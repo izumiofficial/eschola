@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_eschola_core_eschola_core,eschola_core.eschola_core,model_eschola_core_eschola_core,base.group_user,1,1,1,1
