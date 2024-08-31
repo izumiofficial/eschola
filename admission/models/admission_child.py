@@ -1,15 +1,12 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
-class StudentRecord(models.Model):
-    _name = 'student.record'
-    _description = 'To store student records'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+class AdmissionChild(models.Model):
+    _name = 'admission.child'
+    _description = 'Dynamically admin the kids'
 
     is_international = fields.Boolean(string='International Curriculum')
     name = fields.Char(string='Name', translate=True)
-    # first_name = fields.Char(string='First Name', translate=True, required=True)
-    # middle_name = fields.Char(string='Middle Name', translate=True, required=True)
-    # last_name = fields.Char(string='Last Name', translate=True, required=True)
     email = fields.Char(string='Email', required=True)
     mobile = fields.Char(unaccent=False)
     birth_date = fields.Date(string='Birth Date', required=True)
@@ -29,7 +26,5 @@ class StudentRecord(models.Model):
     religion = fields.Selection([
         ('muslim', 'Muslim'),
         ('christian', 'Christian')
-    ], string='Religion', required=True)
-
-    primary_guardian_id = fields.Many2one('guardian.record', string="Primary Guardian")
-    secondary_guardian_id = fields.Many2one('guardian.record', string="Secondary Guardian")
+    ], string='Gender', required=True)
+    admission_id = fields.Many2one('admission', string="Admission")

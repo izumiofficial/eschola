@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_admission_admission,admission.admission,model_admission_admission,base.group_user,1,1,1,1
+admission.access_admission,access_admission,admission.model_admission,base.group_user,1,1,1,1
+admission.access_admission_child,access_admission_child,admission.model_admission_child,base.group_user,1,1,1,1

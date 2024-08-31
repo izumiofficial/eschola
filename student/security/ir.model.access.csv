@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_student_student,student.student,model_student_student,base.group_user,1,1,1,1
+student.access_student_record,access_student_record,student.model_student_record,base.group_user,1,1,1,1

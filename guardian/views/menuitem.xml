@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="guardian_root"
+              name="Guardian"
+              sequence="1"/>
+</odoo>
