@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "eschola_core",
+    'name': "eSchola Core",
 
-    'summary': "Short (1 phrase/line) summary of the module's purpose",
+    'summary': "The core app for eschola",
 
     'description': """
-Long description of module's purpose
+This core app contains all custom modules for eschola. it will install several app which (admission, guardian and student) is the main app to be install
     """,
 
-    'author': "My Company",
-    'website': "https://www.yourcompany.com",
-
+    'author': "Computs Sdn Bhd",
+    'website': "http://www.computs.com.my",
+    'sequence': -999,
+    'application': True,
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
