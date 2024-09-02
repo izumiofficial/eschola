@@ -20,8 +20,9 @@ This core app contains all custom modules for eschola. it will install several a
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/admission.xml',
+        'security/ir.model.access.csv',
+        'views/menuitem.xml',
+        # 'views/admission.xml',
         'views/admission_register.xml',
         'views/guardian.xml',
         'views/student.xml',
