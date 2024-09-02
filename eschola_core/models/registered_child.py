@@ -27,4 +27,4 @@ class RegisteredChild(models.Model):
         ('muslim', 'Muslim'),
         ('christian', 'Christian')
     ], string='Gender', required=True)
-    admission_id = fields.Many2one('admission.register', string="Register")
+    # admission_id = fields.Many2one('admission.register', string="Register")

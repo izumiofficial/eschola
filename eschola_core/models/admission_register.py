@@ -6,21 +6,23 @@ class AdmissionRegister(models.Model):
     _description = 'Admission of family'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string='Student Name', translate=True)
-    email = fields.Char(string='Email', required=True)
+    name = fields.Char(string='Guardian Name', translate=True)
+    # secondary_guardian_name = fields.Char(string="Secondary Guardian Name")
+
+    email = fields.Char(string='Email')
     mobile = fields.Char(unaccent=False)
     country = fields.Many2one('res.country', string='Country of Residence')
-    grade = fields.Selection([
-        ('grade_7', 'Grade 7'),
-        ('grade_8', 'Grade 8'),
-        ('grade_9', 'Grade 9'),
-        ('grade_10', 'Grade 10'),
-        ('al_as', 'AL/AS')
-    ], string='Grade', requred=True)
     status = fields.Selection([
         ('draft', 'Draft'),
         ('confirm', 'Confirmed'),
         ('cancel', 'Cancelled')
     ])
 
-    child_ids = fields.One2many('registered.child', 'admission_id', string="Student")
+    # child_ids = fields.One2many('registered.child', 'admission_id', string="Student")
+
+    # def action_confirm_registration(self):
+    #     for child in self.child_ids:
+    #         self.env['admission'].create({
+    #             'child_name': child.name,
+    #             'child_age': child.age,
+    #         })
