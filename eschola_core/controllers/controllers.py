@@ -3,23 +3,42 @@ from odoo import http
 from odoo.http import request
 
 class NewRegister(http.Controller):
-    @http.route('/submit_register_form_for_love', type='http', auth='public', website=True, csrf=False)
-    def submit_register_form(self, **post):
-        print(**post)
-        guardian_name = post.get('guardian_name')
-        # secondary_guardian_name = post.get('secondary_guardian_name')
-        email = post.get('email')
-        mobile = post.get('mobile')
-        country = post.get('country')
-        print(f'{guardian_name}, {email}, {mobile}, {country}')
-        # Create the admission record
-        register = request.env['admission.register'].sudo().create({
-            'name': guardian_name,
-            'email': email,
-            'mobile': mobile,
-            'country': country,
 
-        })
+    @http.route(['/register_form'], type='http', auth='public', website=True)
+    def portal_register_form(self, **kw):
+        countries = request.env['res.country'].sudo().search([])
+
+        # render the form template when this route is accessed
+        return request.render("eschola_core.register_form_template", {'countries': countries})
+
+    @http.route('/submit_form', type='http', auth='public', website=True, csrf=False)
+    def submit_register_form(self, **kw):
+        if request.httprequest.method == 'POST':
+            # 1. Data Collection
+            guardian_name = kw.get('guardian_name')
+            email = kw.get('email')
+            mobile = kw.get('mobile')
+            country = kw.get('country')
+
+            # 2. Basic Data Validation (Add more checks as needed)
+            if not all([guardian_name, email, mobile, country]):
+                return request.render("eschola_core.register_form_template",
+                                      {'error_message': 'All fields are required.'})
+
+            # 3. Create the admission record
+            request.env['admission.register'].sudo().create({
+                'name': guardian_name,
+                'email': email,
+                'mobile': mobile,
+                'country': country,
+            })
+
+            # 4. Provide User Feedback
+            return request.render("eschola_core.register_form_template",
+                                  {'success_message': 'Registration successful!'})
+
+        # If not a POST request, redirect back to the form
+        return request.redirect('/register_form')
 
 
         # Create child records and link them to the admission.register

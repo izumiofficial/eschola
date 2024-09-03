@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="register_form" model="website.menu">
+        <field name="name">Register Form</field>
+        <field name="url">/register_form</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">100</field>
+    </record>
+    <template id="register_form_template" name="Register Form">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Admission Form</h1>
+                <form action="/submit_form" method="POST">
+                    <div class="form-row row">
+                        <div class="col-md-3 mb-3">
+                            <label for="guardian_name">Guardian Name</label>
+                            <input type="text" class="form-control" id="guardian_name" name="guardian_name"
+                                   required="True"/>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="email" class="">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required="True"/>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="mobile" class="">Mobile</label>
+                            <input type="text" class="form-control" id="mobile" name="mobile" required="True"/>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="country" class="">Country</label>
+                            <select class="form-control" id="country" name="country" required="True">
+                                <option>Select Country</option>
+                                <t t-foreach="countries or []" t-as="country">
+                                    <option t-att-value="country.id">
+                                        <t t-esc="country.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            Child Information
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Name</label>
+                                    <input type="text" class="form-control" id="validationCustom01"
+                                           placeholder="Name"/>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom02">Gender</label>
+                                    <select class="form-control">
+                                        <option>Select Gender...</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustomUsername">Email</label>
+                                    <input type="text" class="form-control" id="validationCustomUsername"/>
+                                </div>
+                            </div>
+                            <div class="form-row row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom01">Mobile</label>
+                                    <input type="text" class="form-control" id="validationCustom01"
+                                           placeholder="Mobile"/>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom02">Year</label>
+                                    <select class="form-control">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustomUsername">Religion</label>
+                                    <select class="form-control">
+                                        <option>Select Gender...</option>
+                                        <option value="Muslim">Muslim</option>
+                                        <option value="Christian">Christian</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="mt-2 mb-5 btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>

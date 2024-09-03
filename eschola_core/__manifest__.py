@@ -16,7 +16,7 @@ This core app contains all custom modules for eschola. it will install several a
     'version': '1.1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail','website'],
 
     # always loaded
     'data': [
@@ -26,6 +26,7 @@ This core app contains all custom modules for eschola. it will install several a
         'views/admission_register.xml',
         'views/guardian.xml',
         'views/student.xml',
+        'views/register_form_template.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
