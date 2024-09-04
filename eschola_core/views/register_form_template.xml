@@ -21,11 +21,13 @@
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="email" class="">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required="True"/>
+                                <input type="email" class="form-control" id="email" name="email"
+                                       required="True"/>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="mobile" class="">Mobile</label>
-                                <input type="text" class="form-control" id="mobile" name="mobile" required="True"/>
+                                <input type="text" class="form-control" id="mobile" name="mobile"
+                                       required="True"/>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="country" class="">Country</label>
@@ -39,7 +41,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="card">
+                        <div class="card student_record">
                             <div class="card-header">
                                 Child Information
                             </div>
@@ -87,11 +89,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--                            <div class="card-footer d-flex justify-content-end" style="gap: 10px;">-->
-                            <!--                                <button type="button" class="btn btn-primary add_line">-->
-                            <!--                                    <i class="bi bi-plus"></i>-->
-                            <!--                                </button>-->
-                            <!--                            </div>-->
                         </div>
 
                         <!--new cloned card-->
@@ -144,17 +141,16 @@
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-end" style="gap: 10px;">
-                                <!--                                <button type="button" class="btn btn-primary add_line">-->
-                                <!--                                    <i class="bi bi-plus"></i>-->
-                                <!--                                </button>-->
                                 <button type="button" class="btn btn-danger remove_line">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
                         </div>
-                        <textarea class="form-control" id="student_line_ids" name="student_line_ids" rows="3"></textarea>
+                        <textarea class="form-control" id="student_line_ids" name="student_line_ids"
+                                  rows="3"></textarea>
                         <div class="d-flex justify-content-between">
-                            <button type="submit" class="mt-2 mb-5 btn btn-secondary create_record">Submit</button>
+                            <!--<button type="submit" class="mt-2 mb-5 btn btn-secondary create_record">Submit</button>-->
+                            <button type="button" class="mt-2 mb-5 btn btn-warning create_record">Submit</button>
                             <button type="button" class="mt-2 mb-5 btn btn-primary add_line">
                                 <i class="bi bi-plus"></i>
                             </button>
