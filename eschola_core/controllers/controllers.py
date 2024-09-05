@@ -3,6 +3,7 @@ import json
 
 from odoo import http
 from odoo.http import request
+from odoo.addons.website.controllers.main import Website
 
 class NewRegister(http.Controller):
 
@@ -58,3 +59,4 @@ class NewRegister(http.Controller):
 
         # If not a POST request, redirect back to the form
         return request.redirect('/register_form')
+
