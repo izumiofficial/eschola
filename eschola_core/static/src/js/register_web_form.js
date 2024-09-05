@@ -18,39 +18,33 @@ publicWidget.registry.generic_form_data = publicWidget.Widget.extend({
         'click .add_line': '_onClickAdd_line',
         'click .remove_line': '_onClickRemove_line',
         'click .create_record': '_onClickSubmit',
-        'click .student_record .add_line': '_onClickAdd_line',
     },
     _onClickAdd_line: function(ev){
-        var $new_card = $('.add_extra_card').clone(true);
+        var $new_card = $('.add_extra').clone(true);
         $new_card.removeClass('d-none');
-        $new_card.removeClass('add_extra_card');
+        $new_card.removeClass('add_extra');
         $new_card.addClass('student_record');
-        $new_card.insertBefore($('.add_extra_card'));
-        console.log('New card created');
+        $new_card.insertBefore($('.add_extra'));
+        console.log('New line created');
     },
     _onClickRemove_line: function(ev){
         $('#cloned_row').remove();
     },
-    _onClickSubmit: async function(ev){
+    _onClickSubmit: function(ev){
         var self = this;
         var student_data = [];
-        $('div.student_record').each(function() {
-            let name = $(this).find('select[name="name"]').val();
+        $('tr.student_record').each(function() {
+            let name = $(this).find('input[name="name"]').val();
             let gender = $(this).find('select[name="gender"]').val();
-            let email = $(this).find('select[name="email"]').val();
-            let mobile = $(this).find('select[name="mobile"]').val();
-            let year = $(this).find('select[name="year"]').val();
-            let religion = $(this).find('select[name="religion"]').val();
+            let email = $(this).find('input[name="email"]').val();
+            let grade = $(this).find('select[name="grade"]').val();
             student_data.push({
-                'name' = name;
-                'gender' = gender;
-                'email' = email;
-                'mobile' = mobile;
-                'year' = year;
-                'religion' = religion;
+                'name' : name,
+                'gender' : gender,
+                'email' : email,
+                'grade' : grade,
             });
         });
-        $('.student_record .add_line').on('click', this._onClickAdd_line.bind(this));
         $('textarea[name="student_line_ids"]').val(JSON.stringify(student_data));
     },
 });

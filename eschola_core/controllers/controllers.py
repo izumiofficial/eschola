@@ -13,6 +13,11 @@ class NewRegister(http.Controller):
 
     @http.route('/submit_form', type='http', auth='public', website=True, csrf=False)
     def submit_register_form(self, **kw):
+        data = json.loads(kw['student_line_ids'])
+        for i in data:
+            print(i)
+
+
         if request.httprequest.method == 'POST':
             # 1. Data Collection
             guardian_name = kw.get('guardian_name')
