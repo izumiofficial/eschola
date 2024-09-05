@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import json
+
 from odoo import http
 from odoo.http import request
 
@@ -13,10 +15,8 @@ class NewRegister(http.Controller):
 
     @http.route('/submit_form', type='http', auth='public', website=True, csrf=False)
     def submit_register_form(self, **kw):
+        # Data from JSON which contains applicant children basic information
         data = json.loads(kw['student_line_ids'])
-        for i in data:
-            print(i)
-
 
         if request.httprequest.method == 'POST':
             # 1. Data Collection
@@ -27,33 +27,34 @@ class NewRegister(http.Controller):
 
             # 2. Basic Data Validation (Add more checks as needed)
             if not all([guardian_name, email, mobile, country]):
-                return request.render("eschola_core.register_form_template",
-                                      {'error_message': 'All fields are required.'})
+                return request.render("eschola_core.register_form_template", {'error_message': 'All fields are required.'})
 
-            # 3. Create the admission record
-            request.env['admission.register'].sudo().create({
+            # 3. Process Children Data
+            child_data = []
+            for child in data:
+                # Assuming 'child_name' and 'child_age' are fields in the 'childs_ids' one2many
+                child_data.append((0, 0, {
+                    'name': child.get('name'),
+                    'email': child.get('email'),
+                    'gender': child.get('gender'),
+                    'grade': child.get('grade'),
+
+                }))
+
+            # 4. Create the admission record
+            new_admission = request.env['admission.register'].sudo().create({
                 'name': guardian_name,
+                'primary_guardian_name': guardian_name,
                 'email': email,
                 'mobile': mobile,
                 'country': country,
+                'status': 'draft',
+                'child_ids': child_data  # Link the child data to the admission record
             })
 
-            # 4. Provide User Feedback
+            # 5. Provide User Feedback
             return request.render("eschola_core.register_form_template",
                                   {'success_message': 'Registration successful!'})
 
         # If not a POST request, redirect back to the form
         return request.redirect('/register_form')
-
-
-        # Create child records and link them to the admission.register
-        # for child_data in post.get('children_data'):
-        #     request.env['registered.child'].sudo().create({
-        #         'name': child_data.get('name'),
-        #         'admission_id': register.id,
-        #     })
-
-        # Redirect to a success page or display a message
-        # return request.redirect('/admission_success')
-        #
-        # return request.render("admission_register.form_submission_success")  # Render a success template

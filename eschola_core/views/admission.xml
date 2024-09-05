@@ -6,7 +6,7 @@
             <field name="model">admission</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <tree string="Registered">
+                <tree string="Admission">
                     <field name="name"/>
                     <field name="email"/>
                     <field name="grade"/>
@@ -18,11 +18,12 @@
             <field name="model">admission</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <form string="Register">
+                <form string="Admission">
                     <header>
-                        <!--                        <button string="Confirm" class="oe_highlight" invisible="status != 'confirm'"-->
-                        <!--                                type="object"-->
-                        <!--                                name="approve_admission"/>-->
+                        <button string="Confirm" class="oe_highlight"
+                                invisible="status != 'paid'"
+                                type="object"
+                                name="confirm_admission"/>
                         <field name="status" widget="statusbar" nolabel="1" readonly="1"/>
                     </header>
                     <sheet>
@@ -33,12 +34,13 @@
                         </div>
                         <group>
                             <group>
-                                <field name="grade"/>
                                 <field name="email"/>
+                                <field name="grade"/>
                             </group>
                             <group>
+                                <field name="gender"/>
                                 <field name="mobile"/>
-                                <field name="country" readonly="1"/>
+                                <field name="country"/>
                             </group>
                         </group>
                     </sheet>

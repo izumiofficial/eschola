@@ -6,9 +6,9 @@
             <field name="model">admission.register</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <tree string="Admission">
-                    <field name="name"/>
-<!--                    <field name="secondary_guardian_name"/>-->
+                <tree string="Admission" default_order="id desc">
+                    <field name="name" readonly="1"/>
+                    <field name="primary_guardian_name"/>
                     <field name="email"/>
 <!--                    <field name="child_ids" widget="many2many_tags"/>-->
                 </tree>
@@ -21,24 +21,37 @@
             <field name="arch" type="xml">
                 <form string="Admission">
                     <header>
-<!--                        <button string="Admission Confirm" class="oe_highlight" invisible="status != 'confirm'"-->
-<!--                                type="object"-->
-<!--                                name="approve_admission"/>-->
+                        <button string="Payment" class="oe_highlight"
+                                invisible="status != 'draft'"
+                                type="object"
+                                name="pay_admission"/>
+                        <button string="Admission Confirm" class="oe_highlight" invisible="status != 'paid'"
+                                type="object"
+                                name="admission_confirm"/>
                         <field name="status" widget="statusbar" nolabel="1" readonly="1"/>
                     </header>
                     <sheet>
                         <group>
                             <group>
-                                <field name="name" placeholder="Guardian Name"/>
+                                <field name="name" placeholder="Name"/>
+                                <field name="primary_guardian_name" required="1"/>
                                 <field name="email"/>
                             </group>
                             <group>
                                 <field name="mobile"/>
-                                <field name="country" readonly="1"/>
+                                <field name="country"/>
                             </group>
                         </group>
                         <separator colspan="4" string="Student(s)"/>
-<!--                        <field name="child_ids" readonly="1"/>-->
+                        <field name="child_ids" readonly="1">
+                            <tree>
+                                <field name="name"/>
+                                <field name="email"/>
+                                <field name="gender"/>
+                                <field name="grade"/>
+                            </tree>
+
+                        </field>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>

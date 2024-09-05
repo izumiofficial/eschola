@@ -30,3 +30,22 @@ class Student(models.Model):
 
     primary_guardian_id = fields.Many2one('guardian', string="Primary Guardian")
     secondary_guardian_id = fields.Many2one('guardian', string="Secondary Guardian")
+
+    def create_contact(self):
+        # Create a new contact (res.partner)
+        partner = self.env['res.partner'].create({
+            'name': self.name,
+            'email': self.email,
+            'mobile': self.mobile,
+            'country_id': self.country.id
+        })
+
+        # Create a portal user for the new contact
+        user = self.env['res.users'].create({
+            'login': self.email,  # Or any other suitable login
+            'partner_id': partner.id,
+            'groups_id': [(6, 0, [self.env.ref('base.group_portal').id])]  # Add to the Portal user group
+        })
+
+        # update the admission status to 'confirm'
+        self.status = 'confirm'

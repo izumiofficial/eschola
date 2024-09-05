@@ -22,7 +22,9 @@
             <field name="arch" type="xml">
                 <form string="Student">
                     <header>
-
+                        <button string="Create User" class="oe_highlight"
+                                type="object"
+                                name="create_contact"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
