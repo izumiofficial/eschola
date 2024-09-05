@@ -16,19 +16,27 @@ This core app contains all custom modules for eschola. it will install several a
     'version': '1.1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail', 'website', 'web'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
+        'views/menuitem.xml',
         'views/admission.xml',
         'views/admission_register.xml',
         'views/guardian.xml',
         'views/student.xml',
+        'views/register_form_template.xml',
     ],
+    'qweb': [],
+    'assets': {
+        'web.assets_frontend': [
+            'eschola_core/static/src/js/register_web_form.js',
+        ],
+    },
+
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
 }
-

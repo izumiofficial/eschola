@@ -1,2 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_eschola_core_eschola_core,eschola_core.eschola_core,model_eschola_core_eschola_core,base.group_user,1,1,1,1
+eschola_core.access_admission_register,access_admission_register,eschola_core.model_admission_register,base.group_user,1,1,1,1
+eschola_core.access_guardian,access_guardian,eschola_core.model_guardian,base.group_user,1,1,1,1
+eschola_core.access_student,access_student,eschola_core.model_student,base.group_user,1,1,1,1
+eschola_core.access_registered_child,access_registered_child,eschola_core.model_registered_child,base.group_user,1,1,1,1
+eschola_core.access_admission,access_admission,eschola_core.model_admission,base.group_user,1,1,1,1
