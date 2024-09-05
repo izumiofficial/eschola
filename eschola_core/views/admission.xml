@@ -21,7 +21,7 @@
                 <form string="Admission">
                     <header>
                         <button string="Confirm" class="oe_highlight"
-                                invisible="status != 'paid'"
+                                invisible="status != 'draft'"
                                 type="object"
                                 name="confirm_admission"/>
                         <field name="status" widget="statusbar" nolabel="1" readonly="1"/>
