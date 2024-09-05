@@ -2,11 +2,14 @@
 <odoo>
     <menuitem id="student_root"
               name="Student"
-              sequence="1"/>
+              sequence="1"
+              web_icon="eschola_core,static/src/img/student.png"/>
     <menuitem id="guardian_root"
               name="Guardian"
-              sequence="1"/>
+              sequence="1"
+              web_icon="eschola_core,static/src/img/guardian.png"/>
     <menuitem id="admission_root"
               name="Admission"
-              sequence="1"/>
+              sequence="1"
+              web_icon="eschola_core,static/src/img/admission.png"/>
 </odoo>

@@ -9,7 +9,7 @@
     <template id="register_form_template" name="Register Form">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
         <t t-call="website.layout">
-            <div class="container oe_structure" id="wrap">
+            <div class="container oe_structure oe_empty" id="wrap">
                 <h1>Admission Form</h1>
                 <link rel="stylesheet"
                       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
