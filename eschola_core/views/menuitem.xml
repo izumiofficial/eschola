@@ -3,11 +3,11 @@
     <menuitem id="student_root"
               name="Student"
               sequence="1"
-              web_icon="eschola_core,static/src/img/student.png"/>
+              web_icon="eschola_core,static/src/img/Students.png"/>
     <menuitem id="guardian_root"
               name="Guardian"
               sequence="1"
-              web_icon="eschola_core,static/src/img/guardian.png"/>
+              web_icon="eschola_core,static/src/img/Guardians.png"/>
     <menuitem id="admission_root"
               name="Admission"
               sequence="1"
