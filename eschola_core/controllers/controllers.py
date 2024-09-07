@@ -70,7 +70,7 @@ class NewRegister(http.Controller):
                 guardian_category = request.env['res.partner.category'].sudo().create({'name': 'Guardian'})
 
             # 5. Create guardian contact upon submit registration
-            partner = request.env['res.partner'].create({
+            partner = request.env['res.partner'].sudo().create({
                 'name': guardian_name,
                 'email': email,
                 'mobile': mobile,
@@ -82,7 +82,7 @@ class NewRegister(http.Controller):
             print(partner)
 
             # 6. Give user portal access to guardian
-            user = request.env['res.users'].create({
+            user = request.env['res.users'].sudo().create({
                 'login': email,
                 'partner_id': partner.id,
                 'groups_id': [(6, 0, [request.env.ref('base.group_portal').id])]
@@ -110,7 +110,7 @@ class NewRegister(http.Controller):
 
             # generate child account
             for child in new_admission.child_ids:
-                child_partner = request.env['res.partner'].create({  # Use request.env
+                child_partner = request.env['res.partner'].sudo().create({  # Use request.env
                     'name': child.name,
                     'email': child.email if child.email else None,
                     'category_id': [(4, student_category.id)], # Many2many of tag
@@ -121,7 +121,7 @@ class NewRegister(http.Controller):
                 print(f"Child Partner's Admission Register ID: {child_partner.admission_register_id}")
 
                 if child.email:
-                    child_user = request.env['res.users'].create({  # Use request.env
+                    child_user = request.env['res.users'].sudo().create({  # Use request.env
                         'login': child.email,
                         'partner_id': child_partner.id,
                         'groups_id': [(6, 0, [request.env.ref('base.group_portal').id])]
