@@ -15,10 +15,12 @@ class AdmissionRegister(models.Model):
     country = fields.Many2one('res.country', string='Country of Residence')
     status = fields.Selection([
         ('draft', 'Draft'),
+        ('activation', 'Activation'),
+        ('payment', 'Payment'),
         ('paid', 'Paid'),
-        ('confirm', 'Confirmed'),
+        ('placement', 'Placement'),
         ('cancel', 'Cancelled')
-    ])
+    ], default='draft', string='Status')
 
     child_ids = fields.One2many('registered.child', 'admission_id', string="Student")
     primary_guardian_id = fields.Many2one('guardian', string="Primary Guardian")
@@ -41,20 +43,6 @@ class AdmissionRegister(models.Model):
             'email': self.email,
             'mobile': self.mobile,
             'country': self.country.id,
-        })
-
-        partner = self.env['res.partner'].create({
-            'name': self.name,
-            'email': self.email,
-            'mobile': self.mobile,
-            'country_id': self.country.id
-        })
-
-        # Create a portal user for the new contact
-        user = self.env['res.users'].create({
-            'login': self.email,  # Or any other suitable login
-            'partner_id': partner.id,
-            'groups_id': [(6, 0, [self.env.ref('base.group_portal').id])]  # Add to the Portal user group
         })
 
         # child_ids will be separated and put in another model called admission.py
@@ -82,3 +70,20 @@ class AdmissionRegister(models.Model):
 
         # Update the status of the admission register to 'confirm'
         self.status = 'confirm'
+
+    def action_activate_account(self):
+        # Assuming you have a method to send the activation email
+        self.send_activation_email()
+        self.status = 'activation'
+
+    @api.model
+    def _cron_check_activated_users(self):
+        # Find users who have activated their accounts
+        activated_users = self.env['res.users'].search([
+            ('partner_id.is_activated', '=', True),  # Assuming you have a field 'is_activated' on res.partner
+            ('partner_id.admission_register_id.status', '=', 'activation')
+        ])
+
+        # Change the status of corresponding admission records to 'payment'
+        for user in activated_users:
+            user.partner_id.admission_register_id.status = 'payment'

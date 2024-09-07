@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="activation_email_sent" name="Activation Email Sent">
+        <t t-call="website.layout">
+            <div id="wrap" class="oe_structure oe_empty">
+                <div class="container mx-auto">
+                    <h1>An activation email has been sent to you.</h1>
+                    <p>Please activate your account by clicking the link in the email.</p>
+                    </div>
+            </div>
+        </t>
+    </template>
+</odoo>
