@@ -89,8 +89,8 @@ class NewRegister(http.Controller):
             print(user.partner_id.admission_register_id)
 
             # Send the activation email to the guardian
-            # template_id = request.env.ref('eschola_core.activation_email_template').id
-            # request.env['mail.template'].browse(template_id).send_mail(user.partner_id.id, force_send=True)
+            template_id = request.env.ref('eschola_core.activation_email_template').id
+            request.env['mail.template'].browse(template_id).send_mail(user.partner_id.id, force_send=True)
 
             # generate child account
             for child in new_admission.child_ids:
