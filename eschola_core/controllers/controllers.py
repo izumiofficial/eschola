@@ -4,7 +4,10 @@ import json
 from odoo import http
 from odoo.http import request
 from odoo.addons.website.controllers.main import Website
+from odoo.odoo.exceptions import MissingError
+import logging
 
+_logger = logging.getLogger(__name__)
 
 class NewRegister(http.Controller):
 
@@ -43,6 +46,8 @@ class NewRegister(http.Controller):
 
                 }))
 
+            print(child_data)
+
             # 4. Create the admission record
             new_admission = request.env['admission.register'].sudo().create({
                 'name': guardian_name,
@@ -54,6 +59,12 @@ class NewRegister(http.Controller):
                 'child_ids': child_data  # Link the child data to the admission record
             })
 
+            print(new_admission.id)
+            print(new_admission)
+
+            # Commit the transaction to ensure the admission record is saved
+            request.env.cr.commit()
+
             # 5. Create guardian contact upon submit registration
             partner = request.env['res.partner'].create({
                 'name': guardian_name,
@@ -63,12 +74,16 @@ class NewRegister(http.Controller):
                 'admission_register_id': new_admission.id,
             })
 
+            print(partner)
+
             # 6. Give user portal access to guardian
             user = request.env['res.users'].create({
                 'login': email,
                 'partner_id': partner.id,
                 'groups_id': [(6, 0, [request.env.ref('base.group_portal').id])]
             })
+
+            print(user)
 
             print(user.partner_id)
             print(user.partner_id.admission_register_id)
@@ -82,9 +97,11 @@ class NewRegister(http.Controller):
                 child_partner = request.env['res.partner'].create({  # Use request.env
                     'name': child.name,
                     'email': child.email if child.email else None,
-                    'parent_id': partner.id,
+                    # 'parent_id': partner.id,
                     'admission_register_id': new_admission.id,  # Link child to the admission record
                 })
+
+                print(f"Child Partner's Admission Register ID: {child_partner.admission_register_id}")
 
                 if child.email:
                     child_user = request.env['res.users'].create({  # Use request.env
@@ -94,11 +111,18 @@ class NewRegister(http.Controller):
                     })
 
                     # Send activation email to the child
-                    if child_user:
-                        request.env['mail.template'].browse(template_id).send_mail(child_user.partner_id.id, force_send=True)
+                    # if child_user:
+                    #     try:
+                    #         template_id = request.env.ref('your_module_name.activation_email_template').id
+                    #         request.env['mail.template'].browse(template_id).send_mail(child_user.partner_id.id,force_send=True)
+                    #     except MissingError:
+                    #         _logger.error(f"Error sending activation email to child: Admission record {child_partner.admission_register_id} not found or inaccessible.")
+                    #         # Optionally, display an error message or take other actions.
 
             # 7. Fetch the number of children
             num_children = len(new_admission.child_ids)
+
+            print(num_children)
 
             # 8. Get the product ID based on the product name
             product = request.env['product.product'].sudo().search([('name', '=', 'Placement Test')], limit=1)
