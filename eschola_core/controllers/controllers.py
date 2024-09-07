@@ -98,7 +98,7 @@ class NewRegister(http.Controller):
             # request.env['mail.template'].browse(template_id).send_mail(user.partner_id.id, force_send=True)
             try:
                 template_id = request.env.ref('eschola_core.activation_email_template').id
-                request.env['mail.template'].browse(template_id).send_mail(user.partner_id.id, force_send=True)
+                request.env['mail.template'].browse(template_id).sudo().send_mail(user.partner_id.id, force_send=True)
             except ValueError as e:  # Catch potential ValueError if the template ID is invalid
                 _logger.error(f"Error sending activation email to guardian: {e}")
             except MissingError as e:  # Catch the MissingError if the partner record is not found
