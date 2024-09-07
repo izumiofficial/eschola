@@ -4,10 +4,11 @@ import json
 from odoo import http
 from odoo.http import request
 from odoo.addons.website.controllers.main import Website
-from odoo.odoo.exceptions import MissingError
+from odoo.exceptions import MissingError
 import logging
 
 _logger = logging.getLogger(__name__)
+
 
 class NewRegister(http.Controller):
 
@@ -64,6 +65,9 @@ class NewRegister(http.Controller):
 
             # Commit the transaction to ensure the admission record is saved
             request.env.cr.commit()
+            guardian_category = request.env['res.partner.category'].sudo().search([('name', '=', 'Guardian')], limit=1)
+            if not guardian_category:
+                guardian_category = request.env['res.partner.category'].sudo().create({'name': 'Guardian'})
 
             # 5. Create guardian contact upon submit registration
             partner = request.env['res.partner'].create({
@@ -71,6 +75,7 @@ class NewRegister(http.Controller):
                 'email': email,
                 'mobile': mobile,
                 'country_id': int(country),
+                'category_id': [(4, guardian_category.id)], # Many2many of tag
                 'admission_register_id': new_admission.id,
             })
 
@@ -89,14 +94,26 @@ class NewRegister(http.Controller):
             print(user.partner_id.admission_register_id)
 
             # Send the activation email to the guardian
-            template_id = request.env.ref('eschola_core.activation_email_template').id
-            request.env['mail.template'].browse(template_id).send_mail(user.partner_id.id, force_send=True)
+            # template_id = request.env.ref('eschola_core.activation_email_template').id
+            # request.env['mail.template'].browse(template_id).send_mail(user.partner_id.id, force_send=True)
+            try:
+                template_id = request.env.ref('eschola_core.activation_email_template').id
+                request.env['mail.template'].browse(template_id).send_mail(user.partner_id.id, force_send=True)
+            except ValueError as e:  # Catch potential ValueError if the template ID is invalid
+                _logger.error(f"Error sending activation email to guardian: {e}")
+            except MissingError as e:  # Catch the MissingError if the partner record is not found
+                _logger.error(f"Error sending activation email to guardian: {e}")
+
+            student_category = request.env['res.partner.category'].sudo().search([('name', '=', 'Student')], limit=1)
+            if not student_category:
+                student_category = request.env['res.partner.category'].sudo().create({'name': 'Student'})
 
             # generate child account
             for child in new_admission.child_ids:
                 child_partner = request.env['res.partner'].create({  # Use request.env
                     'name': child.name,
                     'email': child.email if child.email else None,
+                    'category_id': [(4, student_category.id)], # Many2many of tag
                     # 'parent_id': partner.id,
                     'admission_register_id': new_admission.id,  # Link child to the admission record
                 })
@@ -137,6 +154,7 @@ class NewRegister(http.Controller):
                     'product_id': product.id,
                     'product_uom_qty': num_children,
                     'price_unit': product.list_price,
+                    'state': 'sale',
                 })]
             })
 
