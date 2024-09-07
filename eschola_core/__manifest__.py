@@ -27,6 +27,8 @@ This core app contains all custom modules for eschola. it will install several a
         'views/guardian.xml',
         'views/student.xml',
         'views/register_form_template.xml',
+        'views/activation_email_sent.xml',
+        'views/activation_email_template.xml',
     ],
     'qweb': [],
     'assets': {
