@@ -154,7 +154,8 @@ class NewRegister(http.Controller):
                     'product_id': product.id,
                     'product_uom_qty': num_children,
                     'price_unit': product.list_price,
-                    'state': 'sale',
+                    'require_signature': False,
+                    'require_payment': True,
                 })]
             })
 
