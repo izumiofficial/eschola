@@ -1,5 +1,8 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class AdmissionRegister(models.Model):
     _name = 'admission.register'
@@ -87,3 +90,23 @@ class AdmissionRegister(models.Model):
         # Change the status of corresponding admission records to 'payment'
         for user in activated_users:
             user.partner_id.admission_register_id.status = 'payment'
+
+    @api.model
+    def _cron_check_paid_admissions(self):
+        """
+        Cron job to check for admissions with 'paid' status and send "Placement Test"
+        certification invitations to children.
+        """
+        paid_admissions = self.env['admission.register'].search([('status', '=', 'paid')])
+
+        for admission in paid_admissions:
+            for child in admission.child_ids:
+                # Check if the child has a linked user
+                if child.user_id:
+                    # Find the "Placement Test" survey
+                    placement_test = self.env['survey.survey'].sudo().search([('title', '=', 'Placement Test')], limit=1)
+                    if placement_test:
+                        # Trigger the invitation process
+                        placement_test.invite_user(child.user_id.partner_id)
+                    else:
+                        _logger.warning(f"Placement Test survey not found for child {child.name}")
