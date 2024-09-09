@@ -111,15 +111,23 @@ class AdmissionRegister(models.Model):
             user.partner_id.admission_register_id.status = 'payment'
 
     # is SO state is sale, status change to paid
-    @api.onchange('order_id')
-    def _onchange_order_id(self):
-        for record in self:
-            if record.order_id and record.order_id.state == 'sale':
-                record.status = 'paid'
-            else:
-                # log error
-                _logger.warning(
-                    f"Admission record {record.id} - Order not found or not in 'sale' state. Current order state: {record.order_id.state if record.order_id else 'No order linked'}")
+    # @api.depends('order_id')
+    # def _onchange_order_id(self):
+    #     for record in self:
+    #         if record.order_id and record.order_id.state == 'sale':
+    #             record.status = 'paid'
 
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
 
-
+    @api.onchange('state')
+    def _onchange_state(self):
+        if self.state == 'sale':
+            admission_registers = self.env['admission.register'].search([('order_id', '=', self.id)])
+            for register in admission_registers:
+                register.status = 'paid'
+                print(admission_registers)
+                print(f"Updated admission register {register.id} status to 'paid'")
+        else:
+            # log error (optional, depending on your needs)
+            print(f"Sale Order {self.id} - Not in 'sale' state. Current order state: {self.state}")
