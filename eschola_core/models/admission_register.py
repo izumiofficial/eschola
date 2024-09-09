@@ -83,7 +83,7 @@ class AdmissionRegister(models.Model):
     def _cron_check_activated_users(self):
         # Find users who have activated their accounts
         activated_users = self.env['res.users'].search([
-            ('partner_id.is_activated', '=', True),  # Assuming you have a field 'is_activated' on res.partner
+            ('active', '=', True),
             ('partner_id.admission_register_id.status', '=', 'activation')
         ])
 
