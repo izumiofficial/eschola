@@ -97,16 +97,17 @@ class AdmissionRegister(models.Model):
         Cron job to check for admissions with 'paid' status and send "Placement Test"
         certification invitations to children.
         """
-        paid_admissions = self.env['admission.register'].search([('status', '=', 'paid')])
+        paid_admissions = self.search([('status', '=', 'paid')])
 
         for admission in paid_admissions:
             for child in admission.child_ids:
-                # Check if the child has a linked user
                 if child.user_id:
-                    # Find the "Placement Test" survey
                     placement_test = self.env['survey.survey'].sudo().search([('title', '=', 'Placement Test')], limit=1)
                     if placement_test:
-                        # Trigger the invitation process
-                        placement_test.invite_user(child.user_id.partner_id)
+                        try:
+                            # Attempt to send the invitation
+                            placement_test.invite_user(child.user_id.partner_id)
+                        except Exception as e:
+                            _logger.error(f"Failed to send Placement Test invitation to {child.name}: {e}")
                     else:
                         _logger.warning(f"Placement Test survey not found for child {child.name}")
