@@ -30,9 +30,9 @@
                                 invisible="status != 'draft'"
                                 type="object"
                                 name="pay_admission"/>
-                        <button string="Admission Confirm" class="oe_highlight" invisible="status != 'paid'"
+                        <button string="Placement Test" class="oe_highlight" invisible="status != 'paid'"
                                 type="object"
-                                name="admission_confirm"/>
+                                name="send_cert"/>
                         <field name="status" widget="statusbar" nolabel="1" options="{'clickable': '1', 'fold_field': 'fold'}"/>
                     </header>
                     <sheet>
