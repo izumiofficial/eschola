@@ -25,7 +25,7 @@ class Admission(models.Model):
         ('draft', 'Draft'),
         ('confirm', 'Confirmed'),
         ('cancel', 'Cancelled')
-    ])
+    ], default='draft', string='Status')
     primary_guardian_id = fields.Many2one('guardian', string="Primary Guardian")
 
     def confirm_admission(self):
