@@ -119,8 +119,10 @@ class AdmissionRegister(models.Model):
                 if child.user_id:
                     placement_test = self.env['survey.survey'].sudo().search([('title', '=', 'Placement Test')], limit=1)
                     if placement_test:
+                        template = self.env.ref('survey.mail_template_user_input_invite')
                         try:
-                            placement_test.invite_user(child.user_id.partner_id)
+                            template.send_mail(child.id, force_send=True)
+                            # placement_test.invite_user(child.user_id.partner_id)
                         except Exception as e:
                             _logger.error(f"Failed to send Placement Test invitation to {child.name}: {e}")
                     else:
