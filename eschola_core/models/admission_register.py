@@ -23,7 +23,7 @@ class AdmissionRegister(models.Model):
         ('paid', 'Paid'),
         ('placement', 'Placement'),
         ('cancel', 'Cancelled')
-    ], default='draft', compute='_compute_status', string='Status')
+    ], default='draft', string='Status')
 
     child_ids = fields.One2many('registered.child', 'admission_id', string="Student")
     primary_guardian_id = fields.Many2one('guardian', string="Primary Guardian")
@@ -56,7 +56,6 @@ class AdmissionRegister(models.Model):
 
 
     def admission_confirm(self):
-
         # create guardian
         self['primary_guardian_id'] = self.env['guardian'].create({
             'name': self.name,
@@ -89,7 +88,7 @@ class AdmissionRegister(models.Model):
         self.child_ids.write({'admission_id': self.id})
 
         # Update the status of the admission register to 'confirm'
-        self.status = 'confirm'
+        # self.status = 'confirm'
 
     def action_activate_account(self):
         # Assuming you have a method to send the activation email
@@ -112,10 +111,10 @@ class AdmissionRegister(models.Model):
             user.partner_id.admission_register_id.status = 'payment'
 
     # is SO state is sale, status change to paid
-    @api.depends('order_id.state')
-    def _compute_status(self):
+    @api.onchange('order_id')
+    def _onchange_order_id(self):
         for record in self:
-            if record.order_id and record.order_id.state == 'sale':  # Check if order exists and is confirmed
+            if record.order_id and record.order_id.state == 'sale':
                 record.status = 'paid'
             else:
                 # log error

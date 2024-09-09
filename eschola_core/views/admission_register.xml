@@ -33,6 +33,9 @@
                         <button string="Placement Test" class="oe_highlight" invisible="status != 'paid'"
                                 type="object"
                                 name="send_cert"/>
+                        <button string="Admission Confirm" class="oe_highlight" invisible="status != 'paid'"
+                                type="object"
+                                name="admission_confirm"/>
                         <field name="status" widget="statusbar" nolabel="1" options="{'clickable': '1', 'fold_field': 'fold'}"/>
                     </header>
                     <sheet>
