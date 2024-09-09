@@ -23,10 +23,12 @@ class AdmissionRegister(models.Model):
         ('paid', 'Paid'),
         ('placement', 'Placement'),
         ('cancel', 'Cancelled')
-    ], default='draft', string='Status')
+    ], default='draft', compute='_compute_status', string='Status')
 
     child_ids = fields.One2many('registered.child', 'admission_id', string="Student")
     primary_guardian_id = fields.Many2one('guardian', string="Primary Guardian")
+
+    order_id = fields.Many2one('sale.order', string='Sales Order')
 
     @api.onchange('primary_guardian_name')
     def _set_name(self):
@@ -49,6 +51,7 @@ class AdmissionRegister(models.Model):
                 self.env['survey.user_input'].create({
                     'survey_id': placement_test.id,  # Use the survey ID
                     'partner_id': child.partner_id.id,
+                    'email': child.email,
                 })
 
 
@@ -95,9 +98,12 @@ class AdmissionRegister(models.Model):
 
     @api.model
     def _cron_check_activated_users(self):
-        # Find users who have activated their accounts
+        """
+        Cron job to check for users with active accounts and update the admission status to 'payment'.
+        """
+        # Find users who are active and whose admission is in 'activation' state
         activated_users = self.env['res.users'].search([
-            ('active', '=', True),
+            ('state', '=', 'active'),
             ('partner_id.admission_register_id.status', '=', 'activation')
         ])
 
@@ -105,35 +111,10 @@ class AdmissionRegister(models.Model):
         for user in activated_users:
             user.partner_id.admission_register_id.status = 'payment'
 
-    # @api.model
-    # def _cron_check_paid_admissions(self):
-    #     """
-    #     Cron job to check for admissions with 'paid' status and send "Placement Test"
-    #     certification invitations to children.
-    #     """
-    #     paid_admissions = self.search([('status', '=', 'paid')])
-    #
-    #     for admission in paid_admissions:
-    #         for child in admission.child_ids:
-    #             if child.user_id:
-    #                 placement_test = self.env['survey.survey'].sudo().search([('title', '=', 'Placement Test')], limit=1)
-    #                 if placement_test:
-    #                     try:
-    #                         # Attempt to send the invitation
-    #                         placement_test.invite_user(child.user_id.partner_id)
-    #                     except Exception as e:
-    #                         _logger.error(f"Failed to send Placement Test invitation to {child.name}: {e}")
-    #                 else:
-    #                     _logger.warning(f"Placement Test survey not found for child {child.name}")
+    @api.depends('order_id.state')
+    def _compute_status(self):
+        for record in self:
+            if record.order_id and record.order_id.state == 'sale':  # Check if order exists and is confirmed
+                record.status = 'paid'
 
-    # @api.model
-    # def send_invitation_cert(self):
-    #     for admission in self:  # Iterate over the current recordset
-    #         if admission.status == 'paid':
-    #             for child in admission.child_ids:
-    #                 if child.user_id:
-    #                     placement_test = self.env['survey.user_input'].sudo().search([('title', '=', 'Placement Test')], limit=1)
-    #                     if placement_test:
-    #                         try:
-    #                             placement_test.
 

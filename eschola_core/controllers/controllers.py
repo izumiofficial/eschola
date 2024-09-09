@@ -162,7 +162,11 @@ class NewRegister(http.Controller):
                 })],
                 'require_signature': False,
                 'require_payment': True,
+                'state': 'sent',
             })
+
+            # Set the order_id on the admission record
+            new_admission.order_id = sale_order.id
 
             # Provide User Feedback
             return request.render("eschola_core.activation_email_sent",
