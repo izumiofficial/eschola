@@ -37,6 +37,20 @@ class AdmissionRegister(models.Model):
         # move stage to 'paid'
         self.status = 'paid'
 
+    def send_cert(self):
+        placement_test = self.env['survey.survey'].sudo().search([('title', '=', 'Placement Test')], limit=1)
+
+        if not placement_test:
+            _logger.warning("Placement Test survey not found")
+            return  # Exit early if the survey doesn't exist
+
+        for child in self.child_ids:
+            if child.partner_id:  # Check if partner_id exists
+                self.env['survey.user_input'].create({
+                    'survey_id': placement_test.id,  # Use the survey ID
+                    'partner_id': child.partner_id.id,
+                })
+
 
     def admission_confirm(self):
 
@@ -112,18 +126,14 @@ class AdmissionRegister(models.Model):
     #                 else:
     #                     _logger.warning(f"Placement Test survey not found for child {child.name}")
 
-    @api.model
-    def send_invitation_cert(self):
-        for admission in self:  # Iterate over the current recordset
-            if admission.status == 'paid':
-                for child in admission.child_ids:
-                    if child.user_id:
-                        placement_test = self.env['survey.survey'].sudo().search([('title', '=', 'Placement Test')], limit=1)
-                        if placement_test:
-                            try:
-                                placement_test.invite_user(child.user_id.partner_id)
-                            except Exception as e:
-                                _logger.error(f"Failed to send Placement Test invitation to {child.name}: {e}")
-                        else:
-                            _logger.warning(f"Placement Test survey not found for child {child.name}")
+    # @api.model
+    # def send_invitation_cert(self):
+    #     for admission in self:  # Iterate over the current recordset
+    #         if admission.status == 'paid':
+    #             for child in admission.child_ids:
+    #                 if child.user_id:
+    #                     placement_test = self.env['survey.user_input'].sudo().search([('title', '=', 'Placement Test')], limit=1)
+    #                     if placement_test:
+    #                         try:
+    #                             placement_test.
 
