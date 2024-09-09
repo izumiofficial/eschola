@@ -111,10 +111,16 @@ class AdmissionRegister(models.Model):
         for user in activated_users:
             user.partner_id.admission_register_id.status = 'payment'
 
+    # is SO state is sale, status change to paid
     @api.depends('order_id.state')
     def _compute_status(self):
         for record in self:
             if record.order_id and record.order_id.state == 'sale':  # Check if order exists and is confirmed
                 record.status = 'paid'
+            else:
+                # log error
+                _logger.warning(
+                    f"Admission record {record.id} - Order not found or not in 'sale' state. Current order state: {record.order_id.state if record.order_id else 'No order linked'}")
+
 
 
