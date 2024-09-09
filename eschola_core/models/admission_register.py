@@ -112,19 +112,18 @@ class AdmissionRegister(models.Model):
     #                 else:
     #                     _logger.warning(f"Placement Test survey not found for child {child.name}")
 
-    @api.depends('status')
+    @api.model
     def send_invitation_cert(self):
-        for admission in self.search([('status', '=', 'paid')]):
-            for child in admission.child_ids:
-                if child.user_id:
-                    placement_test = self.env['survey.survey'].sudo().search([('title', '=', 'Placement Test')], limit=1)
-                    if placement_test:
-                        template = self.env.ref('survey.mail_template_user_input_invite')
-                        try:
-                            template.send_mail(child.id, force_send=True)
-                            # placement_test.invite_user(child.user_id.partner_id)
-                        except Exception as e:
-                            _logger.error(f"Failed to send Placement Test invitation to {child.name}: {e}")
-                    else:
-                        _logger.warning(f"Placement Test survey not found for child {child.name}")
+        for admission in self:  # Iterate over the current recordset
+            if admission.status == 'paid':
+                for child in admission.child_ids:
+                    if child.user_id:
+                        placement_test = self.env['survey.survey'].sudo().search([('title', '=', 'Placement Test')], limit=1)
+                        if placement_test:
+                            try:
+                                placement_test.invite_user(child.user_id.partner_id)
+                            except Exception as e:
+                                _logger.error(f"Failed to send Placement Test invitation to {child.name}: {e}")
+                        else:
+                            _logger.warning(f"Placement Test survey not found for child {child.name}")
 
