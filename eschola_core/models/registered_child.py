@@ -28,3 +28,18 @@ class RegisteredChild(models.Model):
         ('christian', 'Christian')
     ], string='Religion')
     admission_id = fields.Many2one('admission.register', string="Register ID")
+    partner_id = fields.Many2one('res.partner', string="Contact")  # New field to link to the contact
+
+    @api.model
+    def create(self, vals):
+        # Check if partner_id is provided in vals, if not, create a new partner
+        if not vals.get('partner_id'):
+            partner_vals = {
+                'name': vals.get('name'),
+                'email': vals.get('email'),
+                'mobile': vals.get('mobile'),
+            }
+            partner = self.env['res.partner'].create(partner_vals)
+            vals['partner_id'] = partner.id
+
+        return super(RegisteredChild, self).create(vals)
