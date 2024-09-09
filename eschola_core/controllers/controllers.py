@@ -118,6 +118,11 @@ class NewRegister(http.Controller):
                     'admission_register_id': new_admission.id,  # Link child to the admission record
                 })
 
+                # Update the child record with the newly created partner ID
+                child.partner_id = child_partner.id
+
+                print(child.partner_id)
+
                 print(f"Child Partner's Admission Register ID: {child_partner.admission_register_id}")
 
                 if child.email:
