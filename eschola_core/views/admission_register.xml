@@ -11,8 +11,8 @@
                     <field name="primary_guardian_name"/>
                     <field name="email"/>
                     <field name="status" widget="badge"
-                           decoration-success="status=='confirm'"
-                           decoration-info="status=='paid'"
+                           decoration-success="status=='paid'"
+                           decoration-info="status=='payment'"
                            decoration-warning="status=='cancel'"
                            decoration-muted="status=='draft'"/>
 <!--                    <field name="child_ids" widget="many2many_tags"/>-->
@@ -33,7 +33,7 @@
                         <button string="Admission Confirm" class="oe_highlight" invisible="status != 'paid'"
                                 type="object"
                                 name="admission_confirm"/>
-                        <field name="status" widget="statusbar" nolabel="1" readonly="1"/>
+                        <field name="status" widget="statusbar" nolabel="1" readonly="0"/>
                     </header>
                     <sheet>
                         <group>
