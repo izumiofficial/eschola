@@ -33,7 +33,7 @@
                         <button string="Admission Confirm" class="oe_highlight" invisible="status != 'paid'"
                                 type="object"
                                 name="admission_confirm"/>
-                        <field name="status" widget="statusbar" nolabel="1" readonly="0"/>
+                        <field name="status" widget="statusbar" nolabel="1"/>
                     </header>
                     <sheet>
                         <group>
