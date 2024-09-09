@@ -91,23 +91,40 @@ class AdmissionRegister(models.Model):
         for user in activated_users:
             user.partner_id.admission_register_id.status = 'payment'
 
-    @api.model
-    def _cron_check_paid_admissions(self):
-        """
-        Cron job to check for admissions with 'paid' status and send "Placement Test"
-        certification invitations to children.
-        """
-        paid_admissions = self.search([('status', '=', 'paid')])
+    # @api.model
+    # def _cron_check_paid_admissions(self):
+    #     """
+    #     Cron job to check for admissions with 'paid' status and send "Placement Test"
+    #     certification invitations to children.
+    #     """
+    #     paid_admissions = self.search([('status', '=', 'paid')])
+    #
+    #     for admission in paid_admissions:
+    #         for child in admission.child_ids:
+    #             if child.user_id:
+    #                 placement_test = self.env['survey.survey'].sudo().search([('title', '=', 'Placement Test')], limit=1)
+    #                 if placement_test:
+    #                     try:
+    #                         # Attempt to send the invitation
+    #                         placement_test.invite_user(child.user_id.partner_id)
+    #                     except Exception as e:
+    #                         _logger.error(f"Failed to send Placement Test invitation to {child.name}: {e}")
+    #                 else:
+    #                     _logger.warning(f"Placement Test survey not found for child {child.name}")
 
-        for admission in paid_admissions:
+    @api.depends('status')
+    def send_invitation_cert(self):
+        for admission in self.search([('status', '=', 'paid')]):
             for child in admission.child_ids:
                 if child.user_id:
                     placement_test = self.env['survey.survey'].sudo().search([('title', '=', 'Placement Test')], limit=1)
                     if placement_test:
+                        template = self.env.ref('survey.mail_template_user_input_invite')
                         try:
-                            # Attempt to send the invitation
-                            placement_test.invite_user(child.user_id.partner_id)
+                            template.send_mail(child.id, force_send=True)
+                            # placement_test.invite_user(child.user_id.partner_id)
                         except Exception as e:
                             _logger.error(f"Failed to send Placement Test invitation to {child.name}: {e}")
                     else:
                         _logger.warning(f"Placement Test survey not found for child {child.name}")
+
