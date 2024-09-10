@@ -1,6 +1,9 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
+from odoo.odoo.exceptions import UserError
+
+
 class Admission(models.Model):
     _name = 'admission'
     _description = 'Admission Student'
@@ -23,27 +26,23 @@ class Admission(models.Model):
     ], string='Gender', default='m')
     status = fields.Selection([
         ('draft', 'Draft'),
-        ('confirm', 'Confirmed'),
-        ('cancel', 'Cancelled')
+        ('confirm', 'Placement'),
+        ('cancel', 'Failed')
     ], default='draft', string='Status')
     primary_guardian_id = fields.Many2one('guardian', string="Primary Guardian")
 
-    def confirm_admission(self):
-        # Find the corresponding registered.child record
-        child = self.env['admission.register'].search([('child_ids', 'in', self.id)])
+    # placement_test_id = fields.Many2one('survey.user_inputput', string="Student's Certificate")
 
-        if child:  # Ensure a child record was found
-            # Create a new record in the 'student.py' model
-            self.env['student'].create({
-                'name': self.name,
-                'email': self.email,
-                'mobile': self.mobile,
-                'country': self.country.id,
-                'grade': self.grade,
-                'gender': self.gender,
-                'primary_guardian_id': child.primary_guardian_id.id,  # Link to the guardian through the child record
-                # ... Add other necessary fields from the admission model
-            })
-
-            # Update the admission status to 'confirm'
-            self.status = 'confirm'
+    # def action_view_certificate(self):
+    #     self.ensure_one()
+    #     placement_test = self.env['survey.survey'].sudo().search([('title', '=', 'Placement Test')], limit=1)
+    #
+    #     if not self.placement_test_id:
+    #         raise UserError("No Certificate is linked to this admission record.")
+    #
+    #     return {
+    #         'type': 'ir.actions.act_window',
+    #         'res_model': 'survey.survey',
+    #         'views': [[False, 'form']],
+    #         'res_id': self.placement_test_id.id,
+    #     }

@@ -12,18 +12,43 @@ class AdmissionRegister(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Name', translate=True)
-    # secondary_guardian_name = fields.Char(string="Secondary Guardian Name")
-
+    secondary_guardian_name = fields.Char(string="Secondary Guardian Name")
+    salutation = fields.Selection([
+        ('mr', 'Mr.'),
+        ('ms', 'Ms.'),
+        ('mrs', 'Mrs'),
+    ], string='Title')
+    relation_to_student = fields.Selection([
+        ('father', 'Father'),
+        ('mother', 'Mother'),
+        ('guardian', 'Guardian'),
+    ], string='Relation to Student')
     primary_guardian_name = fields.Char(string='Primary Guardian Name')
     email = fields.Char(string='Email')
     mobile = fields.Char(unaccent=False)
     country = fields.Many2one('res.country', string='Country of Residence')
+
+    # 2nd guardian
+    salutation2 = fields.Selection([
+        ('mr', 'Mr.'),
+        ('ms', 'Ms.'),
+        ('mrs', 'Mrs'),
+    ], string='Title')
+    relation_to_student2 = fields.Selection([
+        ('father', 'Father'),
+        ('mother', 'Mother'),
+        ('guardian', 'Guardian'),
+    ], string='Relation to Student')
+    email2 = fields.Char(string='Email')
+    mobile2 = fields.Char(unaccent=False)
+    country2 = fields.Many2one('res.country', string='Country of Residence')
+
     status = fields.Selection([
         ('draft', 'Draft'),
         # ('activation', 'Activation'),
         ('payment', 'Payment'),
         ('paid', 'Paid'),
-        ('placement', 'Placement'),
+        # ('placement', 'Placement'),
         ('cancel', 'Cancelled')
     ], default='draft', compute='_compute_status', store=True, string='Status')
 
@@ -56,42 +81,6 @@ class AdmissionRegister(models.Model):
                     'partner_id': child.partner_id.id,
                     'email': child.email,
                 })
-
-
-    def admission_confirm(self):
-        # create guardian
-        self['primary_guardian_id'] = self.env['guardian'].create({
-            'name': self.name,
-            'email': self.email,
-            'mobile': self.mobile,
-            'country': self.country.id,
-        })
-
-        # child_ids will be separated and put in another model called admission.py
-        for child in self.child_ids:
-            # Extract the required child information
-            name = child.name
-            email = child.email
-            gender = child.gender
-            grade = child.grade
-
-            # Create a new record in the 'admission.py' model
-            self.env['admission'].create({  # Assuming 'admission.application' is the model in admission.py
-                'name': name,
-                'email': email,
-                'gender': gender,
-                'grade': grade,
-                'status': 'draft',
-                'country': self.country.id,  # Get country field from the guardian
-                'primary_guardian_id': self.primary_guardian_id.id,
-                # ... Add other child-related fields as needed
-            })
-
-        # Update the 'admission_id' field for each child
-        self.child_ids.write({'admission_id': self.id})
-
-        # Update the status of the admission register to 'confirm'
-        # self.status = 'confirm'
 
     def action_activate_account(self):
         # Assuming you have a method to send the activation email
@@ -138,6 +127,29 @@ class AdmissionRegister(models.Model):
             if record.order_id and record.order_id.state == 'sale':
                 record.status = 'paid'
                 record.send_cert()
+                # child_ids will be separated and put in another model called admission.py
+                for child in self.child_ids:
+                    # Extract the required child information
+                    name = child.name
+                    email = child.email
+                    gender = child.gender
+                    grade = child.grade
+
+                    # Create a new record in the 'admission.py' model
+                    self.env['admission'].create({  # Assuming 'admission.application' is the model in admission.py
+                        'name': name,
+                        'email': email,
+                        'gender': gender,
+                        'grade': grade,
+                        'status': 'draft',
+                        'country': self.country.id,  # Get country field from the guardian
+                        'primary_guardian_id': self.primary_guardian_id.id,
+                        # ... Add other child-related fields as needed
+                    })
+
+                # Update the 'admission_id' field for each child
+                self.child_ids.write({'admission_id': self.id})
+
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
