@@ -26,13 +26,6 @@
             <field name="arch" type="xml">
                 <form string="Admission">
                     <header>
-                        <button string="Payment" class="oe_highlight"
-                                invisible="status != 'draft'"
-                                type="object"
-                                name="pay_admission"/>
-                        <button string="Placement Test" class="oe_highlight" invisible="status != 'paid'"
-                                type="object"
-                                name="send_cert"/>
                         <button string="Admission Confirm" class="oe_highlight" invisible="status != 'paid'"
                                 type="object"
                                 name="admission_confirm"/>

@@ -85,7 +85,8 @@ class NewRegister(http.Controller):
             user = request.env['res.users'].sudo().create({
                 'login': email,
                 'partner_id': partner.id,
-                'groups_id': [(6, 0, [request.env.ref('base.group_portal').id])]
+                'groups_id': [(6, 0, [request.env.ref('base.group_portal').id])],
+                'state': 'active',
             })
 
             print(user)
@@ -164,6 +165,12 @@ class NewRegister(http.Controller):
                 'require_payment': True,
                 'state': 'sent',
             })
+
+            try:
+                sale_order.action_quotation_send()
+                print(f"Sale order email sent successfully for order {sale_order.id}")
+            except Exception as e:
+                print(f"Failed to send sale order email for order {sale_order.id}: {e}")
 
             # Set the order_id on the admission record
             new_admission.order_id = sale_order.id

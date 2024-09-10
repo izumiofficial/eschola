@@ -23,7 +23,7 @@ class Admission(models.Model):
     ], string='Gender', default='m')
     status = fields.Selection([
         ('draft', 'Draft'),
-        ('confirm', 'Confirmed'),
+        ('confirm', 'Placement'),
         ('cancel', 'Cancelled')
     ], default='draft', string='Status')
     primary_guardian_id = fields.Many2one('guardian', string="Primary Guardian")
