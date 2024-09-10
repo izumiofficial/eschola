@@ -1,7 +1,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
-from odoo.odoo.exceptions import UserError
+from odoo.exceptions import UserError
 
 
 class Admission(models.Model):
