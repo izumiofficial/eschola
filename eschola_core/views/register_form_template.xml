@@ -66,6 +66,7 @@
                             <div class="col-md-3 mb-3">
                                 <label for="guardian_name">Title</label>
                                 <select class="form-control" id="salutation2" name="salutation2">
+                                    <option value=""></option>
                                     <option value="mr">Mr.</option>
                                     <option value="ms">Ms.</option>
                                     <option value="mrs">Mrs.</option>
@@ -90,7 +91,7 @@
                             <div class="col-md-3 mb-3">
                                 <label for="country" class="">Country of Residence</label>
                                 <select class="form-control" id="country2" name="country2" required="True">
-                                    <option>Select Country</option>
+                                    <option></option>
                                     <t t-foreach="countries or []" t-as="country">
                                         <option t-att-value="country.id">
                                             <t t-esc="country.name"/>
@@ -101,6 +102,7 @@
                             <div class="col-md-3 mb-3">
                                 <label for="guardian_name">Relation to Student</label>
                                 <select class="form-control" id="relation_to_student2" name="relation_to_student2">
+                                    <option value=""></option>
                                     <option value="father">Father</option>
                                     <option value="mother">Mother</option>
                                     <option value="guardian">Guardian</option>

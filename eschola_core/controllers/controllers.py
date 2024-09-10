@@ -26,15 +26,23 @@ class NewRegister(http.Controller):
 
         if request.httprequest.method == 'POST':
             # 1. Data Collection
+            salutation = kw.get('salutation')
             guardian_name = kw.get('guardian_name')
             email = kw.get('email')
             mobile = kw.get('mobile')
             country = kw.get('country')
+            relation_to_student = kw.get('relation_to_student')
+            salutation2 = kw.get('salutation2')
+            secondary_guardian_name = kw.get('secondary_guardian_name')
+            email2 = kw.get('email2')
+            mobile2 = kw.get('mobile2')
+            country2 = kw.get('country2')
+            relation_to_student2 = kw.get('relation_to_student2')
 
             # 2. Basic Data Validation (Add more checks as needed)
-            if not all([guardian_name, email, mobile, country]):
+            if not all([salutation, guardian_name, email, mobile, country, relation_to_student]):
                 return request.render("eschola_core.register_form_template",
-                                      {'error_message': 'All fields are required.'})
+                                      {'error_message': 'All primary fields are required.'})
 
             # 3. Process Children Data
             child_data = []
@@ -47,21 +55,24 @@ class NewRegister(http.Controller):
 
                 }))
 
-            print(child_data)
-
             # 4. Create the admission record
             new_admission = request.env['admission.register'].sudo().create({
                 'name': guardian_name,
+                'salutation': salutation,
                 'primary_guardian_name': guardian_name,
                 'email': email,
                 'mobile': mobile,
                 'country': country,
+                'relation_to_student': relation_to_student,
+                'salutation2': salutation2,
+                'secondary_guardian_name': secondary_guardian_name,
+                'email2': email2,
+                'mobile2': mobile2,
+                'country2': country2,
+                'relation_to_student2': relation_to_student2,
                 'status': 'payment',
                 'child_ids': child_data  # Link the child data to the admission record
             })
-
-            print(new_admission.id)
-            print(new_admission)
 
             # Commit the transaction to ensure the admission record is saved
             request.env.cr.commit()
@@ -89,14 +100,6 @@ class NewRegister(http.Controller):
                 'state': 'active',
             })
 
-            print(user)
-
-            print(user.partner_id)
-            print(user.partner_id.admission_register_id)
-
-            # Send the activation email to the guardian
-            # template_id = request.env.ref('eschola_core.activation_email_template').id
-            # request.env['mail.template'].browse(template_id).send_mail(user.partner_id.id, force_send=True)
             try:
                 template_id = request.env.ref('eschola_core.activation_email_template').id
                 request.env['mail.template'].browse(template_id).sudo().send_mail(user.partner_id.id, force_send=True)
@@ -132,15 +135,6 @@ class NewRegister(http.Controller):
                         'partner_id': child_partner.id,
                         'groups_id': [(6, 0, [request.env.ref('base.group_portal').id])]
                     })
-
-                    # Send activation email to the child
-                    # if child_user:
-                    #     try:
-                    #         template_id = request.env.ref('your_module_name.activation_email_template').id
-                    #         request.env['mail.template'].browse(template_id).send_mail(child_user.partner_id.id,force_send=True)
-                    #     except MissingError:
-                    #         _logger.error(f"Error sending activation email to child: Admission record {child_partner.admission_register_id} not found or inaccessible.")
-                    #         # Optionally, display an error message or take other actions.
 
             # 7. Fetch the number of children
             num_children = len(new_admission.child_ids)
