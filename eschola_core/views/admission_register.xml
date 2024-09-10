@@ -15,7 +15,7 @@
                            decoration-info="status=='payment'"
                            decoration-warning="status=='cancel'"
                            decoration-muted="status=='draft'"/>
-<!--                    <field name="child_ids" widget="many2many_tags"/>-->
+                    <field name="child_ids" widget="many2many_tags"/>
                 </tree>
             </field>
         </record>
@@ -36,9 +36,22 @@
                         <button string="Admission Confirm" class="oe_highlight" invisible="status != 'paid'"
                                 type="object"
                                 name="admission_confirm"/>
-                        <field name="status" widget="statusbar" nolabel="1" options="{'clickable': '1', 'fold_field': 'fold'}"/>
+                        <field name="status" widget="statusbar" nolabel="1"
+                               options="{'clickable': '1', 'fold_field': 'fold'}"/>
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_sale_order"
+                                    type="object" string="Sale Order"
+                                    icon="fa-dollar" class="oe_stat_button">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="order_id" widget="statinfo" nolabel="1" class="mr4"/>
+                                    </span>
+                                    <span class="o_stat_text">Sale Order</span>
+                                </div>
+                            </button>
+                        </div>
                         <group>
                             <group>
                                 <field name="name" placeholder="Name"/>

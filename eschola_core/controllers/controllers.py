@@ -56,7 +56,7 @@ class NewRegister(http.Controller):
                 'email': email,
                 'mobile': mobile,
                 'country': country,
-                'status': 'activation',
+                'status': 'payment',
                 'child_ids': child_data  # Link the child data to the admission record
             })
 
