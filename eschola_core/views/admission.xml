@@ -6,7 +6,7 @@
             <field name="model">admission</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <tree string="Admission">
+                <tree string="Admission" default_order="id desc">
                     <field name="name"/>
                     <field name="email"/>
                     <field name="grade"/>
@@ -24,13 +24,25 @@
             <field name="arch" type="xml">
                 <form string="Admission">
                     <header>
-                        <button string="Confirm" class="oe_highlight"
-                                invisible="status != 'draft'"
-                                type="object"
-                                name="confirm_admission"/>
+<!--                        <button string="Confirm" class="oe_highlight"-->
+<!--                                invisible="status != 'draft'"-->
+<!--                                type="object"-->
+<!--                                name="confirm_admission"/>-->
                         <field name="status" widget="statusbar" nolabel="1" readonly="1"/>
                     </header>
                     <sheet>
+<!--                        <div class="oe_button_box" name="button_box">-->
+<!--                            <button name="action_view_certificate"-->
+<!--                                    type="object" string="Placement Test"-->
+<!--                                    icon="fa-file-text-o" class="oe_stat_button">-->
+<!--                                <div class="o_field_widget o_stat_info">-->
+<!--                                    <span class="o_stat_value">-->
+<!--                                        <field name="placement_test_id" widget="statinfo" nolabel="1" class="mr4"/>-->
+<!--                                    </span>-->
+<!--                                    <span class="o_stat_text">Placement Test</span>-->
+<!--                                </div>-->
+<!--                            </button>-->
+<!--                        </div>-->
                         <div class="oe_title">
                             <h1>
                                 <field name="name" placeholder="Student Name"/>

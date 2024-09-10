@@ -12,12 +12,37 @@ class AdmissionRegister(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Name', translate=True)
-    # secondary_guardian_name = fields.Char(string="Secondary Guardian Name")
-
+    secondary_guardian_name = fields.Char(string="Secondary Guardian Name")
+    salutation = fields.Selection([
+        ('mr', 'Mr.'),
+        ('ms', 'Ms.'),
+        ('mrs', 'Mrs'),
+    ], string='Title')
+    relation_to_student = fields.Selection([
+        ('father', 'Father'),
+        ('mother', 'Mother'),
+        ('guardian', 'Guardian'),
+    ], string='Relation to Student')
     primary_guardian_name = fields.Char(string='Primary Guardian Name')
     email = fields.Char(string='Email')
     mobile = fields.Char(unaccent=False)
     country = fields.Many2one('res.country', string='Country of Residence')
+
+    # 2nd guardian
+    salutation2 = fields.Selection([
+        ('mr', 'Mr.'),
+        ('ms', 'Ms.'),
+        ('mrs', 'Mrs'),
+    ], string='Title')
+    relation_to_student2 = fields.Selection([
+        ('father', 'Father'),
+        ('mother', 'Mother'),
+        ('guardian', 'Guardian'),
+    ], string='Relation to Student')
+    email2 = fields.Char(string='Email')
+    mobile2 = fields.Char(unaccent=False)
+    country2 = fields.Many2one('res.country', string='Country of Residence')
+
     status = fields.Selection([
         ('draft', 'Draft'),
         # ('activation', 'Activation'),

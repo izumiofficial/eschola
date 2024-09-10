@@ -15,9 +15,18 @@
                       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
                 <form action="/submit_form" method="POST">
                     <div class="register_template_form" id="register_template_form">
+                        <h4>Primary Guardian</h4>
                         <div class="form-row row">
                             <div class="col-md-3 mb-3">
-                                <label for="guardian_name">Guardian Name</label>
+                                <label for="guardian_name">Title</label>
+                                <select class="form-control" id="salutation" name="salutation">
+                                    <option value="mr">Mr.</option>
+                                    <option value="ms">Ms.</option>
+                                    <option value="mrs">Mrs.</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="guardian_name">Name</label>
                                 <input type="text" class="form-control" id="guardian_name" name="guardian_name"
                                        required="True"/>
                             </div>
@@ -32,7 +41,7 @@
                                        required="True"/>
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label for="country" class="">Country</label>
+                                <label for="country" class="">Country of Residence</label>
                                 <select class="form-control" id="country" name="country" required="True">
                                     <option>Select Country</option>
                                     <t t-foreach="countries or []" t-as="country">
@@ -40,6 +49,61 @@
                                             <t t-esc="country.name"/>
                                         </option>
                                     </t>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="guardian_name">Relation to Student</label>
+                                <select class="form-control" id="relation_to_student" name="relation_to_student">
+                                    <option value="father">Father</option>
+                                    <option value="mother">Mother</option>
+                                    <option value="guardian">Guardian</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr></hr>
+                        <h4>Secondary Guardian</h4>
+                        <div class="form-row row">
+                            <div class="col-md-3 mb-3">
+                                <label for="guardian_name">Title</label>
+                                <select class="form-control" id="salutation2" name="salutation2">
+                                    <option value="mr">Mr.</option>
+                                    <option value="ms">Ms.</option>
+                                    <option value="mrs">Mrs.</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="guardian_name">Name</label>
+                                <input type="text" class="form-control" id="secondary_guardian_name"
+                                       name="secondary_guardian_name"
+                                       required="True"/>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="email" class="">Email</label>
+                                <input type="email" class="form-control" id="email2" name="email2"
+                                       required="True"/>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="mobile" class="">Mobile</label>
+                                <input type="text" class="form-control" id="mobile2" name="mobile2"
+                                       required="True"/>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="country" class="">Country of Residence</label>
+                                <select class="form-control" id="country2" name="country2" required="True">
+                                    <option>Select Country</option>
+                                    <t t-foreach="countries or []" t-as="country">
+                                        <option t-att-value="country.id">
+                                            <t t-esc="country.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="guardian_name">Relation to Student</label>
+                                <select class="form-control" id="relation_to_student2" name="relation_to_student2">
+                                    <option value="father">Father</option>
+                                    <option value="mother">Mother</option>
+                                    <option value="guardian">Guardian</option>
                                 </select>
                             </div>
                         </div>
@@ -118,7 +182,8 @@
                                 <textarea class="form-control d-none" id="student_line_ids" name="student_line_ids"
                                           rows="3"></textarea>
                                 <div class="d-flex justify-content-between">
-                                    <button type="submit" class="mt-2 mb-5 btn btn-secondary create_record">Submit</button>
+                                    <button type="submit" class="mt-2 mb-5 btn btn-secondary create_record">Submit
+                                    </button>
                                     <button type="button" class="mt-2 mb-5 btn btn-primary add_line">
                                         <i class="bi bi-plus"></i>
                                     </button>
