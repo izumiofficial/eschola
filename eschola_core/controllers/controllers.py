@@ -49,9 +49,13 @@ class NewRegister(http.Controller):
             for child in data:
                 child_data.append((0, 0, {
                     'name': child.get('name'),
-                    'email': child.get('email'),
                     'gender': child.get('gender'),
+                    'email': child.get('email'),
+                    'mobile': child.get('mobile'),
                     'grade': child.get('grade'),
+                    'religion': child.get('religion'),
+                    'country': child.get('country'),
+                    'nationality': child.get('nationality'),
 
                 }))
 

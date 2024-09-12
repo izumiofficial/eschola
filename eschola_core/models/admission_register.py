@@ -147,6 +147,18 @@ class AdmissionRegister(models.Model):
                         # ... Add other child-related fields as needed
                     })
 
+                    # Create a new record in the 'student.py' model
+                    self.env['student'].create({  # Assuming 'admission.application' is the model in admission.py
+                        'name': name,
+                        'email': email,
+                        'gender': gender,
+                        'grade': grade,
+                        'status': 'draft',
+                        'country': self.country.id,  # Get country field from the guardian
+                        'primary_guardian_id': self.primary_guardian_id.id,
+                        # ... Add other child-related fields as needed
+                    })
+
                 # Update the 'admission_id' field for each child
                 self.child_ids.write({'admission_id': self.id})
 

@@ -9,6 +9,7 @@
     <template id="register_form_template" name="Register Form">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
         <t t-call="website.layout">
+            <div class="oe_structure"/>
             <div class="container oe_structure oe_empty" id="wrap">
                 <h1>Admission Form</h1>
                 <link rel="stylesheet"
@@ -116,67 +117,269 @@
                                     <div class="collapse">
                                         <tbody>
                                             <tr class="student_record">
-                                                <td class="col-md-3">
-                                                    <label for="validationCustom01">Name</label>
-                                                    <input type="text" class="form-control" id="name" name="name"/>
+                                                <td class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <input type="checkbox" id="is_international"
+                                                               name="is_international"
+                                                               class="col-sm-2 col-form-label"/>
+                                                        <div class="col-sm-10">
+                                                            <label class="form-check-label" for="exampleCheck1">
+                                                                Currently studying international Curriculum
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="name" class="col-sm-2 col-form-label">Name
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="name"
+                                                                   name="name"/>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="email" class="col-sm-2 col-form-label">Email
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="email" class="form-control" id="email"
+                                                                   name="email"/>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="mobile" class="col-sm-2 col-form-label">Mobile
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="mobile"
+                                                                   name="mobile"/>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="gender" class="col-sm-2 col-form-label">Gender
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="gender" name="gender">
+                                                                <option>Select Gender...</option>
+                                                                <option value="m">Male</option>
+                                                                <option value="f">Female</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
                                                 </td>
-                                                <td class="col-md-3">
-                                                    <label for="validationCustomUsername">Email</label>
-                                                    <input type="text" class="form-control" id="email" name="email"/>
-                                                </td>
-                                                <td class="col-md-3">
-                                                    <label for="validationCustom02">Gender</label>
-                                                    <select class="form-control" id="gender" name="gender">
-                                                        <option>Select Gender...</option>
-                                                        <option value="m">Male</option>
-                                                        <option value="f">Female</option>
-                                                    </select>
-                                                </td>
-                                                <td class="col-md-3">
-                                                    <label for="validationCustom02">Year</label>
-                                                    <select class="form-control" id="grade" name="grade">
-                                                        <option value="grade_7">Grade 7</option>
-                                                        <option value="grade_8">Grade 8</option>
-                                                        <option value="grade_9">Grade 9</option>
-                                                        <option value="grade_10">Grade 10</option>
-                                                        <option value="al_as">AL/AS</option>
-                                                    </select>
+                                                <td class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="grade" class="col-sm-2 col-form-label">Year
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="grade" name="grade">
+                                                                <option value="grade_7">Grade 7</option>
+                                                                <option value="grade_8">Grade 8</option>
+                                                                <option value="grade_9">Grade 9</option>
+                                                                <option value="grade_10">Grade 10</option>
+                                                                <option value="al_as">AL/AS</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="religion" class="col-sm-2 col-form-label">Religion
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="religion" name="religion">
+                                                                <option>Select Religion...</option>
+                                                                <option value="muslim">Muslim</option>
+                                                                <option value="christian">Christian</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="country" class="col-sm-2 col-form-label">Country of Residency
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="country" name="country"
+                                                                    required="True">
+                                                                <option>Select Country</option>
+                                                                <t t-foreach="countries or []" t-as="country">
+                                                                    <option t-att-value="country.id">
+                                                                        <t t-esc="country.name"/>
+                                                                    </option>
+                                                                </t>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="nationality" class="col-sm-2 col-form-label">Nationality
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="nationality" name="nationality"
+                                                                    required="True">
+                                                                <option>Select Country</option>
+                                                                <t t-foreach="countries or []" t-as="country">
+                                                                    <option t-att-value="country.id">
+                                                                        <t t-esc="country.name"/>
+                                                                    </option>
+                                                                </t>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
                                                 </td>
                                             </tr>
                                             <!--start of clone row-->
                                             <tr class="add_extra d-none" id="cloned_row">
-                                                <td class="col-md-3">
-                                                    <label for="validationCustom01">Name</label>
-                                                    <input type="text" class="form-control" id="name" name="name"/>
-                                                </td>
-                                                <td class="col-md-3">
-                                                    <label for="validationCustomUsername">Email</label>
-                                                    <input type="text" class="form-control" id="email" name="email"/>
-                                                </td>
-                                                <td class="col-md-3">
-                                                    <label for="validationCustom02">Gender</label>
-                                                    <select class="form-control" id="gender" name="gender">
-                                                        <option>Select Gender...</option>
-                                                        <option value="m">Male</option>
-                                                        <option value="f">Female</option>
-                                                    </select>
-                                                </td>
-                                                <td class="col-md-3">
-                                                    <label for="validationCustom02">Year</label>
-                                                    <select class="form-control" id="grade" name="grade">
-                                                        <option value="grade_7">Grade 7</option>
-                                                        <option value="grade_8">Grade 8</option>
-                                                        <option value="grade_9">Grade 9</option>
-                                                        <option value="grade_10">Grade 10</option>
-                                                        <option value="al_as">AL/AS</option>
-                                                    </select>
-                                                </td>
-                                                <td class="align-self-center">
-                                                    <label>Remove</label>
-                                                    <button type="button" class="btn btn-danger remove_line">
+                                                <td class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <input type="checkbox" id="is_international"
+                                                               name="is_international"
+                                                               class="col-sm-2 col-form-label"/>
+                                                        <div class="col-sm-10">
+                                                            <label class="form-check-label" for="exampleCheck1">
+                                                                Currently studying international Curriculum
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="name" class="col-sm-2 col-form-label">Name
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="name"
+                                                                   name="name"/>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="email" class="col-sm-2 col-form-label">Email
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="email" class="form-control" id="email"
+                                                                   name="email"/>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="mobile" class="col-sm-2 col-form-label">Mobile
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="mobile"
+                                                                   name="mobile"/>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="gender" class="col-sm-2 col-form-label">Gender
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="gender" name="gender">
+                                                                <option>Select Gender...</option>
+                                                                <option value="m">Male</option>
+                                                                <option value="f">Female</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <button type="button" class="btn btn-danger remove_line float-right">
                                                         <i class="bi bi-trash"></i>
                                                     </button>
+                                                    <br></br>
                                                 </td>
+                                                <td class="col-md-6">
+                                                    <div class="form-group row">
+                                                        <label for="grade" class="col-sm-2 col-form-label">Year
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="grade" name="grade">
+                                                                <option value="grade_7">Grade 7</option>
+                                                                <option value="grade_8">Grade 8</option>
+                                                                <option value="grade_9">Grade 9</option>
+                                                                <option value="grade_10">Grade 10</option>
+                                                                <option value="al_as">AL/AS</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="religion" class="col-sm-2 col-form-label">Religion
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="religion" name="religion">
+                                                                <option>Select Religion...</option>
+                                                                <option value="muslim">Muslim</option>
+                                                                <option value="christian">Christian</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="country" class="col-sm-2 col-form-label">Country of Residency
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="country" name="country"
+                                                                    required="True">
+                                                                <option>Select Country</option>
+                                                                <t t-foreach="countries or []" t-as="country">
+                                                                    <option t-att-value="country.id">
+                                                                        <t t-esc="country.name"/>
+                                                                    </option>
+                                                                </t>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                    <div class="form-group row">
+                                                        <label for="nationality" class="col-sm-2 col-form-label">Nationality
+                                                        </label>
+                                                        <div class="col-sm-10">
+                                                            <select class="form-control" id="nationality" name="nationality"
+                                                                    required="True">
+                                                                <option>Select Country</option>
+                                                                <t t-foreach="countries or []" t-as="country">
+                                                                    <option t-att-value="country.id">
+                                                                        <t t-esc="country.name"/>
+                                                                    </option>
+                                                                </t>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br></br>
+                                                </td>
+<!--                                                <td class="col-md-3">-->
+<!--                                                    <label for="validationCustom01">Name</label>-->
+<!--                                                    <input type="text" class="form-control" id="name" name="name"/>-->
+<!--                                                </td>-->
+<!--                                                <td class="col-md-3">-->
+<!--                                                    <label for="validationCustomUsername">Email</label>-->
+<!--                                                    <input type="text" class="form-control" id="email" name="email"/>-->
+<!--                                                </td>-->
+<!--                                                <td class="col-md-3">-->
+<!--                                                    <label for="validationCustom02">Gender</label>-->
+<!--                                                    <select class="form-control" id="gender" name="gender">-->
+<!--                                                        <option>Select Gender...</option>-->
+<!--                                                        <option value="m">Male</option>-->
+<!--                                                        <option value="f">Female</option>-->
+<!--                                                    </select>-->
+<!--                                                </td>-->
+<!--                                                <td class="col-md-3">-->
+<!--                                                    <label for="validationCustom02">Year</label>-->
+<!--                                                    <select class="form-control" id="grade" name="grade">-->
+<!--                                                        <option value="grade_7">Grade 7</option>-->
+<!--                                                        <option value="grade_8">Grade 8</option>-->
+<!--                                                        <option value="grade_9">Grade 9</option>-->
+<!--                                                        <option value="grade_10">Grade 10</option>-->
+<!--                                                        <option value="al_as">AL/AS</option>-->
+<!--                                                    </select>-->
+<!--                                                </td>-->
+<!--                                                <td class="align-self-center">-->
+<!--                                                    <label>Remove</label>-->
+<!--                                                    <button type="button" class="btn btn-danger remove_line">-->
+<!--                                                        <i class="bi bi-trash"></i>-->
+<!--                                                    </button>-->
+<!--                                                </td>-->
                                             </tr>
                                         </tbody>
                                     </div>
@@ -195,6 +398,7 @@
                     </div>
                 </form>
             </div>
+            <div class="oe_structure"/>
         </t>
     </template>
 </odoo>
