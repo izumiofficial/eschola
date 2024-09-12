@@ -37,12 +37,21 @@ publicWidget.registry.generic_form_data = publicWidget.Widget.extend({
             let name = $(this).find('input[name="name"]').val();
             let gender = $(this).find('select[name="gender"]').val();
             let email = $(this).find('input[name="email"]').val();
+            let mobile = $(this).find('input[name="mobile"]').val();
             let grade = $(this).find('select[name="grade"]').val();
+            let religion = $(this).find('select[name="religion"]').val();
+            let country = $(this).find('select[name="country"]').val();
+            let nationality = $(this).find('select[name="nationality"]').val();
+
             student_data.push({
                 'name' : name,
                 'gender' : gender,
                 'email' : email,
+                'mobile' : mobile,
                 'grade' : grade,
+                'religion' : religion,
+                'country' : country,
+                'nationality' : nationality,
             });
         });
         $('textarea[name="student_line_ids"]').val(JSON.stringify(student_data));
