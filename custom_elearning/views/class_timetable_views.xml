@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_class_timetable_list" model="ir.ui.view">
+            <field name="name">elearning.class_timetable.list</field>
+            <field name="model">elearning.class_timetable</field>
+            <field name="arch" type="xml">
+                <tree string="Class Timetable">
+                    <field name="name"/>
+                    <field name="date_field"/>
+                    <field name="day_of_weeks"/>
+<!--                    <field name="time_start" widget="float_time"/>-->
+<!--                    <field name="time_end" widget="float_time"/>-->
+                    <field name="duration"/>
+                    <field name="course_id"/>
+                    <field name="class_mode"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_class_timetable_form" model="ir.ui.view">
+            <field name="name">elearning.class_timetable.form</field>
+            <field name="model">elearning.class_timetable</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="generate_qr_code" type="object" string="Generate QR" invisible="not id"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_attendance" type="object" class="oe_stat_button" icon="fa-graduation-cap">
+                                <div class="o_stat_info">
+                                    <field name="record_count" class="o_stat_value"/>
+                                    <span class="o_stat_text">Attendance</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" options="{'line_breaks': False}" widget="text" default_focus="1"/></h1>
+                        </div>
+                        <group>
+                            <group string="Date and Time">
+                                <field name="date_field" widget="daterange" options="{&quot;end_date_field&quot;:&quot;date_end&quot;}"/>
+                                <field name="day_of_weeks"/>
+<!--                                <field name="time_start" widget="float_time"/>-->
+<!--                                <field name="time_end" widget="float_time"/>-->
+                                <field name="duration"/>
+                            </group>
+                            <group string="Details">
+                                <field name="course_id"/>
+                                <field name="class_mode"/>
+<!--                                <field name="instructor_related" widget="many2many_tags"/>-->
+                            </group>
+                        </group>
+                        <group>
+                            <group srting="QR Code">
+                                <field name="qr_code" widget="image" options='{"preview_image": false}'/>
+                            </group>
+                            <group>
+
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_class_timetable_kanban" model="ir.ui.view">
+            <field name="name">elearning.class_timetable.kanban</field>
+            <field name="model">elearning.class_timetable</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <field name="name"/>
+<!--                            <field name="date_field" string="Start Date"/>-->
+<!--                            <field name="date_end" string="End Date"/>-->
+<!--                            <field name="day_of_weeks"/>-->
+<!--                            <field name="duration"/>-->
+                        </div>
+                    </t>
+                </kanban>
+            </field>
+        </record>
+<!--        <record id="view_class_timetable_filters" model="ir.ui.view">-->
+<!--            <field name="name">elearning.class_timetable.filters</field>-->
+<!--            <field name="model">elearning.class_timetable</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//search" position="inside">-->
+<!--                    <group expand="0" string="Group By">-->
+<!--                        <filter string="Tags" name="group_by_tags" context="{'group_by':'day_of_weeks'}"/>-->
+<!--                    </group>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+        <record id="in_class_action" model="ir.actions.act_window">
+            <field name="name">Classes</field>
+            <field name="res_model">elearning.class_timetable</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="context">{'search_default_group_by_tags':1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Start Adding Class</p>
+            </field>
+        </record>
+        <menuitem
+                id="in_class"
+                name="Classes"
+                parent="website_slides.website_slides_menu_courses"
+                action="in_class_action"
+                sequence="1"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="attendance_relation_view_tree" model="ir.ui.view">
+            <field name="name">attendance.relation.view.tree</field>
+            <field name="model">class.attendance</field>
+            <field name="arch" type="xml">
+                <tree string="Attandees" editable="bottom">
+                    <field name="class_id" string="Class"/>
+                    <field name="partner_id" string="Attendee"/>
+                    <field name="partner_email" string="Email"/>
+                    <field name="create_date" string="Added On"/>
+                    <field name="date" string="Check-in Time"/>
+                    <field name="attendance_status" string="Attendance Status" widget="badge"
+                           decoration-success="attendance_status=='attend'"
+                           decoration-warning="attendance_status=='absent'"
+                           decoration-muted="attendance_status=='joined'"/>
+                    <button name="action_open_composer" type="object" string="Send Invitation" icon="fa-envelope"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

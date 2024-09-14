@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="o_wss_calendar_icon">
+            <t t-set="icon_url" t-value="icon_url if icon_url else '/custom_elearning/static/src/img/calendar.svg'"/>
+            <t t-set="icon_classes" t-value="icon_classes if icon_classes else 'o_wss_calendar_icon'"/>
+            <img t-att-class="icon_classes" t-att-src="icon_url" alt="Calendar icon"/>
+        </template>
+        <template id="portal_home_inherit" inherit_id="portal.portal_my_home">
+<!--            <xpath expr="//div/div[2]/p" position="attributes">-->
+<!--                <attribute name="class">o_portal_no_doc_message d-none invisible</attribute>-->
+<!--            </xpath>-->
+            <xpath expr="//div/div[2]/div[6]" position="replace"/>
+            <xpath expr="//div/div[2]/div[5]" position="after">
+                <div class="o_portal_category row g-2 mt-3" id="portal_common_category">
+                    <t t-call="portal.portal_docs_entry">
+                        <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                        <t t-set="title">Connection &amp; Security</t>
+                        <t t-set="text">Configure your connection parameters</t>
+                        <t t-set="url" t-value="'/my/security'"/>
+                        <t t-set="config_card" t-value="True"/>
+                    </t>
+                </div>
+            </xpath>
+        </template>
+        <template id="side_content_inherit" inherit_id="portal.side_content">
+            <xpath expr="//div[2]/a" position="attributes">
+                <attribute name="class">btn btn-link p-0 mt-3 invisible</attribute>
+            </xpath>
+        </template>
+        <template id="portal_deactivate_inherit" inherit_id="portal.portal_my_security">
+            <xpath expr="//section[@name='portal_deactivate_account']" position="replace"/>
+        </template>
+        <template id="login_as_inherit" inherit_id="web.login">
+            <xpath expr="//form/div[4]/div" position="attributes">
+                <attribute name="class">o_login_auth invisible</attribute>
+            </xpath>
+        </template>
+        <!--    remove About this forum    -->
+        <template id="forum_inherit_remove" inherit_id="website_forum.user_sidebar">
+            <xpath expr="//div[2]" position="replace"/>
+        </template>
+
+        <!--        -->
+<!--        <templates id="forum_thanks_message_inherit" inherit_id="website_forum.template">-->
+<!--            <xpath expr="//t[3]" position="inside">-->
+<!--                <p>Thank you for your post!</p>-->
+<!--                <p>We will respond to you shortly.</p>-->
+<!--            </xpath>-->
+<!--        </templates>-->
+    </data>
+</odoo>
