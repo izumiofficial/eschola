@@ -6,13 +6,15 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='vat']" position="after">
-<!--                <field name="gender" invisible="is_company"/>-->
+                <field name="gender" invisible="is_company"/>
                 <field name="std_created" invisible="1"/>
                 <field name="gdn_created" invisible="1"/>
             </xpath>
-            <xpath expr="//form/header/" position="inside">
-                <button string="Create Student" class="oe_highlight" type="object" name="action_create_student" invisible="std_created"/>
-                <button string="Create Student" class="oe_highlight" type="object" name="action_create_guardian" invisible="gdn_created"/>
+            <xpath expr="//form/sheet" position="before">
+                <header>
+                    <button string="Create Student" class="oe_highlight" type="object" name="action_create_student" invisible="std_created"/>
+                    <button string="Create Guardian" class="oe_highlight" type="object" name="action_create_guardian" invisible="gdn_created"/>
+                </header>
             </xpath>
         </field>
     </record>
