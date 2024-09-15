@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="partner_extra_fields" model="ir.ui.view">
+        <field name="name">partner_extra_fields</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="gender" invisible="is_company"/>
+                <field name="std_created" invisible="1"/>
+                <field name="gdn_created" invisible="1"/>
+            </xpath>
+            <xpath expr="//form/header/" position="inside">
+                <button string="Create Student" class="oe_highlight" type="object" name="action_create_student" invisible="std_created"/>
+                <button string="Create Student" class="oe_highlight" type="object" name="action_create_guardian" invisible="gdn_created"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
