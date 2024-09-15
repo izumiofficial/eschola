@@ -6,10 +6,10 @@ class ResPartner(models.Model):
     admission_register_id = fields.Many2one('admission.register', string="Admission Register")
     # is_activated = fields.Boolean(string='Is Activated', default=False)
 
-    gender = fields.Selection([
-        ('male', 'Male'),
-        ('female', 'Female'),
-    ], string='Gender')
+    # gender = fields.Selection([
+    #     ('male', 'Male'),
+    #     ('female', 'Female'),
+    # ], string='Gender')
 
     std_created = fields.Boolean(string='Student Created', default=False)
     gdn_created = fields.Boolean(string='Guardian Created', default=False)
@@ -20,7 +20,7 @@ class ResPartner(models.Model):
                 'name': record.name,
                 'email': record.email,
                 'mobile': record.mobile,
-                'gender': record.gender,
+                # 'gender': record.gender,
                 'country': record.country.id,
             })
 
