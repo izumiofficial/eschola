@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="portal_user_detail" inherit_id="portal.portal_my_details_fields">
+        <xpath expr="//div[4]" position="after">
+            <div t-attf-class="mb-3 col-xl-6">
+                <label class="col-form-label" for="unique_id">Unique ID</label>
+                <input type="text" name="unique_id" t-attf-class="form-control" t-att-value="partner.unique_id" />
+            </div>
+        </xpath>
+    </template>
+</odoo>

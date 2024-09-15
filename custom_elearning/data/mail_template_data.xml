@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="mail_template_slide_channel_invite_instructor" model="mail.template">
+        <field name="name">Elearning: Invite Instructor to Course</field>
+        <field name="model_id" ref="website_slides.model_slide_channel_partner"/>
+        <field name="subject">You have been invited to join {{ object.channel_id.name }} as an instructor</field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="use_default_to" eval="True"/>
+        <field name="description">Sent to instructor when they are added to a course</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Hello
+                    <br/>
+                    <br/>
+                    You have been assigned to a new course as instructor: <t t-out="object.channel_id.name or ''">Basics of
+                    Gardening</t>.
+                </p>
+            </div>
+        </field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+    <record id="mail_template_slide_channel_invite_attendee_class" model="mail.template">
+        <field name="name">Elearning: Invite Student to Class</field>
+        <field name="model_id" ref="website_slides.model_slide_channel_partner"/>
+        <field name="subject">You have been invited to join a class as attendee</field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="use_default_to" eval="True"/>
+        <field name="description">Sent to class invitation to attendee.</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Hello
+                    <br/>
+                    <br/>
+                    You have been invited to join a class
+                </p>
+            </div>
+        </field>
+<!--        <field name="lang">{{ object.partner_id.lang }}</field>-->
+        <field name="auto_delete" eval="True"/>
+    </record>
+</odoo>

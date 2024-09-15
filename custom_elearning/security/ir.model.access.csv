@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+custom_elearning.access_elearning_class_timetable,access_elearning_class_timetable,custom_elearning.model_elearning_class_timetable,base.group_user,1,1,1,1
+custom_elearning.access_class_attendance,access_class_attendance,custom_elearning.model_class_attendance,base.group_user,1,1,1,1
+custom_elearning.portal_access_elearning_class_timetable,access_elearning_class_timetable,custom_elearning.model_elearning_class_timetable,base.group_portal,1,1,0,0
+custom_elearning.portal_access_class_attendance,access_class_attendance,custom_elearning.model_class_attendance,base.group_portal,1,1,0,0

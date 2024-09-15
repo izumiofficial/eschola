@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_class_list_izlan" model="website.menu">
+        <field name="name">Class List</field>
+        <field name="url">/view_class_list_izlan</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">100</field>
+    </record>
+    <template id="class_portal_list">
+        <!--        <xpath expr="//a[hasclass('o_wslides_home_all_slides')]" position="after">-->
+        <!--            <a class="nav-link nav-link d-flex" href="/slides/classes">-->
+        <!--                &lt;!&ndash;                <t t-call="custom_elearning.o_wss_calendar_icon"/>&ndash;&gt;-->
+        <!--                <span class="ms-1">Check-In</span>-->
+        <!--            </a>-->
+        <!--        </xpath>-->
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Class List</t>
+            </t>
+            <t t-call="portal.portal_table">
+                <thead>
+                    <th>Class Name</th>
+                </thead>
+                <tbody>
+                    <t t-foreach="class_list" t-as="classes">
+                        <tr>
+                            <td>
+                                <a t-attf-href="/classes/#{classes.id}">
+                                    <t t-out="classes.name"/>
+                                </a>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+    <template id="attendance_check_in_button">
+        <t t-call="portal.portal_layout">
+            <t t-if="page_name == 'attendance_check_in_button'">
+                <section>
+                    <div class="d-flex justify-content-center align-items-center vh-50">
+                        <form method="post" t-attf-action="/classes/joined/#{class_id.id}">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div>
+                                <button class="btn btn-primary btn-lg">
+                                    Check-In
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </t>
+        </t>
+    </template>
+    <record id="attendance_attend" model="website.page">
+        <field name="name">attendance_attend</field>
+        <field name="type">qweb</field>
+        <field name="url">/attendance_attend</field>
+        <field name="website_published">True</field>
+        <field name="key">custom_elearning.attendance_attend</field>
+        <field name="arch" type="xml">
+            <t name="attendance_attend_confirm" t-name="custom_elearning.attendance_attend">
+                <t t-call="website.layout">
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <h1>Check-IN</h1>
+                        <div class="row">
+                            <div class="alert alert-info" role="status">
+                                You've successfully checked in!
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+    <record id="attendance_not_attend_1" model="website.page">
+        <field name="name">attendance_not_attend_1</field>
+        <field name="type">qweb</field>
+        <field name="url">/attendance_not_attend</field>
+        <field name="website_published">True</field>
+        <field name="key">custom_elearning.attendance_not_attend_1</field>
+        <field name="arch" type="xml">
+            <t name="attendance_not_attend_confirm_1" t-name="custom_elearning.attendance_not_attend_1">
+                <t t-call="website.layout">
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <h1>Something is wrong</h1>
+                        <div class="row">
+                            <div class="alert alert-danger" role="status">
+                                You are not in the class list.
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+    <record id="attendance_not_attend_2" model="website.page">
+        <field name="name">attendance_not_attend_2</field>
+        <field name="type">qweb</field>
+        <field name="url">/attendance_not_attend</field>
+        <field name="website_published">True</field>
+        <field name="key">custom_elearning.attendance_not_attend_2</field>
+        <field name="arch" type="xml">
+            <t name="attendance_not_attend_confirm_2" t-name="custom_elearning.attendance_not_attend_2">
+                <t t-call="website.layout">
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <h1>Warning</h1>
+                        <div class="row">
+                            <div class="alert alert-info" role="status">
+                                You have already checked in to this class.
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+</odoo>
