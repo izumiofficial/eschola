@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='vat']" position="after">
-                <field name="gender" invisible="is_company"/>
+<!--                <field name="gender" invisible="is_company"/>-->
                 <field name="std_created" invisible="1"/>
                 <field name="gdn_created" invisible="1"/>
             </xpath>
