@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_slide_slide_form_inherit" model="ir.ui.view">
+        <field name="name">slide.slide.form.inherit</field>
+        <field name="model">slide.slide</field>
+        <field name="inherit_id" ref="website_slides.view_slide_slide_form"/>
+        <field name="arch" type="xml">
+            <field name="document_binary_content" position="before">
+                <field name="external_default_type" invisible="slide_category not in ['local_external']"/>
+                <field name="slide_type" invisible="1"/>
+                <field name="external_url"
+                        invisible="slide_type not in ['externalvideo', 'clapprvideo']"
+                        required="slide_type in ['externalvideo', 'clapprvideo']"/>
+                <field name="video_binary_content" string="Uploaded Video" 
+                        options="{'accepted_file_extensions': '.ogg', 'accepted_file_extensions': '.mp4'}"
+                        invisible="external_default_type not in ['localvideo']"
+                        filename="localvideo_filename"/>
+                <field name="localvideo_filename" invisible="1"/>
+                <field name="localvideo_mimetype" invisible="1"/>
+            </field>
+            <field name="date_published" position="after">
+                <field name="is_published"/>
+            </field>
+        </field>
+    </record>
+</odoo>
