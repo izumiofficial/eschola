@@ -26,6 +26,8 @@
         'security/ir.model.access.csv',
         'views/school_year_views.xml',
         'views/term_views.xml',
+        'views/slide_channel_views.xml',
+        'views/website_slides_templates_course.xml',
     ],
 }
 
