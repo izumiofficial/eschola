@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<odoo><data>
+<template id="slide_content_detailed" inherit_id="website_slides.slide_content_detailed">
+    <xpath expr="//div[hasclass('o_wslides_lesson_content_type')][2]" position="inside">
+        <div t-if="slide.slide_type == 'localvideo'" class="embed-responsive embed-responsive-16by9 embed-responsive-item mb8 ratio ratio-16x9">
+            <t t-esc="slide.embed_code"/>
+        </div>
+        <div t-if="slide.slide_type == 'clapprvideo'" class="embed-responsive embed-responsive-16by9 embed-responsive-item mb8 ratio ratio-16x9">
+            <t t-set="slideID" t-value="'#clappr_' + str(slide.id)"/>
+            <div t-att-id="'clappr_' + str(slide.id)" class="clapprVideo embed-responsive-item"></div>
+            <script type="text/javascript" src="/elearning_external_videos/static/src/js/clappr.min.js"/>
+            <script>
+             var player_<t t-esc="str(slide.id)"/> = new Clappr.Player({
+              source:"<t t-esc="slide.external_url"/>",
+              parentId: "<t t-esc="slideID"/>",
+              width: '100%',
+              playback: {
+                playInline: true, // Required by skippable ads on iOS (not fullscreen)
+              },
+              height: '100%',
+              autoPlay: true,
+              //poster: 'people_640x360_grises.jpg',
+              //gaAccount: 'UA-44332211-1',
+              //gaTrackerName: 'MyPlayerInstance'
+              });
+            </script>
+        </div>
+    </xpath>
+</template>
+<template id="slide_icon">
+    <xpath expr="." position="inside">
+        <i t-if="slide.slide_type == 'clapprvideo'" t-att-class="'fa fa-play-circle %s' % icon_class"></i>
+        <i t-if="slide.slide_type == 'localvideo'" t-att-class="'fa fa-play-circle %s' % icon_class"></i>
+    </xpath>
+</template>
+<template id="slide_fullscreen_sidebar_category" inherit_id="website_slides.slide_fullscreen_sidebar_category">
+    <xpath expr="//li[@t-att-data-completed='slide_completed']" position="attributes">
+        <attribute name="t-att-data-embed-code" position="replace">slide.embed_code if slide.slide_category in ['video', 'document', 'infographic', 'local_external'] else False</attribute>
+    </xpath>
+</template>
+<template id="slide_fullscreen" inherit_id="website_slides.slide_fullscreen">
+</template>
+</data></odoo>
