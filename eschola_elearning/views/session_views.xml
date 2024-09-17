@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="session_view_tree" model="ir.ui.view">
+        <field name="name">session.view.tree</field>
+        <field name="model">session</field>
+        <field name="arch" type="xml">
+            <tree string="Session">
+                <field name="name"/>
+                <field name="course_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="session_view_form" model="ir.ui.view">
+        <field name="name">session.view.form</field>
+        <field name="model">session</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" options="{'line_breaks': False}" widget="text" default_focus="1" required="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Date and Time">
+                            <field name="start_datetime" string="Date" widget="daterange" options="{&quot;end_date_field&quot;:&quot;end_datetime&quot;}"/>
+<!--                            <widget name="calendar_week_days"/>-->
+                        </group>
+                        <group string="Details">
+                            <field name="course_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_session" model="ir.actions.act_window">
+        <field name="name">Sessions</field>
+        <field name="res_model">session</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add the first Session!
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Sessions"
+              id="session_model"
+              parent="website_slides.website_slides_menu_courses"
+              action="action_session"
+              sequence="1"/>
+</odoo>

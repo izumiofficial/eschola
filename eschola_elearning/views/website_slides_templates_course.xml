@@ -6,6 +6,29 @@
                 <th class="border-top-0">SPM</th>
             </xpath>
 
+            <xpath expr="//div[@id='o_wslides_sidebar_collapse']/table/tr[2]" position="after">
+                <tr t-if="channel.teacher_id">
+                    <th class="border-top-0">Teacher</th>
+                    <td class="border-top-0 text-break"><span t-esc="channel.teacher_id.name"/></td>
+                </tr>
+                <tr t-if="channel.term_id">
+                    <th class="border-top-0">Term</th>
+                    <td class="border-top-0 text-break"><span t-esc="channel.term_id.name"/></td>
+                </tr>
+                <tr t-if="channel.school_year_id">
+                    <th class="border-top-0">School Year</th>
+                    <td class="border-top-0 text-break"><span t-esc="channel.school_year_id.name"/></td>
+                </tr>
+                <tr t-if="channel.start_date">
+                    <th class="border-top-0">Start Date</th>
+                    <td class="border-top-0 text-break"><span t-esc="channel.start_date" t-options="{'widget': 'date'}"/></td>
+                </tr>
+                <tr t-if="channel.end_date">
+                    <th class="border-top-0">End Date</th>
+                    <td class="border-top-0 text-break"><span t-esc="channel.end_date" t-options="{'widget': 'date'}"/></td>
+                </tr>
+            </xpath>
+
             <xpath expr="//div[@id='o_wslides_sidebar_collapse']/table/tr[2]" position="replace"/>
         </template>
     </data>
