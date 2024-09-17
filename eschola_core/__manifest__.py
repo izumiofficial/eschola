@@ -13,10 +13,10 @@ This core app contains all custom modules for eschola. it will install several a
     'sequence': -999,
     'application': True,
     'category': 'Website',
-    'version': '1.3.0',
+    'version': '1.4.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail', 'website', 'web', 'sale', 'contacts'],
+    'depends': ['base', 'mail', 'website', 'web', 'sale', 'contacts', 'hr'],
 
     # always loaded
     'data': [
@@ -26,6 +26,7 @@ This core app contains all custom modules for eschola. it will install several a
         'views/admission_register.xml',
         'views/guardian.xml',
         'views/student.xml',
+        'views/teacher.xml',
         'views/res_partner.xml',
         'views/register_form_template.xml',
         'views/activation_email_sent.xml',

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+eschola_elearning.access_school_year,access_school_year,eschola_elearning.model_school_year,base.group_user,1,1,1,1
+eschola_elearning.access_term,access_term,eschola_elearning.model_term,base.group_user,1,1,1,1

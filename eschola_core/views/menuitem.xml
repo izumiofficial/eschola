@@ -12,4 +12,8 @@
               name="Admission"
               sequence="1"
               web_icon="eschola_core,static/src/img/admission.png"/>
+    <menuitem id="teacher_root"
+              name="Teacher"
+              sequence="1"
+              web_icon="eschola_core,static/src/img/admission.png"/>
 </odoo>

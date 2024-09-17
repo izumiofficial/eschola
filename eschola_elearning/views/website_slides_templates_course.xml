@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="course_sidebar_inherit" inherit_id="website_slides.course_sidebar">
+            <xpath expr="//tr[@t-if='channel.user_id']/th" position="replace">
+                <th class="border-top-0">SPM</th>
+            </xpath>
+
+            <xpath expr="//div[@id='o_wslides_sidebar_collapse']/table/tr[2]" position="replace"/>
+        </template>
+    </data>
+</odoo>
