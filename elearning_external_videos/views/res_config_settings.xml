@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_elearning_external_videos_res_config_settings_form_inherit" model="ir.ui.view">
+        <field name="name">elearning_external_videos.res_config_settings.form.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website_slides.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='slides_install_setting']" position="after">
+                <setting class="col-12 col-lg-6 o_setting_box" id="elearning_integration" groups="website_slides.group_website_slides_manager"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
