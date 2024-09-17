@@ -20,7 +20,7 @@ class Student(models.Model):
         ('grade_9', 'Grade 9'),
         ('grade_10', 'Grade 10'),
         ('al_as', 'AL/AS')
-    ], string='Grade', requred=True)
+    ], string='Grade')
     nationality = fields.Many2one('res.country', string='Nationality')
     country = fields.Many2one('res.country', string='Country of Residence')
     religion = fields.Selection([
