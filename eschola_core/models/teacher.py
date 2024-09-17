@@ -7,7 +7,7 @@ class Teacher(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     partner_id = fields.Many2one('res.partner', 'Partner', required=True, ondelete="cascade")
-    name = fields.Char('Name', reqired=True)
+    name = fields.Char('Name', required=True)
     email = fields.Char(string='Email')
     mobile = fields.Char(unaccent=False)
     gender = fields.Selection([
