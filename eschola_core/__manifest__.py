@@ -13,7 +13,7 @@ This core app contains all custom modules for eschola. it will install several a
     'sequence': -999,
     'application': True,
     'category': 'Website',
-    'version': '1.4.0',
+    'version': '1.4.1',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'mail', 'website', 'web', 'sale', 'contacts', 'hr'],
