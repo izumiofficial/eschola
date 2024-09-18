@@ -27,6 +27,12 @@
                                 name="create_contact"/>
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_course"
+                                    type="object" string="Course"
+                                    icon="fa-university" class="oe_stat_button">
+                            </button>
+                        </div>
                         <div class="oe_title">
                             <h1>
                                 <field name="name" placeholder="Student Name"/>

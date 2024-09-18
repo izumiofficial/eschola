@@ -31,6 +31,8 @@ class Student(models.Model):
     primary_guardian_id = fields.Many2one('guardian', string="Primary Guardian")
     secondary_guardian_id = fields.Many2one('guardian', string="Secondary Guardian")
 
+    course_id = fields.Many2one('slide.channel', string='Course')
+
     def create_contact(self):
         # Create a new contact (res.partner)
         partner = self.env['res.partner'].create({
@@ -49,3 +51,17 @@ class Student(models.Model):
 
         # update the admission status to 'confirm'
         self.status = 'confirm'
+
+    def action_view_course(self):
+        # smart button function to view course taken from slide.channel.partner
+        self.ensure_one()  # Ensure only one record is being processed
+
+        action = {
+            'type': 'ir.actions.act_window',
+            'res_model': 'slide.channel',  # Model to open
+            'res_id': self.course_id.id,  # ID of the specific record
+            'view_mode': 'form',  # Open in form view
+            'target': 'current',  # Open in the same window
+        }
+
+        return action
