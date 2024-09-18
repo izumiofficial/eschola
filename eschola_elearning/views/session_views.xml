@@ -90,6 +90,12 @@
                         </group>
                         <group string="Details">
                             <field name="course_id"/>
+                            <field name="user_id"/>
+                            <field name="teacher_id"/>
+                            <field name="term_id"/>
+                            <field name="school_year_id"/>
+                            <field name="course_start_date"/>
+                            <field name="course_end_date"/>
                         </group>
                     </group>
                 </sheet>

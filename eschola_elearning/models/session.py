@@ -61,6 +61,12 @@ class Session(models.Model):
     start_datetime = fields.Datetime(string='Start Date')
     end_datetime = fields.Datetime(string='End Date')
     course_id = fields.Many2one('slide.channel', string='Course')
+    user_id = fields.Many2one('res.users', string='SPM', related='course_id.user_id')
+    teacher_id = fields.Many2one('teacher', string='Teacher', related='course_id.teacher_id')
+    term_id = fields.Many2one('term', string='Term', related='course_id.term_id')
+    school_year_id = fields.Many2one('school.year', string='School Year', related='course_id.school_year_id')
+    course_start_date = fields.Date(string='Start Date', related='course_id.start_date')
+    course_end_date = fields.Date(string='End Date', related='course_id.end_date')
     recurrency = fields.Boolean('Recurrent')
     recurrence_id = fields.Many2one(
         'calendar.recurrence', string="Recurrence Rule")
