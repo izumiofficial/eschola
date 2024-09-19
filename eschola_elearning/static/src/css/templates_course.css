@@ -1,0 +1,19 @@
+.sessions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));  /* Responsive grid with min-width of 200px */
+    gap: 1rem;  /* Spacing between the "bubbles" */
+}
+
+.session-card {
+    background-color: #f5f5f5;  /* Light background for the card */
+    border: 1px solid #ccc;  /* Border around the card */
+    border-radius: 8px;  /* Rounded corners */
+    padding: 10px;  /* Padding inside the card */
+    text-align: center;  /* Center the text */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Light shadow for a 3D effect */
+    transition: transform 0.2s;  /* Animation for hover effect */
+}
+
+.session-card:hover {
+    transform: scale(1.05);  /* Slight zoom effect on hover */
+}

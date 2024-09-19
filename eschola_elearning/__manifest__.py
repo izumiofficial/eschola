@@ -33,5 +33,11 @@
         'wizard/generate_timetable_view.xml',
         'wizard/session_confirmation.xml',
     ],
+
+    'assets': {
+            'web.assets_frontend': [
+                'eschola_elearning/static/src/css/templates_course.css'
+                                    ],
+        }
 }
 
