@@ -2,3 +2,7 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 eschola_elearning.access_school_year,access_school_year,eschola_elearning.model_school_year,base.group_user,1,1,1,1
 eschola_elearning.access_term,access_term,eschola_elearning.model_term,base.group_user,1,1,1,1
 eschola_elearning.access_session,access_session,eschola_elearning.model_session,base.group_user,1,1,1,1
+eschola_elearning.access_op_timing,access_op_timing,eschola_elearning.model_op_timing,base.group_user,1,1,1,1
+eschola_elearning.access_generate_time_table,access_generate_time_table,eschola_elearning.model_generate_time_table,base.group_user,1,1,1,1
+eschola_elearning.access_gen_time_table_line,access_gen_time_table_line,eschola_elearning.model_gen_time_table_line,base.group_user,1,1,1,1
+eschola_elearning.access_session_confirmation,access_session_confirmation,eschola_elearning.model_session_confirmation,base.group_user,1,1,1,1

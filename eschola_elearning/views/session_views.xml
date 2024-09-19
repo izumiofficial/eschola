@@ -5,8 +5,12 @@
         <field name="model">session</field>
         <field name="arch" type="xml">
             <tree string="Session">
-                <field name="name"/>
                 <field name="course_id"/>
+                <field name="teacher_id"/>
+                <field name="start_datetime"/>
+                <field name="end_datetime"/>
+                <field name="state"/>
+                <field name="type" optional="hide"/>
             </tree>
         </field>
     </record>
@@ -16,112 +20,83 @@
         <field name="model">session</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button type="object" name="lecture_confirm"
+                            invisible="state != 'draft'" string="Confirm"
+                            class="oe_highlight"/>
+                    <button type="object" name="lecture_done"
+                            invisible="state != 'confirm'" string="Done"
+                            class="oe_highlight"/>
+                    <button type="object" name="lecture_draft"
+                            invisible="state != 'cancel'" string="Set to Draft"
+                            class="oe_highlight"/>
+                    <button type="object" name="lecture_cancel"
+                            invisible="state in ('draft','confirm')" string="Cancel"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirm"/>
+                </header>
                 <sheet>
+                    <div name="button_box" class="oe_button_box">
+                    </div>
+                    <field name="active" invisible="1"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                            invisible="active == True"/>
                     <div class="oe_title">
                         <label for="name"/>
                         <h1>
-                            <field name="name" options="{'line_breaks': False}" widget="text" default_focus="1" required="1"/>
+                            <field name="name"/>
                         </h1>
                     </div>
                     <group>
                         <group string="Date and Time">
-<!--                            <field name="user_can_edit" invisible="1"/>-->
-                            <field name="start_datetime" string="Date" widget="daterange" options="{&quot;end_date_field&quot;:&quot;end_datetime&quot;}"/>
-                            <field name="start_date" widget="daterange" options="{'end_date_field': 'stop_date'}" invisible="not allday" required="allday"/>
-                            <field name="start" widget="daterange" options="{'end_date_field': 'stop'}" invisible="allday" required="not allday"/>
-                            <field name="stop_date" invisible="1"/>
-                            <field name="stop" invisible="1"/>
-                            <label for="duration" class="fw-bold text-900 opacity-100"/>
-                            <div class="d-flex gap-2">
-                                <div class="d-flex align-items-start" invisible="allday">
-                                    <field name="duration" widget="float_time" string="Duration" class="oe_inline pe-2" readonly="(id and recurrency)"/>
-                                    <span>hours</span>
-                                </div>
-                                <span invisible="allday" style="white-space: pre;">or</span>
-                                <div class="d-flex gap-2">
-                                    <label for="allday" class=""/>
-                                    <field name="allday" class="oe_inline" widget="boolean_toggle" force_save="1" options="{'autosave': False}"/>
-                                </div>
+                            <label for="start_datetime" string="Session Time"/>
+                            <div class="o_row">
+                                <field name="start_datetime" widget="daterange" class="oe_inline"
+                                       options="{'related_end_date': 'end_datetime'}"/>
+                                <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                                <field name="end_datetime" widget="daterange" nolabel="1" class="oe_inline"
+                                       options="{'related_start_date': 'start_datetime'}"/>
                             </div>
-                            <field name="event_tz" invisible="not recurrency"/>
-
-
-                            <field name="recurrence_id" invisible="1"/>
-                            <field name="rrule_type" invisible="1"/>
-                            <field name="recurrency"/>
-                            <field name="rrule_type_ui" class="w-auto" invisible="not recurrency" required="recurrency"/>
-                            <label for="interval" class="fw-bold text-900" invisible="not recurrency or rrule_type_ui != 'custom'"/>
-                            <div class="d-flex gap-1" invisible="not recurrency or rrule_type_ui != 'custom'">
-                                <field name="interval" string="Repeat every" class="oe_inline w-auto"/>
-                                <field name="rrule_type" nolabel="1" class="oe_inline" required="rrule_type_ui == 'custom'"/>
-                            </div>
-                            <span class="fw-bold text-nowrap" invisible="rrule_type_ui not in ['weekly', 'custom'] or (rrule_type_ui == 'custom' and rrule_type != 'weekly')">Repeat on</span>
-                            <div invisible="rrule_type_ui not in ['weekly', 'custom'] or (rrule_type_ui == 'custom' and rrule_type != 'weekly')">
-                                <widget name="calendar_week_days"/>
-                            </div>
-                            <field name="recurrence_id" invisible="1"/>
-
-                            <label string="Day of Month" for="month_by" class="fw-bold text-900" style="width: fit-content;" invisible="rrule_type_ui not in ['monthly', 'custom'] or (rrule_type_ui == 'custom' and rrule_type != 'monthly')"/>
-                            <div class="d-flex gap-2" invisible="rrule_type_ui not in ['monthly', 'custom'] or (rrule_type_ui == 'custom' and rrule_type != 'monthly')">
-                                <field name="month_by" nolabel="1" class="oe_inline w-auto" required="rrule_type_ui == 'monthly' or rrule_type == 'monthly'"/>
-                                <field name="day" nolabel="1" class="oe_inline w-auto"
-                                       required="(rrule_type_ui == 'monthly' or rrule_type == 'monthly') and month_by == 'date'"
-                                       invisible="month_by != 'date'"
-                                />
-                                <field name="byday" string="The" class="oe_inline w-auto" nolabel="1"
-                                       required="(rrule_type_ui == 'monthly' or rrule_type == 'monthly') and month_by == 'day'"
-                                       invisible="month_by != 'day'"
-                                />
-                                <field name="weekday" nolabel="1" class="oe_inline w-auto"
-                                       required="(rrule_type_ui == 'monthly' or rrule_type == 'monthly') and month_by == 'day'"
-                                       invisible="month_by != 'day'"
-                                />
-                            </div>
-                            <label string="Until" for="end_type" class="fw-bold text-900" invisible="not recurrency"/>
-                            <div class="d-flex gap-2" invisible="not recurrency">
-                                <field name="end_type" class="oe_inline w-auto" nolabel="1" required="recurrency"/>
-                                <field name="count" class="oe_inline w-auto" nolabel="1" invisible="end_type != 'count'" required="recurrency"/>
-                                <field name="until" class="oe_inline w-auto" nolabel="1" invisible="end_type != 'end_date'"
-                                       required="recurrency and end_type == 'end_date'"
-                                       placeholder="e.g: 12/31/2023"
-                                />
-                            </div>
-                            <!--                            <widget name="calendar_week_days"/>-->
                         </group>
                         <group string="Details">
-                            <field name="course_id"/>
+                            <field name="course_id" options='{"no_open": True}'/>
+                            <field name="teacher_id" options='{"no_open": True}'/>
                             <field name="user_id"/>
-                            <field name="teacher_id"/>
                             <field name="term_id"/>
                             <field name="school_year_id"/>
-                            <field name="course_start_date"/>
-                            <field name="course_end_date"/>
+                            <field name="type"/>
                         </group>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"
+                           groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
 
     <record id="view_session_calendar" model="ir.ui.view">
-            <field name="name">session.calendar</field>
-            <field name="model">session</field>
-            <field name="priority" eval="8"/>
-            <field name="arch" type="xml">
-                <calendar string="Sessions" date_start="start_datetime"
-                          color="course_id" date_stop="end_datetime">
-                    <field name="course_id"/>
-                    <field name="start_datetime"/>
-                    <field name="end_datetime"/>
-                    <field name="teacher_id"/>
-                </calendar>
-            </field>
-        </record>
+        <field name="name">session.calendar</field>
+        <field name="model">session</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <calendar string="Sessions" date_start="start_datetime"
+                      color="course_id" date_stop="end_datetime">
+                <field name="course_id"/>
+                <field name="teacher_id"/>
+                <field name="start_datetime"/>
+                <field name="end_datetime"/>
+                <field name="type"/>
+            </calendar>
+        </field>
+    </record>
 
     <record id="action_session" model="ir.actions.act_window">
         <field name="name">Sessions</field>
         <field name="res_model">session</field>
-        <field name="view_mode">tree,calendar,form</field>
+        <field name="view_mode">calendar,tree,form</field>
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
