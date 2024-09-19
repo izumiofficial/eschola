@@ -30,5 +30,11 @@
         'views/session_views.xml',
         'views/website_slides_templates_course.xml',
     ],
+
+    'assets': {
+            'web.assets_frontend': [
+                'eschola_elearning/static/src/css/templates_course.css'
+                                    ],
+        }
 }
 
