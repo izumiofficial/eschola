@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="eschola_elearning.CalendarController" t-inherit="web.CalendarController" t-inherit-mode="primary">
+        <xpath expr="//Layout" position="inside">
+            <t t-set-slot="control-panel-create-button">
+                <span class="o_session_buttons btn-group">
+                    <div class="btn-group">
+                        <button class="btn btn-primary me-1" type="button" t-on-click="onClickGenerateSessionButton">Generate Session</button>
+                    </div>
+                </span>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

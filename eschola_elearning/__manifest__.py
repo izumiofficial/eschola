@@ -37,7 +37,11 @@
     'assets': {
             'web.assets_frontend': [
                 'eschola_elearning/static/src/css/templates_course.css'
-                                    ],
+            ],
+            'web.assets_backend': [
+                'eschola_elearning/static/src/views/calendar/*',
+                'eschola_elearning/static/src/views/view_dialog/*'
+            ],
         }
 }
 
