@@ -102,7 +102,7 @@ class Session(models.Model):
         course_constraint = res_param.search([
             ('key', '=', 'timetable.is_course_constraint')])
         is_course_constraint = course_constraint.value
-        sessions = self.env['op.session'].search([])
+        sessions = self.env['session'].search([])
         for session in sessions:
             if self.id != session.id:
                 if is_course_constraint:
