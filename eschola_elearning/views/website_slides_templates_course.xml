@@ -57,23 +57,25 @@
 
                                     <!-- Display start and stop time (as a range, only time) -->
                                     <p>
-                                        <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.start, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.start, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
+                                        <div t-if="session.start_datetime and session.end_datetime">
+                                        <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
                                         &#x2192;
-                                        <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.stop, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.stop, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
+                                        <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
+                                        </div>
                                     </p>
 
                                     <!-- Display duration in 1.0 hours -->
 <!--                                    <p><strong>Duration:</strong> <t t-esc="session.duration"/> hours</p>-->
 
                                     <!-- Display duration in 01:00 hours -->
-                                    <div t-if="session.duration">
-                                        <p>
-                                            <strong>Duration:</strong>
-                                            <t t-set="hours" t-value="int(session.duration)"/>
-                                            <t t-set="minutes" t-value="int((session.duration - hours) * 60)"/>
-                                            <t t-esc="'%02d:%02d' % (hours, minutes)"/> hours
-                                        </p>
-                                    </div>
+<!--                                    <div t-if="session.duration">-->
+<!--                                        <p>-->
+<!--                                            <strong>Duration:</strong>-->
+<!--                                            <t t-set="hours" t-value="int(session.duration)"/>-->
+<!--                                            <t t-set="minutes" t-value="int((session.duration - hours) * 60)"/>-->
+<!--                                            <t t-esc="'%02d:%02d' % (hours, minutes)"/> hours-->
+<!--                                        </p>-->
+<!--                                    </div>-->
                                 </div>
                             </t>
                         </div>
