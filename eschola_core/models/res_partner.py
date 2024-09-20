@@ -14,6 +14,15 @@ class ResPartner(models.Model):
     gdn_created = fields.Boolean(string='Guardian Created', default=False)
     flak = fields.Char(string='FLAK')
 
+    is_parent = fields.Boolean("Is a Parent")
+    is_student = fields.Boolean("Is a Student")
+    contact_type = fields.Selection([
+        ('primary_guardian', 'Primary Guardian'),
+        ('secondary_guardian', 'Secondary Guardian'),
+        ('teacher', 'Teacher'),
+        ('spm', 'SPM'),
+    ], string='Contact Type')
+
     def _create_portal_user(self, partner_id, email):
         """Helper function to create a portal user."""
         return self.env['res.users'].sudo().create({

@@ -5,10 +5,20 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+            <field name="company_type" position="replace">
+                <div>
+                    <field name="company_type" widget="radio" options="{'horizontal': true}"/>
+                    <field name="is_parent" class="ml16"/>
+                    <label for="is_parent" class="mr16"/>
+                    <field name="is_student"/>
+                    <label for="is_student"/>
+                </div>
+            </field>
             <xpath expr="//field[@name='vat']" position="after">
                 <field name="gender" invisible="is_company"/>
                 <field name="std_created" invisible="1"/>
                 <field name="gdn_created" invisible="1"/>
+                <field name="contact_type"/>
             </xpath>
             <xpath expr="//form/sheet" position="before">
                 <header>
