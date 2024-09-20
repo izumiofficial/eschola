@@ -2,10 +2,12 @@
 <odoo>
     <data>
         <template id="course_sidebar_inherit" inherit_id="website_slides.course_sidebar">
+            <!-- to replace label Responsible to SPM -->
             <xpath expr="//tr[@t-if='channel.user_id']/th" position="replace">
                 <th class="border-top-0">SPM</th>
             </xpath>
 
+            <!-- to add necessary information of the course -->
             <xpath expr="//div[@id='o_wslides_sidebar_collapse']/table/tr[2]" position="after">
                 <tr t-if="channel.teacher_id">
                     <th class="border-top-0">Teacher</th>
@@ -29,7 +31,60 @@
                 </tr>
             </xpath>
 
+            <!-- to remove the Last Updated column  -->
             <xpath expr="//div[@id='o_wslides_sidebar_collapse']/table/tr[2]" position="replace"/>
         </template>
+
+         <template id="course_main_inherit" inherit_id="website_slides.course_main">
+             <!-- to add new tab called Sessions  -->
+             <xpath expr="//div[@class='o_wslides_course_main']/div/div/div[2]/ul/li[1]" position="after">
+                 <li class="nav-item" role="presentation">
+                    <a t-att-class="'nav-link %s' % ('active' if active_tab == 'sessions' else '')"
+                        id="sessions-tab" data-bs-toggle="pill" href="#sessions" role="tab" aria-controls="sessions"
+                        t-att-aria-selected="'true' if active_tab == 'sessions' else 'false'">Sessions</a>
+                </li>
+             </xpath>
+
+             <!-- to design the template of Sessions  -->
+             <xpath expr="//div[hasclass('tab-content')]" position="inside">
+                 <div t-att-class="'tab-pane fade %s' % ('show active' if active_tab == 'sessions' else '')" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
+                    <div t-if="channel.session_ids">
+                        <div class="sessions-grid">
+                            <t t-foreach="channel.session_ids" t-as="session">
+                                <div class="session-card">
+                                    <!-- Session title (name) -->
+                                    <h3><strong t-esc="session.name"/></h3>  <!-- Display the session name -->
+
+                                    <!-- Display start and stop time (as a range, only time) -->
+                                    <p>
+                                        <div t-if="session.start_datetime and session.end_datetime">
+                                        <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
+                                        &#x2192;
+                                        <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
+                                        </div>
+                                    </p>
+
+                                    <!-- Display duration in 1.0 hours -->
+<!--                                    <p><strong>Duration:</strong> <t t-esc="session.duration"/> hours</p>-->
+
+                                    <!-- Display duration in 01:00 hours -->
+<!--                                    <div t-if="session.duration">-->
+<!--                                        <p>-->
+<!--                                            <strong>Duration:</strong>-->
+<!--                                            <t t-set="hours" t-value="int(session.duration)"/>-->
+<!--                                            <t t-set="minutes" t-value="int((session.duration - hours) * 60)"/>-->
+<!--                                            <t t-esc="'%02d:%02d' % (hours, minutes)"/> hours-->
+<!--                                        </p>-->
+<!--                                    </div>-->
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                    <div t-if="not channel.session_ids">
+                        <p>No sessions available for this course.</p>
+                    </div>
+                </div>
+             </xpath>
+         </template>
     </data>
 </odoo>
