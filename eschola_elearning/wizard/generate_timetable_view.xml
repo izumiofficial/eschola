@@ -97,16 +97,5 @@
             <field name="view_id" ref="view_generate_time_table_form"/>
         </record>
     </data>
-<!--    <menuitem id="menu_generate_time_table"-->
-<!--              name="Generate Timetable"-->
-<!--              groups="openeducat_timetable.group_op_timetable_manager"-->
-<!--              sequence="20"-->
-<!--              action="act_open_generate_time_table_view"/>-->
-
-    <menuitem name="Generate Sessions"
-              id="menu_generate_time_table"
-              parent="website_slides.website_slides_menu_courses"
-              action="act_open_generate_time_table_view"
-              sequence="2"/>
 
 </odoo>
