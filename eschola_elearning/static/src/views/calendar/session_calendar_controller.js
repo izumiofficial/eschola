@@ -21,17 +21,11 @@ export class SessionCalendarController extends CalendarController {
     }
 
     onClickGenerateSessionButton() {
-        console.log('Generate la woi');
         this.displayDialog(SessionFormViewDialog, {
             resModel: "generate.time.table",
             title: _t("Generate New Session"),
             viewId: this.model.formViewId,
         });
-//        this.actionService.doAction({
-//            type: 'ir.actions.act_window',
-//            res_model: 'generate.time.table',
-//            views: [[false, 'form']],
-//        });
     }
 
 }

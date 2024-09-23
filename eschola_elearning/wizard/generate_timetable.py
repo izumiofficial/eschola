@@ -93,7 +93,13 @@ class GenerateSession(models.TransientModel):
                             curr_end_date.strftime("%Y-%m-%d %H:%M:%S"),
                             'type': calendar.day_name[int(line.day)],
                         })
-            return {'type': 'ir.actions.act_window_close'}
+            return {
+                'name': 'Sessions',
+                'type': 'ir.actions.act_window',
+                'res_model': 'session',
+                'view_mode': 'calendar,tree,form',
+                'context': '{}'
+            }
 
 
 class GenerateSessionLine(models.TransientModel):
@@ -103,8 +109,8 @@ class GenerateSessionLine(models.TransientModel):
 
     gen_time_table = fields.Many2one(
         'generate.time.table', 'Time Table', required=True)
-    teacher_id = fields.Many2one('teacher', 'Teacher', required=True)
-    course_id = fields.Many2one('slide.channel', 'Course', required=True)
+    teacher_id = fields.Many2one('teacher', 'Teacher', required=True, related='gen_time_table.course_id.teacher_id')
+    course_id = fields.Many2one('slide.channel', 'Course', required=True, related='gen_time_table.course_id')
     timing_id = fields.Many2one('op.timing', 'Timing')
     session_start_time = fields.Float("Start Time")
     session_end_time = fields.Float("End Time")
