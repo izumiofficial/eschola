@@ -7,10 +7,10 @@
             <tree string="Session">
                 <field name="course_id"/>
                 <field name="teacher_id"/>
+                <field name="type" optional="hide"/>
                 <field name="start_datetime"/>
                 <field name="end_datetime"/>
                 <field name="state"/>
-                <field name="type" optional="hide"/>
             </tree>
         </field>
     </record>
