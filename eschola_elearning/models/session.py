@@ -67,14 +67,14 @@ class Session(models.Model):
             record.type = days.get(record.start_datetime.weekday()).capitalize()
             record.days = days.get(record.start_datetime.weekday())
 
-    @api.depends('teacher_id', 'start_datetime', 'end_datetime')
+    @api.depends('course_id', 'start_datetime', 'end_datetime')
     def _compute_name(self):
         tz = pytz.timezone(self.env.user.tz)
         for session in self:
-            if session.teacher_id \
+            if session.course_id \
                     and session.start_datetime and session.end_datetime:
                 session.name = \
-                    session.teacher_id.name + str(
+                    session.course_id.name + ' ' + str(
                         session.start_datetime.astimezone(tz).strftime('%I:%M%p')) + '-' + str(
                         session.end_datetime.astimezone(tz).strftime('%I:%M%p'))
 

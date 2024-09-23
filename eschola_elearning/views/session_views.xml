@@ -82,7 +82,7 @@
         <field name="model">session</field>
         <field name="priority" eval="8"/>
         <field name="arch" type="xml">
-            <calendar string="Sessions" date_start="start_datetime"
+            <calendar js_class="session_calendar" string="Sessions" date_start="start_datetime"
                       color="course_id" date_stop="end_datetime">
                 <field name="course_id"/>
                 <field name="teacher_id"/>
