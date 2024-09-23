@@ -50,33 +50,31 @@
                  <div t-att-class="'tab-pane fade %s' % ('show active' if active_tab == 'sessions' else '')" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
                     <div t-if="channel.session_ids">
                         <div class="sessions-grid">
+                            <!-- Set to track unique session types -->
+                            <t t-set="unique_types" t-value="set()"/>
+
+                            <!-- Loop through session_ids and group by type -->
                             <t t-foreach="channel.session_ids" t-as="session">
-                                <div class="session-card">
-                                    <!-- Session title (name) -->
-                                    <h3><strong t-esc="session.name"/></h3>  <!-- Display the session name -->
+                                <!-- Create a unique key based on the session type -->
+                                <t t-set="type_key" t-value="session.type"/>
 
-                                    <!-- Display start and stop time (as a range, only time) -->
-                                    <p>
-                                        <div t-if="session.start_datetime and session.end_datetime">
-                                        <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
-                                        &#x2192;
-                                        <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
-                                        </div>
-                                    </p>
+                                <!-- Only display if type hasn't been displayed yet -->
+                                <t t-if="type_key not in unique_types">
+                                    <div class="session-card">
+                                        <!-- Add the type to the set of displayed types -->
+                                        <t t-set="unique_types" t-value="unique_types | {type_key}"/>
 
-                                    <!-- Display duration in 1.0 hours -->
-<!--                                    <p><strong>Duration:</strong> <t t-esc="session.duration"/> hours</p>-->
+                                        <!-- Session title (name/type) -->
+                                        <h3><strong t-esc="session.type"/></h3>
 
-                                    <!-- Display duration in 01:00 hours -->
-<!--                                    <div t-if="session.duration">-->
-<!--                                        <p>-->
-<!--                                            <strong>Duration:</strong>-->
-<!--                                            <t t-set="hours" t-value="int(session.duration)"/>-->
-<!--                                            <t t-set="minutes" t-value="int((session.duration - hours) * 60)"/>-->
-<!--                                            <t t-esc="'%02d:%02d' % (hours, minutes)"/> hours-->
-<!--                                        </p>-->
-<!--                                    </div>-->
-                                </div>
+                                        <!-- Display start and stop time (as a range, only time) -->
+                                        <p>
+                                            <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
+                                            &#x2192;
+                                            <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
+                                        </p>
+                                    </div>
+                                </t>
                             </t>
                         </div>
                     </div>
