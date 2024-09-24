@@ -4,7 +4,7 @@
         <field name="name">absent.type.tree.view</field>
         <field name="model">absent.type</field>
         <field name="arch" type="xml">
-            <tree string="School Year" editable="bottom">
+            <tree string="Absent Type" editable="bottom">
                 <field name="sequence" widget="handle"/>
                 <field name="name" required="1"/>
                 <field name="is_active" widget="boolean_toggle"/>
@@ -28,5 +28,5 @@
               id="absent_type_model"
               parent="website_slides.website_slides_menu_configuration"
               sequence="6"
-              action="action_school_year_config"/>
+              action="action_absent_type_config"/>
 </odoo>
