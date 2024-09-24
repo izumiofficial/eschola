@@ -93,6 +93,27 @@
         </field>
     </record>
 
+    <record id="view_session_search" model="ir.ui.view">
+            <field name="name">session.search</field>
+            <field name="model">session</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Student">
+                    <field name="name"/>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter name="course_id" string="Course"
+                                domain="[]" context="{'group_by':'course_id'}"/>
+                        <filter name="active" string="Active"
+                                domain="[]" context="{'group_by':'active'}"/>
+                        <filter name="state" string="State"
+                                domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
     <record id="action_session" model="ir.actions.act_window">
         <field name="name">Sessions</field>
         <field name="res_model">session</field>

@@ -10,6 +10,7 @@
             </xpath>
 
             <xpath expr="//group[@name='course']" position="inside">
+                <field name="external_link"/>
                 <field name="teacher_id"/>
                 <field name="term_id"/>
                 <field name="school_year_id"/>

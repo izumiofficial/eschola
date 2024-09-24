@@ -11,3 +11,5 @@ class Channel(models.Model):
     end_date = fields.Date(string='End Date', related='term_id.end_date')
 
     session_ids = fields.One2many('session', 'course_id', string='Sessions')
+
+    external_link = fields.Char("External Link")
