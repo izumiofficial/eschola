@@ -149,10 +149,9 @@ class Session(models.Model):
     #             ('id', '=', self.course_id.id)]).subject_ids
     #         return {'domain': {'subject_id': [('id', 'in', subject_ids.ids)]}}
 
-    def write(self, vals):
-        data = super(Session,
-                     self.with_context(check_move_validity=False)).write(vals)
-        for session in self:
-            if session.state not in ('draft', 'done'):
-                session.notify_user()
-        return data
+    # def write(self, vals):
+    #     data = super(Session, self.with_context(check_move_validity=False)).write(vals)
+    #     for session in self:
+    #         if session.state not in ('draft', 'done'):
+    #             session.notify_user()
+    #     return data
