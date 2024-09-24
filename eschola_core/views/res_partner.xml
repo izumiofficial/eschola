@@ -18,12 +18,12 @@
                 <field name="gender" invisible="is_company"/>
                 <field name="std_created" invisible="1"/>
                 <field name="gdn_created" invisible="1"/>
-                <field name="contact_type"/>
+                <field name="contact_type" invisible="is_student"/>
             </xpath>
             <xpath expr="//form/sheet" position="before">
                 <header>
-                    <button string="Create Student" class="oe_highlight" type="object" name="action_create_student" invisible="std_created"/>
-                    <button string="Create Guardian" class="oe_highlight" type="object" name="action_create_guardian" invisible="gdn_created"/>
+                    <button string="Create Student" class="oe_highlight" type="object" name="action_create_student" invisible="std_created or is_parent"/>
+                    <button string="Create Guardian" class="oe_highlight" type="object" name="action_create_guardian" invisible="gdn_created or is_student"/>
                 </header>
             </xpath>
         </field>
