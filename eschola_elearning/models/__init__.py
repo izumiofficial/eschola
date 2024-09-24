@@ -5,3 +5,4 @@ from . import term
 from . import session
 from . import slide_channel
 from . import timing
+from . import absent_type

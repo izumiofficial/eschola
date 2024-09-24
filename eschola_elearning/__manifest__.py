@@ -29,6 +29,7 @@
         'views/slide_channel_views.xml',
         'views/session_views.xml',
         'views/timing_view.xml',
+        'views/absent_type.xml',
         'views/website_slides_templates_course.xml',
         'wizard/generate_timetable_view.xml',
         'wizard/session_confirmation.xml',

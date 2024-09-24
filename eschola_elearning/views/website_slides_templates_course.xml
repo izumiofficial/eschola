@@ -49,6 +49,9 @@
              <xpath expr="//div[hasclass('tab-content')]" position="inside">
                  <div t-att-class="'tab-pane fade %s' % ('show active' if active_tab == 'sessions' else '')" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
                     <div t-if="channel.session_ids">
+                        <div class="">
+                            <a t-att-href="channel.external_link" target="_blank" class="btn btn-primary w-100 mb-3" role="button" aria-pressed="true">Class link</a>
+                        </div>
                         <div class="sessions-grid">
                             <!-- Set to track unique session types -->
                             <t t-set="unique_types" t-value="set()"/>

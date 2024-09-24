@@ -23,6 +23,36 @@ class ResPartner(models.Model):
         ('spm', 'SPM'),
     ], string='Contact Type')
 
+    user_type = fields.Selection([
+        ('parent', 'Parent'),
+        ('student', 'Student'),
+    ], string='User Type')  # Make it computed and stored
+
+    @api.onchange('user_type')
+    def _onchange_user_type(self):
+        if self.user_type == 'parent':
+            self.is_parent = True
+            self.is_student = False
+        elif self.user_type == 'student':
+            self.is_parent = False
+            self.is_student = True
+        else:
+            self.is_parent = False
+            self.is_student = False
+
+    @api.onchange('is_parent')
+    def _onchange_is_parent(self):
+        if self.is_parent:
+            self.is_student = False
+            self.user_type = 'parent'
+
+    @api.onchange('is_student')
+    def _onchange_is_student(self):
+        if self.is_student:
+            self.is_parent = False
+            self.user_type = 'student'
+
+
     def _create_portal_user(self, partner_id, email):
         """Helper function to create a portal user."""
         return self.env['res.users'].sudo().create({

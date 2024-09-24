@@ -6,3 +6,4 @@ eschola_elearning.access_op_timing,access_op_timing,eschola_elearning.model_op_t
 eschola_elearning.access_generate_time_table,access_generate_time_table,eschola_elearning.model_generate_time_table,base.group_user,1,1,1,1
 eschola_elearning.access_gen_time_table_line,access_gen_time_table_line,eschola_elearning.model_gen_time_table_line,base.group_user,1,1,1,1
 eschola_elearning.access_session_confirmation,access_session_confirmation,eschola_elearning.model_session_confirmation,base.group_user,1,1,1,1
+eschola_elearning.access_absent_type,access_absent_type,eschola_elearning.model_absent_type,base.group_user,1,1,1,1
