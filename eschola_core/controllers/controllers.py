@@ -90,7 +90,8 @@ class NewRegister(http.Controller):
                 'email': email,
                 'mobile': mobile,
                 'country_id': int(country),
-                'category_id': [(4, guardian_category.id)], # Many2many of tag
+                'category_id': [(4, guardian_category.id)],  # Many2many of tag
+                'is_parent': True,
                 'admission_register_id': new_admission.id,
             })
 
@@ -121,8 +122,9 @@ class NewRegister(http.Controller):
                 child_partner = request.env['res.partner'].sudo().create({  # Use request.env
                     'name': child.name,
                     'email': child.email if child.email else None,
-                    'category_id': [(4, student_category.id)], # Many2many of tag
+                    'category_id': [(4, student_category.id)],  # Many2many of tag
                     # 'parent_id': partner.id,
+                    'is_student': True,
                     'admission_register_id': new_admission.id,  # Link child to the admission record
                 })
 
