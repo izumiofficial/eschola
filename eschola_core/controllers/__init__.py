@@ -2,3 +2,4 @@
 
 from . import controllers
 from . import app_main
+from . import portal

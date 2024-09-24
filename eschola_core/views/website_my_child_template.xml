@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="website_my_child_template" name="My Child Page">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="oe_structure">
+                    <h1>My Children</h1>
+                    <t t-foreach="children" t-as="child">
+                        <div>
+                            <h2><t t-esc="child.name"/></h2>
+                            </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

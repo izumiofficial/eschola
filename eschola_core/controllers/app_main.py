@@ -1,8 +1,7 @@
 from odoo import http
 from odoo.http import request
 import werkzeug.utils
-from odoo.addons.portal.controllers.web import \
-    Home as home
+from odoo.addons.portal.controllers.web import Home as home
 
 class Home(home):
 
