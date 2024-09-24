@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="absent_type_tree_view" model="ir.ui.view">
+        <field name="name">absent.type.tree.view</field>
+        <field name="model">absent.type</field>
+        <field name="arch" type="xml">
+            <tree string="School Year" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name" required="1"/>
+                <field name="is_active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_absent_type_config" model="ir.actions.act_window">
+        <field name="name">Absent Type</field>
+        <field name="res_model">absent.type</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add the first Absent Type
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Absent Type"
+              id="absent_type_model"
+              parent="website_slides.website_slides_menu_configuration"
+              sequence="6"
+              action="action_school_year_config"/>
+</odoo>
