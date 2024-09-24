@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
+        <record id="kanban_view_student" model="ir.ui.view">
+            <field name="name">Student Kanban</field>
+            <field name="model">student</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban">
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click o_res_partner_kanban">
+                                <a type="open">
+                                    <div class="o_kanban_image" style="background:#e6e5e6;">
+                                            <img src="/base/static/img/avatar.png" alt="Student" />
+                                    </div>
+                                    <div class="oe_kanban_details">
+                                        <h4>
+                                            <field name="name" />
+                                        </h4>
+                                        <ul>
+                                            <li t-if="record.mobile.raw_value">
+                                                <field name="mobile" />
+                                            </li>
+                                            <li t-if="record.email.raw_value">
+                                                <a t-attf-href="mailto:#{record.email.value}">
+                                                    <field name="email" />
+                                                </a>
+                                            </li>
+                                            <li t-if="record.country.raw_value">
+                                                <field name="country" />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </a>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
         <record id="view_parent_tree" model="ir.ui.view">
             <field name="name">parent.tree</field>
             <field name="model">guardian</field>
@@ -48,11 +86,28 @@
                 </form>
             </field>
         </record>
+
+        <record id="view_guardian_search" model="ir.ui.view">
+            <field name="name">guardian.search</field>
+            <field name="model">guardian</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Guardian">
+                    <field name="name"/>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter name="country" string="Country"
+                                domain="[]" context="{'group_by':'country'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <!--    below are the menu item declaration-->
         <record id="action_guardian" model="ir.actions.act_window">
             <field name="name">Guardian</field>
             <field name="res_model">guardian</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
             <field name="context">{}</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
