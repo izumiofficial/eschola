@@ -49,35 +49,26 @@
              <xpath expr="//div[hasclass('tab-content')]" position="inside">
                  <div t-att-class="'tab-pane fade %s' % ('show active' if active_tab == 'sessions' else '')" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
                     <div t-if="channel.session_ids">
-                        <div class="">
-                            <a t-att-href="channel.external_link" target="_blank" class="btn btn-primary w-100 mb-3" role="button" aria-pressed="true">Class link</a>
-                        </div>
                         <div class="sessions-grid">
-                            <!-- Set to track unique session types -->
-                            <t t-set="unique_types" t-value="set()"/>
-
-                            <!-- Loop through session_ids and group by type -->
                             <t t-foreach="channel.session_ids" t-as="session">
-                                <!-- Create a unique key based on the session type -->
-                                <t t-set="type_key" t-value="session.type"/>
+                                <div class="session-card">
+                                    <!-- Session title (name/type) -->
+                                    <h3><strong t-esc="session.type"/></h3>
 
-                                <!-- Only display if type hasn't been displayed yet -->
-                                <t t-if="type_key not in unique_types">
-                                    <div class="session-card">
-                                        <!-- Add the type to the set of displayed types -->
-                                        <t t-set="unique_types" t-value="unique_types | {type_key}"/>
+                                    <!-- Display the session date -->
+                                    <p>
+                                        <t t-esc="request.env['ir.qweb.field.date'].value_to_html(session.start_datetime, {'widget': 'date'})"/>
+                                    </p>
 
-                                        <!-- Session title (name/type) -->
-                                        <h3><strong t-esc="session.type"/></h3>
-
-                                        <!-- Display start and stop time (as a range, only time) -->
-                                        <p>
+                                    <!-- Display start and stop time (as a range, only time) -->
+                                    <p>
+                                        <div t-if="session.start_datetime and session.end_datetime">
                                             <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
                                             &#x2192;
                                             <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
-                                        </p>
-                                    </div>
-                                </t>
+                                        </div>
+                                    </p>
+                                </div>
                             </t>
                         </div>
                     </div>
