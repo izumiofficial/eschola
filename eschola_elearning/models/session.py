@@ -155,3 +155,15 @@ class Session(models.Model):
     #         if session.state not in ('draft', 'done'):
     #             session.notify_user()
     #     return data
+
+    def action_attendance(self):
+        self.ensure_one()
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Attendance',
+            'res_model': 'course.attendance',
+            'domain': [('channel_id', '=', self.course_id.id)],
+            'view_mode': 'form',
+            'target': 'current',
+        }

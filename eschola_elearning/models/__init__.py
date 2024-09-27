@@ -6,3 +6,5 @@ from . import session
 from . import slide_channel
 from . import timing
 from . import absent_type
+from . import attendance_line
+from . import course_attendance
