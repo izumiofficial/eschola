@@ -25,6 +25,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/menuitem.xml',
+        'data/attendance_sheet_sequence.xml',
         'views/school_year_views.xml',
         'views/term_views.xml',
         'views/slide_channel_views.xml',

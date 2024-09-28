@@ -39,6 +39,7 @@
                     <sheet>
                         <group>
                             <group>
+                                <field name="course_id"/>
                                 <field name="spm"/>
                                 <field name="session_id"
                                        domain="[('course_id','=',course_id)]"/>

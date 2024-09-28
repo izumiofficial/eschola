@@ -39,5 +39,5 @@ class CourseAttendance(models.Model):
             register = self.env['slide.channel'].browse(vals['spm']).id
             print(sheet)
             print(register)
-            vals['name'] = register + sheet
+            vals['name'] = str(register) + sheet
         return super(CourseAttendance, self).create(vals_list)
