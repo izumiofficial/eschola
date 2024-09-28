@@ -2,7 +2,8 @@
 <odoo>
     <menuitem id="session_root"
               name="Sessions"
-              sequence="1"/>
+              sequence="1"
+              web_icon="eschola_elearning,static/icon.png"/>
     <menuitem id="attendance_root"
               name="Attendance"
               parent="session_root"
