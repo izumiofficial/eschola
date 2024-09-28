@@ -15,10 +15,11 @@ class AttendanceLine(models.Model):
     present = fields.Boolean('Present', default=True, tracking=True)
     absent = fields.Boolean('Absent', tracking=True)
     absent_type = fields.Many2one('absent.type', string='Absent Type')
-    course_id = fields.Many2one(
-        'slide.channel', 'Course')
+    course_id = fields.Many2one('slide.channel', 'Course')
     camera_on = fields.Boolean(string='On Camera', default=False)
     participation = fields.Boolean(string='Participation', default=False)
     remark = fields.Char('Remark', size=256, tracking=True)
-    attendance_date = fields.Date('Date')
+    attendance_date = fields.Date(
+        'Date', related='attendance_id.attendance_date', store=True,
+        readonly=True, tracking=True)
     active = fields.Boolean(default=True)

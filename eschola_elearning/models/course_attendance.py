@@ -18,11 +18,26 @@ class CourseAttendance(models.Model):
         ('done', 'Attendance Taken'),
         ('cancel', 'Cancelled')
     ], string='Status', default='draft')
-    attendance_line = fields.One2many(
-        'attendance.line', 'attendance_id', 'Attendance Line')
+    attendance_line = fields.One2many('attendance.line', 'attendance_id', 'Attendance Line')
+
+    def attendance_draft(self):
+        self.state = 'draft'
+
+    def attendance_start(self):
+        self.state = 'start'
+
+    def attendance_done(self):
+        self.state = 'done'
+
+    def attendance_cancel(self):
+        self.state = 'cancel'
 
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            vals['name'] = self.course_id + self.session_id
+            sheet = self.env['ir.sequence'].next_by_code('course.attendance')
+            register = self.env['slide.channel'].browse(vals['spm']).id
+            print(sheet)
+            print(register)
+            vals['name'] = register + sheet
         return super(CourseAttendance, self).create(vals_list)

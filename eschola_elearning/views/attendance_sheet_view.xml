@@ -21,6 +21,21 @@
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
                 <form string="Attendance Sheet">
+                    <header>
+                        <button type="object" name="attendance_start"
+                                invisible="state != 'draft'" string="Attendance Start"
+                                class="oe_highlight"/>
+                        <button type="object" name="attendance_done"
+                                invisible="state != 'start'" string="Attendance Taken"
+                                class="oe_highlight"/>
+                        <button type="object" name="attendance_draft"
+                                invisible="state != 'cancel'" string="Draft"
+                                class="oe_highlight"/>
+                        <button type="object" name="attendance_cancel"
+                                invisible="state not in ('draft','start')" string="Cancel"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,start,done"/>
+                    </header>
                     <sheet>
                         <group>
                             <group>
@@ -39,8 +54,10 @@
                                 <tree string="Attendance Line" editable="top">
                                     <field name="student_id"/>
                                     <field name="present"/>
-                                    <field name="absent"/>
-                                    <field name="absent_type"/>
+<!--                                    <field name="absent"/>-->
+                                    <field name="absent_type" string="Absent Reason"/>
+                                    <field name="camera_on"/>
+                                    <field name="participation"/>
                                     <field name="remark"/>
                                 </tree>
                             </field>

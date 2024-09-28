@@ -11,6 +11,8 @@
                 <field name="present"/>
                 <field name="absent"/>
                 <field name="absent_type"/>
+                <field name="camera_on"/>
+                <field name="participation"/>
                 <field name="remark" optional="show"/>
                 <field name="attendance_date"/>
                 <field name="course_id" optional="show"/>
