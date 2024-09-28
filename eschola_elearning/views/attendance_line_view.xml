@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_attendance_line_tree" model="ir.ui.view">
+        <field name="name">attendance.line.tree</field>
+        <field name="model">attendance.line</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="Attendance Line">
+                <field name="attendance_id" optional="show"/>
+                <field name="student_id"/>
+                <field name="present"/>
+                <field name="absent"/>
+                <field name="absent_type"/>
+                <field name="camera_on"/>
+                <field name="participation"/>
+                <field name="remark" optional="show"/>
+                <field name="attendance_date"/>
+                <field name="course_id" widget="selection" invisible="0"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_attendance_line_form" model="ir.ui.view">
+        <field name="name">attendance.line.form</field>
+        <field name="model">attendance.line</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Attendance Line">
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                            invisible="active == True"/>
+                    <group>
+                        <group>
+                            <field name="attendance_id"/>
+                            <field name="present"/>
+                            <field name="absent"/>
+                            <field name="remark"/>
+                            <field name="attendance_date"/>
+                        </group>
+                        <group>
+<!--                            <field name="student_id" domain="[('course_detail_ids.course_id','=',course_id)]"/>-->
+<!--                            <field name="attendance_type_id" options='{"no_open": True}'/>-->
+                            <field name="absent_type" invisible="not absent"/>
+                            <field name="course_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_attendance_line_search" model="ir.ui.view">
+        <field name="name">attendance.line.search</field>
+        <field name="model">attendance.line</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Attendance Line">
+                <field name="attendance_id"/>
+                <field name="student_id"/>
+                <field name="present"/>
+                <filter string="Present" name="group_by_attendance_present"
+                        domain="[('present', '=', True)]"/>
+                <filter string="Absent" name="group_by_attendance_absent"
+                        domain="[('present', '=', False)]"/>
+                <filter string="Today" name="group_by_attendance_today"
+                        domain="[('attendance_date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Archived" name="inactive"
+                        domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By...">
+                    <filter string="Attendance" name="group_by_attendance"
+                            domain="[]" context="{'group_by':'attendance_id'}"/>
+                    <filter string="Course" name="group_by_attendance_course"
+                            domain="[]" context="{'group_by':'course_id'}"/>
+                    <filter string="Student" name="group_by_attendance_student"
+                            domain="[]" context="{'group_by':'student_id'}"/>
+                    <filter string="Present ?" name="group_by_attendance_present"
+                            domain="[]" context="{'group_by':'present'}"/>
+                    <filter string="Date" name="group_by_attendance_date"
+                            domain="[]" context="{'group_by':'attendance_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="act_open_attendance_line_view" model="ir.actions.act_window">
+        <field name="name">Attendance Line</field>
+        <field name="res_model">attendance.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_attendance_line_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+            <menuitem name="Attendance Line"
+                      id="attendance_line_view"
+                      parent="eschola_elearning.attendance_root"
+                      sequence="1"
+                      action="act_open_attendance_line_view"/>
+</odoo>

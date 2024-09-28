@@ -39,6 +39,7 @@ class GenerateSession(models.TransientModel):
     start_date = fields.Date(
         'Start Date', required=True, default=time.strftime('%Y-%m-01'))
     end_date = fields.Date('End Date', required=True)
+    rec_att = fields.Boolean('Attendance Obligation', help='Check if attendance are mandatory.')
 
     @api.constrains('start_date', 'end_date')
     def check_dates(self):

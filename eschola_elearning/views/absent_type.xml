@@ -26,7 +26,7 @@
 
     <menuitem name="Absent Type"
               id="absent_type_model"
-              parent="website_slides.website_slides_menu_configuration"
-              sequence="6"
+              parent="eschola_elearning.attendance_root"
+              sequence="2"
               action="action_absent_type_config"/>
 </odoo>

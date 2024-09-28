@@ -48,6 +48,8 @@ class Session(models.Model):
     )
     timing = fields.Char(compute='_compute_timing')
 
+    attendance_sheet = fields.One2many('course.attendance', 'session_id', string='Session')
+
     @api.depends('start_datetime', 'end_datetime')
     def _compute_timing(self):
         tz = pytz.timezone(self.env.user.tz)
@@ -155,3 +157,72 @@ class Session(models.Model):
     #         if session.state not in ('draft', 'done'):
     #             session.notify_user()
     #     return data
+
+    def action_attendance2(self):
+        self.ensure_one()
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Attendance',
+            'res_model': 'course.attendance',
+            'domain': [('channel_id', '=', self.course_id.id)],
+            'view_mode': 'form',
+            'target': 'current',
+        }
+
+    def action_attendance(self, context=None):
+        sheet = self.env['course.attendance'].search([('session_id', '=', self.id)])
+
+        # Fetch student/participant records
+        students = self.env['slide.channel.partner'].search([
+            ('channel_id', '=', self.course_id.id)
+        ])
+        # Pre-populate with the first student (if any)
+        default_student_id = students[0].id if students else False
+
+        if self.id == sheet.session_id.id:
+            if len(sheet) <= 1:
+                view_id = self.env.ref('eschola_elearning.view_attendance_sheet_form').id,
+                return {
+                    'name': 'Attendance Sheet',
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'views': [(view_id, 'form')],
+                    'res_model': 'course.attendance',
+                    'view_id': view_id,
+                    'type': 'ir.actions.act_window',
+                    'target': 'current',
+                    'res_id': sheet.id,
+                    'context': {'default_session_id': self.id,
+                                'default_spm': self.user_id.id,
+                                'default_course_id': self.course_id.id,
+                                'default_student_id': default_student_id},
+                    'domain': [('session_id', "=", sheet.session_id.id)]
+                }
+
+            action = self.env.ref('eschola_elearning.act_open_attendance_sheet_view').read()[0]
+            action['domain'] = [('session_id', '=', self.id)]
+            action['context'] = {
+                'default_session_id': self.id,
+                'default_spm': self.user_id.id,
+                'default_course_id': self.course_id.id,
+                'default_student_id': default_student_id
+            }
+            return action
+        else:
+            view_id = self.env.ref('eschola_elearning.view_attendance_sheet_form').id,
+            return {
+                'name': 'Attendance Sheet',
+                'view_type': 'form',
+                'view_mode': 'tree',
+                'views': [(view_id, 'form')],
+                'res_model': 'course.attendance',
+                'view_id': False,
+                'type': 'ir.actions.act_window',
+                'target': 'current',
+                'context': {'default_session_id': self.id,
+                            'default_spm': self.user_id.id,
+                            'default_course_id': self.course_id.id,
+                            'default_student_id': default_student_id},
+                'domain': [('session_id', "=", self.id)]
+            }
