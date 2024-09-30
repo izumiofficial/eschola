@@ -68,7 +68,6 @@ class ResPartner(models.Model):
                 'email': record.email,
                 'mobile': record.mobile,
                 'gender': record.gender,
-                'country': record.country.id,
             })
 
             self._create_portal_user(student.partner_id.id, record.email)
@@ -80,7 +79,6 @@ class ResPartner(models.Model):
                 'name': record.name,
                 'email': record.email,
                 'mobile': record.mobile,
-                'country': record.country.id,
             })
 
             self._create_portal_user(guardian.partner_id.id, record.email)
