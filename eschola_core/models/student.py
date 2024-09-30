@@ -6,6 +6,7 @@ class Student(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     is_international = fields.Boolean(string='International Curriculum')
+    partner_id = fields.Many2one('res.partner', string="Partner")
     name = fields.Char(string='Name', translate=True)
     email = fields.Char(string='Email')
     mobile = fields.Char(unaccent=False)

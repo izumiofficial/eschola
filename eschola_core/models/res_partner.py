@@ -52,14 +52,18 @@ class ResPartner(models.Model):
             self.is_parent = False
             self.user_type = 'student'
 
-
     def _create_portal_user(self, partner_id, email):
         """Helper function to create a portal user."""
-        return self.env['res.users'].sudo().create({
-            'login': email,
-            'partner_id': partner_id,
-            'groups_id': [(6, 0, [self.env.ref('base.group_portal').id])],
-        })
+        try:
+            return self.env['res.users'].sudo().create({
+                'login': email,
+                'partner_id': partner_id,
+                'groups_id': [(6, 0, [self.env['ir.model.data'].xmlid_to_res_id('base.group_portal')])],
+                # 'password': 'your_default_password'  # If you want to set a default password
+            })
+        except Exception as e:
+            # Handle the exception, e.g., log the error or show a warning message
+            print(f"Error creating portal user: {e}")
 
     def action_create_student(self):
         for record in self:
