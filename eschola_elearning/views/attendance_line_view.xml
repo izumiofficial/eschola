@@ -39,7 +39,7 @@
                             <field name="attendance_date"/>
                         </group>
                         <group>
-<!--                            <field name="student_id" domain="[('course_detail_ids.course_id','=',course_id)]"/>-->
+                            <field name="student_id"/>
 <!--                            <field name="attendance_type_id" options='{"no_open": True}'/>-->
                             <field name="absent_type" invisible="not absent"/>
                             <field name="course_id"/>

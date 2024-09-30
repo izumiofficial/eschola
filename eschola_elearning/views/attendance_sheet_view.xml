@@ -6,11 +6,20 @@
             <field name="model">course.attendance</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <tree string="Attendance Sheet">
+                <tree string="Attendance Sheet" editable="bottom">
+                    <field name="name" optional="show"/>
+                    <field name="student_id"/>
                     <field name="spm"/>
-                    <field name="name"/>
                     <field name="session_id"/>
+                    <field name="present"/>
+                    <field name="absent" optional="show"/>
+                    <field name="absent_type" optional="show"/>
+                    <field name="camera_on"/>
+                    <field name="participation"/>
+                    <field name="remark" optional="show"/>
                     <field name="attendance_date"/>
+                    <field name="course_id"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -43,25 +52,13 @@
                                 <field name="spm"/>
                                 <field name="session_id"
                                        domain="[('course_id','=',course_id)]"/>
+                                <field name="student_id"/>
                                 <field name="course_id" invisible="1"/>
                             </group>
                             <group>
                                 <field name="name"/>
                                 <field name="attendance_date"/>
                             </group>
-                        </group>
-                        <group col="4" string="Students">
-                            <field name="attendance_line" colspan="4" nolabel="1">
-                                <tree string="Attendance Line" editable="top">
-                                    <field name="student_id"/>
-                                    <field name="present"/>
-<!--                                    <field name="absent"/>-->
-                                    <field name="absent_type" string="Absent Reason"/>
-                                    <field name="camera_on"/>
-                                    <field name="participation"/>
-                                    <field name="remark"/>
-                                </tree>
-                            </field>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
@@ -87,7 +84,7 @@
             <field name="name">Attendance Sheets</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">course.attendance</field>
-            <field name="binding_view_types">form</field>
+            <!--            <field name="binding_view_types">tree</field>-->
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="view_attendance_sheet_search"/>
             <field name="domain">[]</field>

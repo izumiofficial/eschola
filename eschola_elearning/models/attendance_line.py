@@ -13,15 +13,8 @@ class AttendanceLine(models.Model):
         tracking=True, ondelete="cascade")
     student_id = fields.Many2one(
         'slide.channel.partner',  # Change the model
-        'Student',
-        tracking=True
+        'Student'
     )
-    # participant_id = fields.Many2one(
-    #     'slide.channel.partner',  # Relate to slide.channel.partner
-    #     'Student',
-    #     tracking=True,
-    #     domain="[('channel_id', '=', course_id)]"  # Filter based on course_id
-    # )
     present = fields.Boolean('Present', default=True, tracking=True)
     absent = fields.Boolean('Absent', tracking=True)
     absent_type = fields.Many2one('absent.type', string='Absent Type')
@@ -33,3 +26,5 @@ class AttendanceLine(models.Model):
         'Date', related='attendance_id.attendance_date', store=True,
         readonly=True, tracking=True)
     active = fields.Boolean(default=True)
+
+    print(student_id)
