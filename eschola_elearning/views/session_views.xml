@@ -37,7 +37,7 @@
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                            <button name="action_attendance" type="object" class="oe_stat_button" icon="fa-graduation-cap">
+                            <button name="action_attendance" type="object" class="oe_stat_button" icon="fa-graduation-cap" invisible="state != 'confirm'">
                                 <div class="o_stat_info">
                                     <span class="o_stat_text">Attendance</span>
                                 </div>

@@ -84,6 +84,17 @@ class Session(models.Model):
         self.state = 'draft'
 
     def lecture_confirm(self):
+        attendance = self.env['slide.channel.partner'].search([
+                ('channel_id', '=', self.course_id.id)]).partner_id
+        for record in attendance:
+            print(record)
+            self.env['course.attendance'].create({
+                'student_id': record.id,
+                'course_id': self.course_id.id,
+                'session_id': self.id,
+                'spm': self.user_id.id
+            })
+
         self.state = 'confirm'
 
     def lecture_done(self):
@@ -161,68 +172,52 @@ class Session(models.Model):
     def action_attendance2(self):
         self.ensure_one()
 
+        print(self.course_id.id)
+
         return {
             'type': 'ir.actions.act_window',
             'name': 'Attendance',
             'res_model': 'course.attendance',
-            'domain': [('channel_id', '=', self.course_id.id)],
-            'view_mode': 'form',
+            'domain': [('slide.channel.partner', '=', self.course_id.id)],
+            'view_mode': 'tree,form',
             'target': 'current',
         }
 
     def action_attendance(self, context=None):
         sheet = self.env['course.attendance'].search([('session_id', '=', self.id)])
-
-        # Fetch student/participant records
         students = self.env['slide.channel.partner'].search([
             ('channel_id', '=', self.course_id.id)
         ])
-        # Pre-populate with the first student (if any)
         default_student_id = students[0].id if students else False
 
-        if self.id == sheet.session_id.id:
-            if len(sheet) <= 1:
-                view_id = self.env.ref('eschola_elearning.view_attendance_sheet_form').id,
-                return {
-                    'name': 'Attendance Sheet',
-                    'view_type': 'form',
-                    'view_mode': 'form',
-                    'views': [(view_id, 'form')],
-                    'res_model': 'course.attendance',
-                    'view_id': view_id,
-                    'type': 'ir.actions.act_window',
-                    'target': 'current',
-                    'res_id': sheet.id,
-                    'context': {'default_session_id': self.id,
-                                'default_spm': self.user_id.id,
-                                'default_course_id': self.course_id.id,
-                                'default_student_id': default_student_id},
-                    'domain': [('session_id', "=", sheet.session_id.id)]
-                }
+        print(default_student_id)
 
-            action = self.env.ref('eschola_elearning.act_open_attendance_sheet_view').read()[0]
-            action['domain'] = [('session_id', '=', self.id)]
-            action['context'] = {
-                'default_session_id': self.id,
-                'default_spm': self.user_id.id,
-                'default_course_id': self.course_id.id,
-                'default_student_id': default_student_id
-            }
-            return action
-        else:
-            view_id = self.env.ref('eschola_elearning.view_attendance_sheet_form').id,
+        if not sheet:  # Handle case where no sheet is found
+            # Optionally create a new attendance sheet here
             return {
                 'name': 'Attendance Sheet',
-                'view_type': 'form',
-                'view_mode': 'tree',
-                'views': [(view_id, 'form')],
+                'view_type': 'tree,form',
+                'view_mode': 'tree,form',
+                'views': [(self.env.ref('eschola_elearning.view_attendance_sheet_tree').id, 'tree')],
                 'res_model': 'course.attendance',
-                'view_id': False,
+                'view_id': False,  # Force creation of a new record
                 'type': 'ir.actions.act_window',
                 'target': 'current',
-                'context': {'default_session_id': self.id,
-                            'default_spm': self.user_id.id,
-                            'default_course_id': self.course_id.id,
-                            'default_student_id': default_student_id},
-                'domain': [('session_id', "=", self.id)]
+                'context': {
+                    'default_session_id': self.id,
+                    'default_spm': self.user_id.id,
+                    'default_course_id': self.course_id.id,
+                    'default_student_id': default_student_id,
+                },
             }
+
+        # If sheet(s) exist, reuse the predefined action
+        action = self.env.ref('eschola_elearning.act_open_attendance_sheet_view').read()[0]
+        action['domain'] = [('session_id', '=', self.id)]
+        action['context'] = {
+            'default_session_id': self.id,
+            'default_spm': self.user_id.id,
+            'default_course_id': self.course_id.id,
+            'default_student_id': default_student_id,
+        }
+        return action
