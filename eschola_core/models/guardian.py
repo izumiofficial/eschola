@@ -8,6 +8,7 @@ class Guardian(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Name', translate=True)
+    partner_id = fields.Many2one('res.partner', string="Partner")
     email = fields.Char(string='Email', required=True)
     mobile = fields.Char(unaccent=False)
     country = fields.Many2one('res.country', string='Country of Residence')
