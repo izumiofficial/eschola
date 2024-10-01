@@ -169,28 +169,28 @@ class Session(models.Model):
     #             session.notify_user()
     #     return data
 
-    def action_attendance2(self):
-        self.ensure_one()
-
-        print(self.course_id.id)
-
-        return {
-            'type': 'ir.actions.act_window',
-            'name': 'Attendance',
-            'res_model': 'course.attendance',
-            'domain': [('slide.channel.partner', '=', self.course_id.id)],
-            'view_mode': 'tree,form',
-            'target': 'current',
-        }
+    # def action_attendance2(self):
+    #     self.ensure_one()
+    #
+    #     print(self.course_id.id)
+    #
+    #     return {
+    #         'type': 'ir.actions.act_window',
+    #         'name': 'Attendance',
+    #         'res_model': 'course.attendance',
+    #         'domain': [('slide.channel.partner', '=', self.course_id.id)],
+    #         'view_mode': 'tree,form',
+    #         'target': 'current',
+    #     }
 
     def action_attendance(self, context=None):
         sheet = self.env['course.attendance'].search([('session_id', '=', self.id)])
-        students = self.env['slide.channel.partner'].search([
-            ('channel_id', '=', self.course_id.id)
-        ])
-        default_student_id = students[0].id if students else False
+        # students = self.env['slide.channel.partner'].search([
+        #     ('channel_id', '=', self.course_id.id)
+        # ])
+        # default_student_id = students[0].id if students else False
 
-        print(default_student_id)
+        # print(default_student_id)
 
         if not sheet:  # Handle case where no sheet is found
             # Optionally create a new attendance sheet here
@@ -206,17 +206,16 @@ class Session(models.Model):
                     'default_session_id': self.id,
                     'default_spm': self.user_id.id,
                     'default_course_id': self.course_id.id,
-                    'default_student_id': default_student_id,
                 },
             }
 
         # If sheet(s) exist, reuse the predefined action
-        action = self.env.ref('eschola_elearning.act_open_attendance_sheet_view').read()[0]
+        # action = self.env.ref('eschola_elearning.act_open_attendance_sheet_view').read()[0]
+        action = self.env['ir.actions.act_window']._for_xml_id('eschola_elearning.act_open_attendance_sheet_view')
         action['domain'] = [('session_id', '=', self.id)]
         action['context'] = {
             'default_session_id': self.id,
             'default_spm': self.user_id.id,
             'default_course_id': self.course_id.id,
-            'default_student_id': default_student_id,
         }
         return action
