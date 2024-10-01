@@ -6,20 +6,21 @@
             <field name="model">course.attendance</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <tree string="Attendance Sheet" editable="bottom">
-                    <field name="name" optional="show"/>
-                    <field name="student_id"/>
-                    <field name="spm"/>
-                    <field name="session_id"/>
-                    <field name="present"/>
-                    <field name="absent" optional="show"/>
-                    <field name="absent_type" optional="show"/>
+                <tree string="Attendance Sheet" editable="top" create="false">
+                    <field name="name" optional="hide"/>
+                    <field name="student_id" readonly="1"/>
+                    <field name="spm" readonly="1"/>
+                    <field name="session_id" readonly="1" optional="hide"/>
+                    <field name="absent_type" required="1"/>
                     <field name="camera_on"/>
                     <field name="participation"/>
-                    <field name="remark" optional="show"/>
+                    <field name="remarks"/>
                     <field name="attendance_date"/>
-                    <field name="course_id"/>
-                    <field name="state"/>
+                    <field name="course_id" readonly="1"/>
+                    <field name="state" readonly="1" widget="badge"
+                           decoration-success="state=='done'"
+                           decoration-muted="state=='draft'"/>
+                    <button name="attendance_done" type="object" string="Checked" icon="fa-check" invisible="state == 'done' or absent_type == False"/>
                 </tree>
             </field>
         </record>
@@ -31,33 +32,30 @@
             <field name="arch" type="xml">
                 <form string="Attendance Sheet">
                     <header>
-                        <button type="object" name="attendance_start"
-                                invisible="state != 'draft'" string="Attendance Start"
-                                class="oe_highlight"/>
                         <button type="object" name="attendance_done"
-                                invisible="state != 'start'" string="Attendance Taken"
+                                invisible="state != 'draft'" string="Attendance Taken"
                                 class="oe_highlight"/>
                         <button type="object" name="attendance_draft"
                                 invisible="state != 'cancel'" string="Draft"
                                 class="oe_highlight"/>
-                        <button type="object" name="attendance_cancel"
-                                invisible="state not in ('draft','start')" string="Cancel"/>
                         <field name="state" widget="statusbar"
-                               statusbar_visible="draft,start,done"/>
+                               statusbar_visible="draft,done"/>
                     </header>
                     <sheet>
                         <group>
                             <group>
-                                <field name="course_id"/>
-                                <field name="spm"/>
-                                <field name="session_id"
-                                       domain="[('course_id','=',course_id)]"/>
-                                <field name="student_id"/>
-                                <field name="course_id" invisible="1"/>
+                                <field name="student_id" readonly="1"/>
+                                <field name="attendance_date" readonly="1"/>
+                                <field name="absent_type" readonly="state == 'done'"/>
+                                <field name="camera_on" readonly="state == 'done'"/>
+                                <field name="participation" readonly="state == 'done'"/>
+                                <field name="remarks" readonly="state == 'done'"/>
                             </group>
                             <group>
-                                <field name="name"/>
-                                <field name="attendance_date"/>
+                                <field name="course_id" readonly="1"/>
+                                <field name="spm" readonly="1"/>
+                                <field name="session_id" readonly="1"/>
+                                <field name="name" readonly="1"/>
                             </group>
                         </group>
                     </sheet>

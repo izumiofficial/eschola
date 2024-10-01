@@ -12,18 +12,18 @@ class CourseAttendance(models.Model):
     student_id = fields.Many2one('res.partner', 'Student')
     present = fields.Boolean('Present', default=True, tracking=True)
     absent = fields.Boolean('Absent', tracking=True)
-    absent_type = fields.Many2one('absent.type', string='Absent Type')
-    camera_on = fields.Boolean(string='On Camera', default=False)
+    absent_type = fields.Many2one('absent.type', string='Attendance')
+    camera_on = fields.Boolean(string='Camera On', default=False)
     participation = fields.Boolean(string='Participation', default=False)
     remark = fields.Char('Remark', size=256, tracking=True)
+    remarks = fields.Text("Remark")
     attendance_date = fields.Date(
         'Date', default=lambda self: fields.Date.today(),
         tracking=True)
-    remarks = fields.Text(string='Remarks')
     state = fields.Selection([
         ('draft', 'Draft'),
         ('start', 'Attendance Start'),
-        ('done', 'Attendance Taken'),
+        ('done', 'Checked'),
         ('cancel', 'Cancelled')
     ], string='Status', default='draft')
     attendance_line = fields.One2many('attendance.line', 'attendance_id', 'Attendance Line')

@@ -27,11 +27,11 @@
                     <button type="object" name="lecture_done"
                             invisible="state != 'confirm'" string="Done"
                             class="oe_highlight"/>
-                    <button type="object" name="lecture_draft"
-                            invisible="state != 'cancel'" string="Set to Draft"
-                            class="oe_highlight"/>
+<!--                    <button type="object" name="lecture_draft"-->
+<!--                            invisible="state not in ('cancel')" string="Set to Draft"-->
+<!--                            class="oe_highlight"/>-->
                     <button type="object" name="lecture_cancel"
-                            invisible="state in ('draft','confirm')" string="Cancel"/>
+                            invisible="state not in ('draft')" string="Cancel"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,confirm"/>
                 </header>
@@ -57,14 +57,14 @@
                             <label for="start_datetime" string="Session Time"/>
                             <div class="o_row">
                                 <field name="start_datetime" widget="daterange" class="oe_inline"
-                                       options="{'related_end_date': 'end_datetime'}"/>
+                                       options="{'related_end_date': 'end_datetime'}" readonly="state == 'done'"/>
                                 <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
                                 <field name="end_datetime" widget="daterange" nolabel="1" class="oe_inline"
-                                       options="{'related_start_date': 'start_datetime'}"/>
+                                       options="{'related_start_date': 'start_datetime'}" readonly="state == 'done'"/>
                             </div>
                         </group>
                         <group string="Details">
-                            <field name="course_id" options='{"no_open": True}'/>
+                            <field name="course_id" options='{"no_open": True}' readonly="state == 'done'"/>
                             <field name="teacher_id" options='{"no_open": True}'/>
                             <field name="user_id"/>
                             <field name="term_id"/>
