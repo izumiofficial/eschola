@@ -19,4 +19,7 @@
             </xpath>
         </field>
     </record>
+    <record id="website_slides.website_slides_menu_root" model="ir.ui.menu">
+        <field name="name">eSchola</field>
+    </record>
 </odoo>

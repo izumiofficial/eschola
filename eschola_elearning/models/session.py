@@ -201,7 +201,6 @@ class Session(models.Model):
                 'views': [(self.env.ref('eschola_elearning.view_attendance_sheet_tree').id, 'tree')],
                 'res_model': 'course.attendance',
                 'view_id': False,  # Force creation of a new record
-                'type': 'ir.actions.act_window',
                 'target': 'current',
                 'context': {
                     'default_session_id': self.id,
