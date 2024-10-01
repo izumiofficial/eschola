@@ -96,9 +96,9 @@
         <field name="context">{}</field>
     </record>
 
-            <menuitem name="Attendance Line"
-                      id="attendance_line_view"
-                      parent="eschola_elearning.attendance_root"
-                      sequence="1"
-                      action="act_open_attendance_line_view"/>
+<!--            <menuitem name="Attendance Line"-->
+<!--                      id="attendance_line_view"-->
+<!--                      parent="eschola_elearning.attendance_root"-->
+<!--                      sequence="1"-->
+<!--                      action="act_open_attendance_line_view"/>-->
 </odoo>

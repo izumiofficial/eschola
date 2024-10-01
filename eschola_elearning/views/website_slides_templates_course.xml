@@ -49,26 +49,49 @@
              <xpath expr="//div[hasclass('tab-content')]" position="inside">
                  <div t-att-class="'tab-pane fade %s' % ('show active' if active_tab == 'sessions' else '')" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
                     <div t-if="channel.session_ids">
-                        <div class="sessions-grid">
+                        <t t-set="previous_week" t-value="None"/>
+                        <t t-set="current_date" t-value="datetime.datetime.now()"/>
+                        <t t-set="current_week" t-value="current_date.isocalendar()[1]"/>
+
+                        <div class="sessions-container">
                             <t t-foreach="channel.session_ids" t-as="session">
-                                <div class="session-card">
-                                    <!-- Session title (name/type) -->
-                                    <h3><strong t-esc="session.type"/></h3>
+                                <!-- Get the week number of the session -->
+                                <t t-set="session_week" t-value="session.start_datetime.isocalendar()[1]"/>
+                                <t t-set="session_date" t-value="session.start_datetime"/>
 
-                                    <!-- Display the session date -->
-                                    <p>
-                                        <t t-esc="request.env['ir.qweb.field.date'].value_to_html(session.start_datetime, {'widget': 'date'})"/>
-                                    </p>
-
-                                    <!-- Display start and stop time (as a range, only time) -->
-                                    <p>
-                                        <div t-if="session.start_datetime and session.end_datetime">
-                                            <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
-                                            &#x2192;
-                                            <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
+                                <!-- Check if the session is in the current or future week -->
+                                <t t-if="session_date >= current_date">
+                                    <!-- Check if the week has changed to display the week heading -->
+                                    <t t-if="session_week != previous_week">
+                                        <div class="week-section">
+                                            <h5 class="week-title text-muted">Week <t t-esc="session_week"/></h5>
+                                            <div class="sessions-grid">
+                                                <!-- Reset previous week -->
+                                                <t t-set="previous_week" t-value="session_week"/>
+                                            </div>
                                         </div>
-                                    </p>
-                                </div>
+                                    </t>
+
+                                    <!-- Display the session card within the week's session container -->
+                                    <div class="sessions-grid session-card">
+                                        <!-- Session title (name/type) -->
+                                        <h4><strong t-esc="session.type"/></h4>
+
+                                        <!-- Display the session date -->
+                                        <p>
+                                            <t t-esc="request.env['ir.qweb.field.date'].value_to_html(session.start_datetime, {'widget': 'date'})"/>
+                                        </p>
+
+                                        <!-- Display start and stop time (as a range, only time) -->
+                                        <p>
+                                            <t t-if="session.start_datetime and session.end_datetime">
+                                                <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
+                                                &#x2192;
+                                                <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
+                                            </t>
+                                        </p>
+                                    </div>
+                                </t>
                             </t>
                         </div>
                     </div>

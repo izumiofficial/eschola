@@ -1,6 +1,6 @@
 .sessions-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));  /* Responsive grid with min-width of 200px */
+    grid-template-columns: repeat(3, 1fr);  /* Fixed number of 3 equal columns */
     gap: 1rem;  /* Spacing between the "bubbles" */
 }
 
@@ -8,6 +8,7 @@
     background-color: #f5f5f5;  /* Light background for the card */
     border: 1px solid #ccc;  /* Border around the card */
     border-radius: 8px;  /* Rounded corners */
+    margin-bottom: 10px;
     padding: 10px;  /* Padding inside the card */
     text-align: center;  /* Center the text */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Light shadow for a 3D effect */
@@ -16,4 +17,15 @@
 
 .session-card:hover {
     transform: scale(1.05);  /* Slight zoom effect on hover */
+}
+
+.week-title {
+    margin-top: 25px;
+    font-size: 15px;
+}
+
+@media (max-width: 500px) {
+    .sessions-grid {
+        grid-template-columns: 1fr; /* One column on small screens */
+    }
 }
