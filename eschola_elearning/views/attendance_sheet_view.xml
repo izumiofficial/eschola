@@ -72,21 +72,52 @@
             <field name="model">course.attendance</field>
             <field name="priority" eval="8"/>
             <field name="arch" type="xml">
-                <search string="Attendance Sheet">
-                    <field name="attendance_date"/>
+                <search string="Attendance">
+                    <field name="student_id"/>
+                    <field name="spm"/>
+                    <filter string="Camera On" name="group_by_camera_on"
+                            domain="[('camera_on', '=', True)]"/>
+                    <filter string="Participation" name="group_by_participation"
+                            domain="[('participation', '=', True)]"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Course" name="group_by_attendance_course"
+                                domain="[]" context="{'group_by':'course_id'}"/>
+                        <filter string="SPM" name="group_by_attendance_student"
+                                domain="[]" context="{'group_by':'spm'}"/>
+                        <filter string="Status" name="group_by_attendance_present"
+                                domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Date" name="group_by_attendance_date"
+                                domain="[]" context="{'group_by':'attendance_date'}"/>
+                    </group>
                 </search>
             </field>
         </record>
+
+<!--        <record id="view_attendance_sheet_search" model="ir.ui.view">-->
+<!--            <field name="name">attendance.sheet.search</field>-->
+<!--            <field name="model">course.attendance</field>-->
+<!--            <field name="priority" eval="8"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <search string="Attendance Sheet">-->
+<!--                    <field name="attendance_date"/>-->
+<!--                </search>-->
+<!--            </field>-->
+<!--        </record>-->
 
         <record model="ir.actions.act_window" id="act_open_attendance_sheet_view">
             <field name="name">Attendance Sheets</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">course.attendance</field>
-            <!--            <field name="binding_view_types">tree</field>-->
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="view_attendance_sheet_search"/>
             <field name="domain">[]</field>
             <field name="context">{}</field>
         </record>
+
+        <menuitem name="Student Attendance"
+                  id="attendance_view"
+                  parent="eschola_elearning.attendance_root"
+                  sequence="1"
+                  action="act_open_attendance_sheet_view"/>
     </data>
 </odoo>
