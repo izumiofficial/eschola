@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_student_grades_tree" model="ir.ui.view">
+        <field name="name">student.grades.tree</field>
+        <field name="model">student.grades</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="Student Grades" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="is_active"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="act_open_student_grades">
+        <field name="name">Student Grades</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">student.grades</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+    <menuitem name="Student Attendance"
+              id="attendance_view"
+              parent="website_slides.website_slides_menu_configuration"
+              sequence="10"
+              action="act_open_student_grades"/>
+</odoo>
