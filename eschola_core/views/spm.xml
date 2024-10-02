@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_spm_tree" model="ir.ui.view">
+        <field name="name">spm.tree</field>
+        <field name="model">spm</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="SPM">
+                <field name="fullname"/>
+                <field name="gender"/>
+                <field name="nationality"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
