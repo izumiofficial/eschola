@@ -9,6 +9,7 @@ eschola_elearning.access_session_confirmation,access_session_confirmation,eschol
 eschola_elearning.access_absent_type,access_absent_type,eschola_elearning.model_absent_type,base.group_user,1,1,1,1
 eschola_elearning.access_attendance_line,access_attendance_line,eschola_elearning.model_attendance_line,base.group_user,1,1,1,1
 eschola_elearning.access_course_attendance,access_course_attendance,eschola_elearning.model_course_attendance,base.group_user,1,1,1,1
+eschola_elearning.access_student_grades,access_student_grades,eschola_elearning.model_student_grades,base.group_user,1,1,1,1
 
 public_eschola_elearning.access_term,access_term,eschola_elearning.model_term,base.group_public,1,0,0,0
 public_eschola_elearning.access_school_year,access_school_year,eschola_elearning.model_school_year,base.group_public,1,0,0,0

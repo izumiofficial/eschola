@@ -35,6 +35,7 @@
         'views/attendance_line_view.xml',
         'views/attendance_sheet_view.xml',
         'views/website_slides_templates_course.xml',
+        'views/student_grades.xml',
         'wizard/generate_timetable_view.xml',
         'wizard/session_confirmation.xml',
     ],
