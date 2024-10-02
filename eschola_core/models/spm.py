@@ -12,6 +12,8 @@ class Spm(models.Model):
         ('male', 'Male'),
         ('female', 'Female')
     ], string='Gender')
+    mobile = fields.Char(string='Mobile')
+    email = fields.Char(string='Email')
     nationality = fields.Many2one('res.country', 'Nationality')
     active = fields.Boolean(default=True)
 
