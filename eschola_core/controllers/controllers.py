@@ -56,7 +56,7 @@ class NewRegister(http.Controller):
                     'gender': child.get('gender'),
                     'email': child.get('email'),
                     'mobile': child.get('mobile'),
-                    'student_grade': child.get('student_grade'),
+                    'student_grades': child.get('student_grades'),
                     'religion': child.get('religion'),
                     'country': child.get('country'),
                     'nationality': child.get('nationality'),

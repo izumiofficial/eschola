@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'website_slides', 'calendar', 'mail'],
+    'depends': ['base', 'website_slides', 'calendar', 'mail', 'web'],
 
     # always loaded
     'data': [
@@ -35,7 +35,6 @@
         'views/attendance_line_view.xml',
         'views/attendance_sheet_view.xml',
         'views/website_slides_templates_course.xml',
-        'views/student_grades.xml',
         'wizard/generate_timetable_view.xml',
         'wizard/session_confirmation.xml',
     ],

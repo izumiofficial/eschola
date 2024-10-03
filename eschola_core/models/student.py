@@ -16,7 +16,7 @@ class Student(models.Model):
         ('m', 'Male'),
         ('f', 'Female')
     ], string='Gender', default='m')
-    student_grade = fields.Many2one('student.grades', string='Student Grade')
+    student_grades = fields.Many2one('student.grades', string='Student Grade')
     grade = fields.Selection([
         ('grade_7', 'Grade 7'),
         ('grade_8', 'Grade 8'),
@@ -74,16 +74,6 @@ class Student(models.Model):
             action['context'] = {'search_default_partner_id': self.partner_id.id}
         else:
             action['domain'] = expression.AND([action['domain'], [('partner_id', 'in', self.partner_id.ids)]])
-        return action
-
-    def action_view_attendace(self):
-        action = self.env["ir.actions.actions"]._for_xml_id("eschola_elearning.act_open_attendance_sheet_view")
-        action['display_name'] = _('Courses')
-        # action['domain'] = [('member_status', '!=', 'invited')]
-        if len(self) == 1:
-            action['context'] = {'search_default_student_id': self.partner_id.id}
-        else:
-            action['domain'] = expression.AND([action['domain'], [('student_id', 'in', self.partner_id.ids)]])
         return action
 
     @api.onchange('name')
