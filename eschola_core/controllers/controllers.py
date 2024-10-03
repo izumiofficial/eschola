@@ -15,9 +15,13 @@ class NewRegister(http.Controller):
     @http.route(['/register_form'], type='http', auth='public', website=True)
     def portal_register_form(self, **kw):
         countries = request.env['res.country'].sudo().search([])
+        student_grades = request.env['student.grades'].sudo().search([])
 
         # render the form template when this route is accessed
-        return request.render("eschola_core.register_form_template", {'countries': countries})
+        return request.render("eschola_core.register_form_template", {
+            'countries': countries,
+            'student_grades': student_grades
+        })
 
     @http.route('/submit_form', type='http', auth='public', website=True, csrf=False)
     def submit_register_form(self, **kw):
@@ -52,7 +56,7 @@ class NewRegister(http.Controller):
                     'gender': child.get('gender'),
                     'email': child.get('email'),
                     'mobile': child.get('mobile'),
-                    'grade': child.get('grade'),
+                    'student_grade': child.get('student_grade'),
                     'religion': child.get('religion'),
                     'country': child.get('country'),
                     'nationality': child.get('nationality'),

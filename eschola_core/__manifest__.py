@@ -16,7 +16,7 @@ This core app contains all custom modules for eschola. it will install several a
     'version': '1.5.2',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail', 'website', 'web', 'sale', 'contacts', 'hr'],
+    'depends': ['base', 'mail', 'website', 'web', 'sale', 'contacts', 'hr', 'eschola_elearning'],
 
     # always loaded
     'data': [

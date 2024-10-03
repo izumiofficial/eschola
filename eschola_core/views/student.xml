@@ -12,7 +12,7 @@
                             <div t-attf-class="oe_kanban_global_click o_res_partner_kanban">
                                 <a type="open">
                                     <div class="o_kanban_image" style="background:#e6e5e6;">
-                                        <img src="/base/static/img/avatar.png" alt="Student"/>
+                                        <field name="student_img" widget='image' class="oe_avatar m-0" options='{"zoom": true}'/>
                                     </div>
                                     <div class="oe_kanban_details">
                                         <h4>
@@ -31,7 +31,7 @@
                                                 </a>
                                             </li>
                                             <li t-if="record.grade.raw_value">
-                                                <field name="grade"/>
+                                                <field name="student_grade"/>
                                             </li>
                                             <li t-if="record.nationality.raw_value">
                                                 <field name="nationality"/>
@@ -55,7 +55,8 @@
                     <field name="email"/>
                     <field name="birth_date"/>
                     <field name="gender"/>
-                    <field name="grade"/>
+                    <field name="grade" optional="hide"/>
+                    <field name="student_grade"/>
                 </tree>
             </field>
         </record>
@@ -71,6 +72,9 @@
                                 name="create_contact"/>
                     </header>
                     <sheet>
+                        <div class="o_employee_avatar m-0 p-0">
+                            <field name="student_img" widget='image' class="oe_avatar m-0" options='{"zoom": true}'/>
+                        </div>
                         <div class="oe_button_box" name="button_box">
                             <button name="action_view_course"
                                     string="courses" type="object"
@@ -89,7 +93,8 @@
                         <group string="Student Details">
                             <group>
                                 <field name="partner_id" readonly="1"/>
-                                <field name="grade"/>
+                                <field name="student_grade"/>
+                                <field name="grade" invisible="1"/>
                                 <field name="nationality"/>
                                 <field name="country"/>
                                 <field name="religion"/>

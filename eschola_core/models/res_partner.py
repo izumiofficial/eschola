@@ -74,6 +74,7 @@ class ResPartner(models.Model):
                 'email': record.email,
                 'mobile': record.mobile,
                 'gender': record.gender,
+                'student_img': record.image_1920,
                 'partner_id': record.id # create linked partner id to student model
             })
 
