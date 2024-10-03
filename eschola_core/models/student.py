@@ -76,6 +76,16 @@ class Student(models.Model):
             action['domain'] = expression.AND([action['domain'], [('partner_id', 'in', self.partner_id.ids)]])
         return action
 
+    def action_view_attendace(self):
+        action = self.env["ir.actions.actions"]._for_xml_id("eschola_elearning.act_open_attendance_sheet_view")
+        action['display_name'] = _('Courses')
+        # action['domain'] = [('member_status', '!=', 'invited')]
+        if len(self) == 1:
+            action['context'] = {'search_default_student_id': self.partner_id.id}
+        else:
+            action['domain'] = expression.AND([action['domain'], [('student_id', 'in', self.partner_id.ids)]])
+        return action
+
     @api.onchange('name')
     def _update_name(self):
         # if name in student is change, name in res.partner also change/updated

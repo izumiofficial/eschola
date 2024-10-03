@@ -75,8 +75,12 @@
                         </div>
                         <div class="oe_button_box" name="button_box">
                             <button name="action_view_course"
-                                    string="courses" type="object"
+                                    string="Courses" type="object"
                                     icon="fa-university" class="oe_stat_button">
+                            </button>
+                            <button name="action_view_attendace"
+                                    string="Attendance" type="object"
+                                    icon="fa-address-book" class="oe_stat_button">
                             </button>
                         </div>
                         <div class="oe_title">
