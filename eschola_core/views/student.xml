@@ -90,7 +90,7 @@
                         </group>
                         <group string="Student Details">
                             <group>
-                                <field name="partner_id" readonly="1"/>
+                                <field name="partner_id"/>
                                 <field name="student_grades"/>
 <!--                                <field name="grade"/>-->
                                 <field name="nationality"/>
