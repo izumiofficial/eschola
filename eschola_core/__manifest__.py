@@ -16,7 +16,7 @@ This core app contains all custom modules for eschola. it will install several a
     'version': '1.5.2',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mail', 'website', 'web', 'sale', 'contacts', 'hr', 'eschola_elearning'],
+    'depends': ['base', 'mail', 'website', 'web', 'sale', 'contacts', 'hr'],
 
     # always loaded
     'data': [
@@ -28,6 +28,7 @@ This core app contains all custom modules for eschola. it will install several a
         'views/student.xml',
         'views/teacher.xml',
         'views/res_partner.xml',
+        'views/student_grades.xml',
         'views/register_form_template.xml',
         'views/website_my_child_template.xml',
         'views/spm.xml',

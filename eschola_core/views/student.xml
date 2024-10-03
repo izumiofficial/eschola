@@ -28,8 +28,8 @@
                                             <li t-if="record.email.raw_value">
                                                 <field name="email"/>
                                             </li>
-                                            <li t-if="record.student_grade.raw_value">
-                                                <field name="student_grade"/>
+                                            <li t-if="record.student_grades.raw_value">
+                                                <field name="student_grades"/>
                                             </li>
                                             <li t-if="record.nationality.raw_value">
                                                 <field name="nationality"/>
@@ -54,7 +54,7 @@
                     <field name="birth_date"/>
                     <field name="gender"/>
                     <field name="grade" optional="hide"/>
-                    <field name="student_grade"/>
+                    <field name="student_grades"/>
                 </tree>
             </field>
         </record>
@@ -78,10 +78,6 @@
                                     string="Courses" type="object"
                                     icon="fa-university" class="oe_stat_button">
                             </button>
-                            <button name="action_view_attendace"
-                                    string="Attendance" type="object"
-                                    icon="fa-address-book" class="oe_stat_button">
-                            </button>
                         </div>
                         <div class="oe_title">
                             <h1>
@@ -95,8 +91,8 @@
                         <group string="Student Details">
                             <group>
                                 <field name="partner_id" readonly="1"/>
-                                <field name="student_grade"/>
-                                <field name="grade" invisible="1"/>
+                                <field name="student_grades"/>
+<!--                                <field name="grade"/>-->
                                 <field name="nationality"/>
                                 <field name="country"/>
                                 <field name="religion"/>
