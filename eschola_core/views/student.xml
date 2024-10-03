@@ -12,7 +12,7 @@
                             <div t-attf-class="oe_kanban_global_click o_res_partner_kanban">
                                 <a type="open">
                                     <div class="o_kanban_image" style="background:#e6e5e6;">
-                                        <img src="/base/static/img/avatar.png" alt="Student"/>
+                                        <field name="student_img" widget='image' class="oe_avatar m-0" options='{"zoom": true}'/>
                                     </div>
                                     <div class="oe_kanban_details">
                                         <h4>
@@ -72,6 +72,9 @@
                                 name="create_contact"/>
                     </header>
                     <sheet>
+                        <div class="o_employee_avatar m-0 p-0">
+                            <field name="student_img" widget='image' class="oe_avatar m-0" options='{"zoom": true}'/>
+                        </div>
                         <div class="oe_button_box" name="button_box">
                             <button name="action_view_course"
                                     string="courses" type="object"

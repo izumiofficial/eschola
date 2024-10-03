@@ -3,7 +3,7 @@ from odoo.osv import expression
 
 class Student(models.Model):
     _name = 'student'
-    _description = 'To store student records'
+    _description = 'Student'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     is_international = fields.Boolean(string='International Curriculum')
@@ -44,6 +44,8 @@ class Student(models.Model):
     slide_channel_count = fields.Integer(
         'Course Count', compute='_compute_slide_channel_values',
         groups="website_slides.group_website_slides_officer")
+
+    student_img = fields.Image(string='Student Image')
 
     def create_contact(self):
         # Create a new contact (res.partner)
