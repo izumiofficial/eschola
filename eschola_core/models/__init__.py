@@ -7,3 +7,4 @@ from . import student
 from . import registered_child
 from . import res_partner
 from . import teacher
+from . import spm

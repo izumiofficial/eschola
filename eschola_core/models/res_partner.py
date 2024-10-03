@@ -6,8 +6,8 @@ class ResPartner(models.Model):
     admission_register_id = fields.Many2one('admission.register', string="Admission Register")
 
     gender = fields.Selection([
-        ('male', 'Male'),
-        ('female', 'Female'),
+        ('m', 'Male'),
+        ('f', 'Female'),
     ], string='Gender')
 
     std_created = fields.Boolean(string='Student Created', default=False)
@@ -27,6 +27,8 @@ class ResPartner(models.Model):
         ('parent', 'Parent'),
         ('student', 'Student'),
     ], string='User Type')  # Make it computed and stored
+
+    student_ids = fields.One2many('student', 'partner_id', string="Students")
 
     @api.onchange('user_type')
     def _onchange_user_type(self):
@@ -72,6 +74,7 @@ class ResPartner(models.Model):
                 'email': record.email,
                 'mobile': record.mobile,
                 'gender': record.gender,
+                'partner_id': record.id # create linked partner id to student model
             })
 
             self._create_portal_user(student.partner_id.id, record.email)
@@ -87,3 +90,38 @@ class ResPartner(models.Model):
 
             self._create_portal_user(guardian.partner_id.id, record.email)
             record.gdn_created = True
+
+    @api.onchange('name')
+    def _update_name(self):
+        # if name in student is change, name in student_ids also change/updated
+        for record in self:
+            if record.student_ids:
+                record.student_ids.write({'name': record.name})
+
+    @api.onchange('country')
+    def _update_country(self):
+        # if name in country is change, country in student_ids also change/updated
+        for record in self:
+            for student in record.student_ids:
+                student.country = record.country_id
+
+    @api.onchange('email')
+    def _update_email(self):
+        # if name in email is change, email in student_ids also change/updated
+        for record in self:
+            for student in record.student_ids:
+                student.email = record.email
+
+    @api.onchange('mobile')
+    def _update_mobile(self):
+        # if name in mobile is change, mobile in student_ids also change/updated
+        for record in self:
+            if record.student_ids:
+                record.student_ids.write({'mobile': record.mobile})
+
+    @api.onchange('gender')
+    def _update_gender(self):
+        # if name in gender is change, gender in student_ids also change/updated
+        for record in self:
+            for student in record.student_ids:
+                student.gender = record.gender

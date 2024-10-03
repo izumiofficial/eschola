@@ -1,4 +1,5 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.osv import expression
 
 class Student(models.Model):
     _name = 'student'
@@ -34,13 +35,22 @@ class Student(models.Model):
 
     course_id = fields.Many2one('slide.channel', string='Course')
 
+    slide_channel_ids = fields.Many2many(
+        'slide.channel', string='eLearning Courses',
+        compute='_compute_slide_channel_values',
+        search='_search_slide_channel_ids',
+        groups="website_slides.group_website_slides_officer")
+    slide_channel_count = fields.Integer(
+        'Course Count', compute='_compute_slide_channel_values',
+        groups="website_slides.group_website_slides_officer")
+
     def create_contact(self):
         # Create a new contact (res.partner)
         partner = self.env['res.partner'].create({
             'name': self.name,
             'email': self.email,
             'mobile': self.mobile,
-            'country_id': self.country.id
+            'country_id': self.country.id,
         })
 
         # Create a portal user for the new contact
@@ -54,15 +64,47 @@ class Student(models.Model):
         self.status = 'confirm'
 
     def action_view_course(self):
-        # smart button function to view course taken from slide.channel.partner
-        self.ensure_one()  # Ensure only one record is being processed
-
-        action = {
-            'type': 'ir.actions.act_window',
-            'res_model': 'slide.channel',  # Model to open
-            'res_id': self.course_id.id,  # ID of the specific record
-            'view_mode': 'form',  # Open in form view
-            'target': 'current',  # Open in the same window
-        }
-
+        action = self.env["ir.actions.actions"]._for_xml_id("website_slides.slide_channel_partner_action")
+        action['display_name'] = _('Courses')
+        action['domain'] = [('member_status', '!=', 'invited')]
+        if len(self) == 1:
+            action['context'] = {'search_default_partner_id': self.partner_id.id}
+        else:
+            action['domain'] = expression.AND([action['domain'], [('partner_id', 'in', self.partner_id.ids)]])
         return action
+
+    @api.onchange('name')
+    def _update_name(self):
+        # if name in student is change, name in res.partner also change/updated
+        for record in self:
+            if record.partner_id:
+                record.partner_id.name = record.name
+
+    @api.onchange('country')
+    def _update_country(self):
+        # if name in country is change, country in res.partner also change/updated
+        for record in self:
+            if record.partner_id:
+                record.partner_id.country_id = record.country
+
+    @api.onchange('email')
+    def _update_email(self):
+        # if name in email is change, email in res.partner also change/updated
+        for record in self:
+            if record.partner_id:
+                record.partner_id.email = record.email
+
+    @api.onchange('mobile')
+    def _update_mobile(self):
+        # if name in mobile is change, mobile in res.partner also change/updated
+        for record in self:
+            if record.partner_id:
+                record.partner_id.mobile = record.mobile
+
+    @api.onchange('gender')
+    def _update_gender(self):
+        # if name in gender is change, gender in res.partner also change/updated
+        for record in self:
+            if record.partner_id:
+                record.partner_id.gender = record.gender
+

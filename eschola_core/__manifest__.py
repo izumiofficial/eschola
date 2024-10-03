@@ -30,6 +30,7 @@ This core app contains all custom modules for eschola. it will install several a
         'views/res_partner.xml',
         'views/register_form_template.xml',
         'views/website_my_child_template.xml',
+        'views/spm.xml',
         'views/activation_email_sent.xml',
         'views/activation_email_template.xml',
     ],

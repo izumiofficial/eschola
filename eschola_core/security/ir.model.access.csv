@@ -5,5 +5,6 @@ eschola_core.access_student,access_student,eschola_core.model_student,base.group
 eschola_core.access_registered_child,access_registered_child,eschola_core.model_registered_child,base.group_user,1,1,1,1
 eschola_core.access_admission,access_admission,eschola_core.model_admission,base.group_user,1,1,1,1
 eschola_core.access_teacher,access_teacher,eschola_core.model_teacher,base.group_user,1,1,1,1
+eschola_core.access_spm,access_spm,eschola_core.model_spm,base.group_user,1,1,1,1
 
 public_eschola_core.access_teacher,access_teacher,eschola_core.model_teacher,base.group_public,1,0,0,0
