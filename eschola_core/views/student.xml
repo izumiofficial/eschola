@@ -12,29 +12,29 @@
                             <div t-attf-class="oe_kanban_global_click o_res_partner_kanban">
                                 <a type="open">
                                     <div class="o_kanban_image" style="background:#e6e5e6;">
-                                            <img src="/base/static/img/avatar.png" alt="Student" />
+                                        <img src="/base/static/img/avatar.png" alt="Student"/>
                                     </div>
                                     <div class="oe_kanban_details">
                                         <h4>
-                                            <field name="name" />
+                                            <field name="name"/>
                                         </h4>
                                         <ul>
                                             <li t-if="record.gender.raw_value">
-                                                <field name="gender" />
+                                                <field name="gender"/>
                                             </li>
                                             <li t-if="record.mobile.raw_value">
-                                                <field name="mobile" />
+                                                <field name="mobile"/>
                                             </li>
                                             <li t-if="record.email.raw_value">
                                                 <a t-attf-href="mailto:#{record.email.value}">
-                                                    <field name="email" />
+                                                    <field name="email"/>
                                                 </a>
                                             </li>
                                             <li t-if="record.grade.raw_value">
-                                                <field name="grade" />
+                                                <field name="grade"/>
                                             </li>
                                             <li t-if="record.nationality.raw_value">
-                                                <field name="nationality" />
+                                                <field name="nationality"/>
                                             </li>
                                         </ul>
                                     </div>
@@ -73,7 +73,7 @@
                     <sheet>
                         <div class="oe_button_box" name="button_box">
                             <button name="action_view_course"
-                                    type="object" string="Course"
+                                    string="courses" type="object"
                                     icon="fa-university" class="oe_stat_button">
                             </button>
                         </div>
@@ -88,6 +88,7 @@
                         </group>
                         <group string="Student Details">
                             <group>
+                                <field name="partner_id" readonly="1"/>
                                 <field name="grade"/>
                                 <field name="nationality"/>
                                 <field name="country"/>

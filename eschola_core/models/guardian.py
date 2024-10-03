@@ -14,3 +14,4 @@ class Guardian(models.Model):
     country = fields.Many2one('res.country', string='Country of Residence')
 
     student_ids = fields.One2many('student', 'primary_guardian_id', string='Child')
+    other_guardian = fields.Many2one() # in
