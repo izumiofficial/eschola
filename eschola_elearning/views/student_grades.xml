@@ -20,7 +20,7 @@
         <field name="domain">[]</field>
         <field name="context">{}</field>
     </record>
-    <menuitem name="Student Attendance"
+    <menuitem name="Student Grades"
               id="attendance_view"
               parent="website_slides.website_slides_menu_configuration"
               sequence="10"

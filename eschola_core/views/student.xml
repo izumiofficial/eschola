@@ -31,7 +31,7 @@
                                                 </a>
                                             </li>
                                             <li t-if="record.grade.raw_value">
-                                                <field name="grade"/>
+                                                <field name="student_grade"/>
                                             </li>
                                             <li t-if="record.nationality.raw_value">
                                                 <field name="nationality"/>
@@ -55,7 +55,8 @@
                     <field name="email"/>
                     <field name="birth_date"/>
                     <field name="gender"/>
-                    <field name="grade"/>
+                    <field name="grade" optional="hide"/>
+                    <field name="student_grade"/>
                 </tree>
             </field>
         </record>
@@ -89,7 +90,8 @@
                         <group string="Student Details">
                             <group>
                                 <field name="partner_id" readonly="1"/>
-                                <field name="grade"/>
+                                <field name="student_grade"/>
+                                <field name="grade" invisible="1"/>
                                 <field name="nationality"/>
                                 <field name="country"/>
                                 <field name="religion"/>

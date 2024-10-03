@@ -16,6 +16,7 @@ class Student(models.Model):
         ('m', 'Male'),
         ('f', 'Female')
     ], string='Gender', default='m')
+    student_grade = fields.Many2one('student.grades', string='Student Grade')
     grade = fields.Selection([
         ('grade_7', 'Grade 7'),
         ('grade_8', 'Grade 8'),
