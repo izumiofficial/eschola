@@ -105,7 +105,7 @@
                 name="Registered"
                 parent="admission_root"
                 action="action_register"
-                sequence="2"
+                sequence="1"
         />
     </data>
 </odoo>
