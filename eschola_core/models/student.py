@@ -111,3 +111,10 @@ class Student(models.Model):
             if record.partner_id:
                 record.partner_id.gender = record.gender
 
+    @api.onchange('student_img')
+    def _update_image(self):
+        # if picture is change, picture in res.partner also change
+        for record in self:
+            if record.partner_id:
+                record.partner_id.image_1920 = record.student_img
+

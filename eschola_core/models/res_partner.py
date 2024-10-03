@@ -126,3 +126,10 @@ class ResPartner(models.Model):
         for record in self:
             for student in record.student_ids:
                 student.gender = record.gender
+
+    @api.onchange('image_1920')
+    def _update_image(self):
+        # if picture is change, picture in res.partner also change
+        for record in self:
+            for student in record.student_ids:
+                student.student_img = record.image_1920
