@@ -26,11 +26,9 @@
                                                 <field name="mobile"/>
                                             </li>
                                             <li t-if="record.email.raw_value">
-                                                <a t-attf-href="mailto:#{record.email.value}">
-                                                    <field name="email"/>
-                                                </a>
+                                                <field name="email"/>
                                             </li>
-                                            <li t-if="record.grade.raw_value">
+                                            <li t-if="record.student_grade.raw_value">
                                                 <field name="student_grade"/>
                                             </li>
                                             <li t-if="record.nationality.raw_value">
