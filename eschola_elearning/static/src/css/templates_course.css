@@ -1,6 +1,6 @@
 .sessions-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);  /* Fixed number of 3 equal columns */
+    grid-template-columns: repeat(4, 1fr);  /* Fixed number of 4 equal columns */
     gap: 1rem;  /* Spacing between the "bubbles" */
 }
 

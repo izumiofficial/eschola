@@ -115,6 +115,16 @@
                                                 <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
                                             </t>
                                         </p>
+
+                                        <!-- Display the status of the session -->
+                                        <p>
+                                            <t t-if="session.state == 'draft'">
+                                                Scheduled
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc="dict(session._fields['state'].selection).get(session.state)"/>
+                                            </t>
+                                        </p>
                                     </div>
                                 </t>
                             </t>
