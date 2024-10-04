@@ -74,9 +74,24 @@
                             <field name="student_img" widget='image' class="oe_avatar m-0" options='{"zoom": true}'/>
                         </div>
                         <div class="oe_button_box" name="button_box">
-                            <button name="action_view_course"
-                                    string="Courses" type="object"
+                            <button name="action_view_course" type="object"
                                     icon="fa-university" class="oe_stat_button">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_text">
+                                        Courses
+                                    </span>
+                                    <field name="slide_channel_count" class="o_stat_value"/>
+                                </div>
+                            </button>
+                            <button name="action_view_attendance" type="object"
+                                    icon="fa-address-book" class="oe_stat_button"
+                                    context="{'selected_student_id': active_id}">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_text">
+                                        Attendance
+                                    </span>
+                                    <field name="course_attendance_count" class="o_stat_value"/>
+                                </div>
                             </button>
                         </div>
                         <div class="oe_title">
@@ -90,9 +105,9 @@
                         </group>
                         <group string="Student Details">
                             <group>
-                                <field name="partner_id"/>
+                                <field name="partner_id" readonly="1"/>
                                 <field name="student_grades"/>
-<!--                                <field name="grade"/>-->
+                                <!--                                <field name="grade"/>-->
                                 <field name="nationality"/>
                                 <field name="country"/>
                                 <field name="religion"/>

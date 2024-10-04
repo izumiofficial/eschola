@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="slide_channel_invite_view_form_inherit" model="ir.ui.view">
+            <field name="name">slide.channel.invite.view.form.inherit</field>
+            <field name="model">slide.channel.invite</field>
+            <field name="inherit_id" ref="website_slides.slide_channel_invite_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_ids']" position="attributes">
+                    <attribute name="domain">[('std_created', '=', True)]</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
