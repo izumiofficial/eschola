@@ -2,9 +2,17 @@
 <odoo>
     <data>
         <template id="course_sidebar_inherit" inherit_id="website_slides.course_sidebar">
-            <!-- to replace label Responsible to SPM -->
-            <xpath expr="//tr[@t-if='channel.user_id']/th" position="replace">
-                <th class="border-top-0">SPM</th>
+            <!-- to replace label Responsible to SPM and hide the SPM name if the user is not logged in -->
+            <xpath expr="//tr[@t-if='channel.user_id']" position="replace">
+                <tr t-if="channel.user_id">
+                    <th class="border-top-0">SPM</th>
+                    <td class="border-top-0 text-break">
+                        <!-- Display the name if the user is an internal user or a portal user -->
+                        <span t-if="request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal')" t-esc="channel.user_id.display_name"/>
+                        <!-- Display ****** if the user is a public user (not logged in) -->
+                        <span t-if="not (request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal'))">******</span>
+                    </td>
+                </tr>
             </xpath>
 
             <!-- to add necessary information of the course -->
@@ -33,17 +41,34 @@
 
             <!-- to remove the Last Updated column  -->
             <xpath expr="//div[@id='o_wslides_sidebar_collapse']/table/tr[2]" position="replace"/>
+
+            <!-- to display the Completion Time value only if the user is logged in -->
+            <xpath expr="//tr[@t-if='channel.total_time']/td" position="replace">
+                <td class="border-top-0">
+                    <t t-if="request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal')" class="fw-bold" t-esc="channel.total_time" t-options="{'widget': 'duration', 'unit': 'hour', 'round': 'minute'}"/>
+                    <t t-if="not (request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal'))">******</t>
+                </td>
+            </xpath>
+
+            <!-- to display the Members value only if the user is logged in -->
+            <xpath expr="//tr[8]/td" position="replace">
+                <td>
+                    <t t-if="request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal')" t-esc="channel.members_count"/>
+                    <t t-if="not (request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal'))">******</t>
+                </td>
+            </xpath>
         </template>
 
          <template id="course_main_inherit" inherit_id="website_slides.course_main">
              <!-- to add new tab called Sessions  -->
              <xpath expr="//div[@class='o_wslides_course_main']/div/div/div[2]/ul/li[1]" position="after">
-                 <li class="nav-item" role="presentation">
+                <!-- to display the 'Sessions' tab only if the user is logged in -->
+                <li t-if="request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal')" class="nav-item" role="presentation">
                     <a t-att-class="'nav-link %s' % ('active' if active_tab == 'sessions' else '')"
                         id="sessions-tab" data-bs-toggle="pill" href="#sessions" role="tab" aria-controls="sessions"
                         t-att-aria-selected="'true' if active_tab == 'sessions' else 'false'">Sessions</a>
                 </li>
-             </xpath>
+            </xpath>
 
              <!-- to design the template of Sessions  -->
              <xpath expr="//div[hasclass('tab-content')]" position="inside">
@@ -88,6 +113,16 @@
                                                 <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.start_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
                                                 &#x2192;
                                                 <t t-esc="request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[0] + ':' + request.env['ir.qweb.field.datetime'].value_to_html(session.end_datetime, {'widget': 'time_only', 'time_only': True}).split(':')[1]"/>
+                                            </t>
+                                        </p>
+
+                                        <!-- Display the status of the session -->
+                                        <p>
+                                            <t t-if="session.state == 'draft'">
+                                                Scheduled
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc="dict(session._fields['state'].selection).get(session.state)"/>
                                             </t>
                                         </p>
                                     </div>
