@@ -37,6 +37,7 @@
         'views/website_slides_templates_course.xml',
         'wizard/generate_timetable_view.xml',
         'wizard/session_confirmation.xml',
+        'wizard/slide_channel_invite_views.xml',
     ],
 
     'assets': {
