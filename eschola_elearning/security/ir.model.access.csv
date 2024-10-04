@@ -10,6 +10,10 @@ eschola_elearning.access_absent_type,access_absent_type,eschola_elearning.model_
 eschola_elearning.access_attendance_line,access_attendance_line,eschola_elearning.model_attendance_line,base.group_user,1,1,1,1
 eschola_elearning.access_course_attendance,access_course_attendance,eschola_elearning.model_course_attendance,base.group_user,1,1,1,1
 
+portal_eschola_elearning.access_term,access_term,eschola_elearning.model_term,base.group_portal,1,0,0,0
+portal_eschola_elearning.access_school_year,access_school_year,eschola_elearning.model_school_year,base.group_portal,1,0,0,0
+portal_eschola_elearning.access_session,access_session,eschola_elearning.model_session,base.group_portal,1,0,0,0
+
 public_eschola_elearning.access_term,access_term,eschola_elearning.model_term,base.group_public,1,0,0,0
 public_eschola_elearning.access_school_year,access_school_year,eschola_elearning.model_school_year,base.group_public,1,0,0,0
 public_eschola_elearning.access_session,access_session,eschola_elearning.model_session,base.group_public,1,0,0,0
