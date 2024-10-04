@@ -16,8 +16,8 @@
               name="Teacher"
               sequence="1"
               web_icon="eschola_core,static/src/img/admission.png"/>
-    <menuitem id="spm_root"
-              name="SPM"
-              sequence="1"
-              web_icon="eschola_core,static/src/img/spm.png"/>
+<!--    <menuitem id="spm_root"-->
+<!--              name="SPM"-->
+<!--              sequence="1"-->
+<!--              web_icon="eschola_core,static/src/img/spm.png"/>-->
 </odoo>

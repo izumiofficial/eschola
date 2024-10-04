@@ -42,8 +42,12 @@ class Student(models.Model):
         search='_search_slide_channel_ids',
         groups="website_slides.group_website_slides_officer")
     slide_channel_count = fields.Integer(
-        'Course Count', compute='_compute_slide_channel_values',
-        groups="website_slides.group_website_slides_officer")
+        'Course Count', compute='_compute_course_count')
+
+    course_attendance_count = fields.Integer(
+        string='Attendance Sheets',
+        compute='_compute_attendance_count'
+    )
 
     student_img = fields.Image(string='Student Image')
 
@@ -75,6 +79,42 @@ class Student(models.Model):
         else:
             action['domain'] = expression.AND([action['domain'], [('partner_id', 'in', self.partner_id.ids)]])
         return action
+
+    def _compute_course_count(self):
+        for rec in self:
+            count = self.env['slide.channel.partner'].search_count([('partner_id', 'in', self.partner_id.ids)])
+            rec.slide_channel_count = count
+
+    def action_view_attendance(self):
+        return {
+            'name': _('Attendance Sheets'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'course.attendance',
+            'domain': [('student_id', '=', self.partner_id.id)],
+            'view_mode': 'tree',
+            'target': 'current',
+            'context': {
+                'create': False
+            }
+        }
+
+    def _compute_attendance_count(self):
+        for rec in self:
+            count = self.env['course.attendance'].search_count([('student_id', '=', rec.partner_id.id)])
+            rec.course_attendance_count = count
+
+    def action_view_session(self):
+        return {
+            'name': _('Attendance Sheets'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'session',
+            'domain': [('course_id', '=', self.partner_id.id)],
+            'view_mode': 'tree',
+            'target': 'current',
+            'context': {
+                'create': False
+            }
+        }
 
     @api.onchange('name')
     def _update_name(self):
