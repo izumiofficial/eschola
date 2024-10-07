@@ -62,8 +62,7 @@
          <template id="course_main_inherit" inherit_id="website_slides.course_main">
              <!-- to add new tab called Sessions  -->
              <xpath expr="//div[@class='o_wslides_course_main']/div/div/div[2]/ul/li[1]" position="after">
-                <!-- to display the 'Sessions' tab only if the user is logged in -->
-                <li t-if="request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal')" class="nav-item" role="presentation">
+                <li class="nav-item" role="presentation">
                     <a t-att-class="'nav-link %s' % ('active' if active_tab == 'sessions' else '')"
                         id="sessions-tab" data-bs-toggle="pill" href="#sessions" role="tab" aria-controls="sessions"
                         t-att-aria-selected="'true' if active_tab == 'sessions' else 'false'">Sessions</a>
