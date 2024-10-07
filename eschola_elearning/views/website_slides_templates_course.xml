@@ -121,7 +121,12 @@
                                         </p>
 
                                         <!-- Display the status of the session -->
-                                        <p>
+                                        <p t-att-class="'%s' % (
+                                            'text-secondary' if session.state == 'draft' else
+                                            'text-success' if session.state == 'confirm' else
+                                            'text-info' if session.state == 'done' else
+                                            'text-danger' if session.state == 'cancel' else ''
+                                        )">
                                             <t t-if="session.state == 'draft'">
                                                 Scheduled
                                             </t>
