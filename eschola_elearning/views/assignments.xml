@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_assignments_tree" model="ir.ui.view">
+        <field name="name">assignments.tree</field>
+        <field name="model">assignments</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="Assignments">
+                <field name="name"/>
+                <field name="active" optional="hide"/>
+                <field name="weightage"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_assignments_form" model="ir.ui.view">
+    <field name="name">assignments.form</field>
+    <field name="model">assignments</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Name" required="1"/>
+                        </h1>
+                    </div>
+                <group>
+                    <field name="active"/>
+                    <field name="weightage"/>
+                    <field name="grading_structure_id"/>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+    <record model="ir.actions.act_window" id="act_open_assignments">
+        <field name="name">Assignments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">assignments</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem name="Assignments"
+              id="assignment_view"
+              parent="website_slides.website_slides_menu_configuration"
+              sequence="12"
+              action="act_open_assignments"/>
+</odoo>

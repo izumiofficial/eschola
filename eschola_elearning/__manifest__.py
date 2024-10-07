@@ -32,6 +32,8 @@
         'views/session_views.xml',
         'views/timing_view.xml',
         'views/absent_type.xml',
+        'views/assignments.xml',
+        'views/grading_structure.xml',
         'views/attendance_line_view.xml',
         'views/attendance_sheet_view.xml',
         'views/website_slides_templates_course.xml',
