@@ -19,7 +19,12 @@
             <xpath expr="//div[@id='o_wslides_sidebar_collapse']/table/tr[2]" position="after">
                 <tr t-if="channel.teacher_id">
                     <th class="border-top-0">Teacher</th>
-                    <td class="border-top-0 text-break"><span t-esc="channel.teacher_id.name"/></td>
+                    <td class="border-top-0 text-break">
+                        <!-- Display the teacher's name if the user is an internal user or a portal user -->
+                        <span t-if="request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal')" t-esc="channel.teacher_id.name"/>
+                        <!-- Display ****** if the user is a public user (not logged in) -->
+                        <span t-if="not (request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal'))">******</span>
+                    </td>
                 </tr>
                 <tr t-if="channel.term_id">
                     <th class="border-top-0">Term</th>
