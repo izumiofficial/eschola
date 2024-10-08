@@ -11,6 +11,7 @@ eschola_elearning.access_attendance_line,access_attendance_line,eschola_elearnin
 eschola_elearning.access_course_attendance,access_course_attendance,eschola_elearning.model_course_attendance,base.group_user,1,1,1,1
 eschola_elearning.access_assignments,access_assignments,eschola_elearning.model_assignments,base.group_user,1,1,1,1
 eschola_elearning.access_grading_structure,access_grading_structure,eschola_elearning.model_grading_structure,base.group_user,1,1,1,1
+eschola_elearning.access_grading_line,access_grading_line,eschola_elearning.model_grading_line,base.group_user,1,1,1,1
 
 portal_eschola_elearning.access_term,access_term,eschola_elearning.model_term,base.group_portal,1,0,0,0
 portal_eschola_elearning.access_school_year,access_school_year,eschola_elearning.model_school_year,base.group_portal,1,0,0,0

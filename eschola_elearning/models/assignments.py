@@ -5,5 +5,3 @@ class Assignments(models.Model):
 
     name = fields.Char(string='Assignment Type')
     active = fields.Boolean(string='Active')
-
-    grading_structure_id = fields.Many2one('grading.structure', string='Grading Structure')
