@@ -130,7 +130,9 @@ class Student(models.Model):
             'view_mode': 'tree',
             'target': 'current',
             'context': {
-                'create': False
+                'create': False,
+                'search_default_group_by_school_year_id': 1,
+                'search_default_group_by_course': 1,
             }
         }
 
