@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_student_grading_tree" model="ir.ui.view">
+        <field name="name">student.grading.tree</field>
+        <field name="model">student.grading</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="Student Grading">
+                <field name="name"/>
+                <field name="course_id"/>
+                <field name="school_year_id"/>
+                <field name="academic_stage"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_student_grading_form" model="ir.ui.view">
+        <field name="name">student.grading.form</field>
+        <field name="model">student.grading</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Student Grading">
+                <header>
+                    <button type="object" name="start_grading"
+                            invisible="state != 'draft'" string="Start Grading"
+                            class="oe_highlight"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirm"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_grading" type="object" class="oe_stat_button" icon="fa-book" invisible="state != 'confirm'">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Students</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="course_id"/>
+                            <field name="school_year_id"/>
+                            <field name="academic_stage"/>
+                        </group>
+                        <group>
+                            <field name="assignments_id"/>
+                            <field name="assignment_date"/>
+                            <field name="total_marks"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_open_student_grading">
+        <field name="name">Student Grading</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">student.grading</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem name="Student Grading"
+              id="student_grading_view"
+              parent="website_slides.website_slides_menu_courses"
+              sequence="10"
+              action="act_open_student_grading"/>
+</odoo>

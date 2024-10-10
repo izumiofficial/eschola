@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_grading_line_tree" model="ir.ui.view">
+        <field name="name">grading.line.tree</field>
+        <field name="model">grading.line</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="Assignments">
+                <field name="name"/>
+                <field name="assignments_id"/>
+                <field name="weightage"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_grading_line_form" model="ir.ui.view">
+        <field name="name">grading.line.form</field>
+        <field name="model">grading.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="assignments_id"/>
+                        <field name="weightage"/>
+                        <field name="grading_structure_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_open_grading_lines">
+        <field name="name">Grading Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">grading.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem name="Grading Lines"
+              id="grading_lines_view"
+              parent="website_slides.website_slides_menu_configuration"
+              sequence="14"
+              action="act_open_grading_lines"/>
+</odoo>

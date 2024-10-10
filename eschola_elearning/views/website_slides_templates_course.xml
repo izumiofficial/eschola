@@ -19,7 +19,12 @@
             <xpath expr="//div[@id='o_wslides_sidebar_collapse']/table/tr[2]" position="after">
                 <tr t-if="channel.teacher_id">
                     <th class="border-top-0">Teacher</th>
-                    <td class="border-top-0 text-break"><span t-esc="channel.teacher_id.name"/></td>
+                    <td class="border-top-0 text-break">
+                        <!-- Display the teacher's name if the user is an internal user or a portal user -->
+                        <span t-if="request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal')" t-esc="channel.teacher_id.name"/>
+                        <!-- Display ****** if the user is a public user (not logged in) -->
+                        <span t-if="not (request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal'))">******</span>
+                    </td>
                 </tr>
                 <tr t-if="channel.term_id">
                     <th class="border-top-0">Term</th>
@@ -62,8 +67,7 @@
          <template id="course_main_inherit" inherit_id="website_slides.course_main">
              <!-- to add new tab called Sessions  -->
              <xpath expr="//div[@class='o_wslides_course_main']/div/div/div[2]/ul/li[1]" position="after">
-                <!-- to display the 'Sessions' tab only if the user is logged in -->
-                <li t-if="request.env.user.has_group('base.group_user') or request.env.user.has_group('base.group_portal')" class="nav-item" role="presentation">
+                <li class="nav-item" role="presentation">
                     <a t-att-class="'nav-link %s' % ('active' if active_tab == 'sessions' else '')"
                         id="sessions-tab" data-bs-toggle="pill" href="#sessions" role="tab" aria-controls="sessions"
                         t-att-aria-selected="'true' if active_tab == 'sessions' else 'false'">Sessions</a>
@@ -117,7 +121,12 @@
                                         </p>
 
                                         <!-- Display the status of the session -->
-                                        <p>
+                                        <p t-att-class="'%s' % (
+                                            'text-secondary' if session.state == 'draft' else
+                                            'text-success' if session.state == 'confirm' else
+                                            'text-info' if session.state == 'done' else
+                                            'text-danger' if session.state == 'cancel' else ''
+                                        )">
                                             <t t-if="session.state == 'draft'">
                                                 Scheduled
                                             </t>

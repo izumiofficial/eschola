@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_assignments_tree" model="ir.ui.view">
+        <field name="name">assignments.tree</field>
+        <field name="model">assignments</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="Assignments" editable="bottom">
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_open_assignments">
+        <field name="name">Assignments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">assignments</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem name="Assignments"
+              id="assignment_view"
+              parent="website_slides.website_slides_menu_configuration"
+              sequence="12"
+              action="act_open_assignments"/>
+</odoo>
