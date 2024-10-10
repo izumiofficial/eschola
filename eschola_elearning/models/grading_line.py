@@ -3,7 +3,7 @@ from odoo import api, fields, models
 class GradingLine(models.Model):
     _name = 'grading.line'
 
-    name = fields.Char(string='Assignment Code')
+    name = fields.Char(string='Code')
     assignments_id = fields.Many2one('assignments', string='Assignment Type')
     weightage = fields.Integer(string='Weightage')
 
