@@ -43,6 +43,14 @@
                                     <field name="weightage"/>
                                 </tree>
                             </field>
+                            <group>
+                                <group>
+
+                                </group>
+                                <group class="oe_subtotal_footer" colspan="2">
+                                    <field name="total_weightage" readonly="1"/>
+                                </group>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>

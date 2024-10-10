@@ -93,16 +93,16 @@
             </field>
         </record>
 
-<!--        <record id="view_attendance_sheet_search" model="ir.ui.view">-->
-<!--            <field name="name">attendance.sheet.search</field>-->
-<!--            <field name="model">course.attendance</field>-->
-<!--            <field name="priority" eval="8"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <search string="Attendance Sheet">-->
-<!--                    <field name="attendance_date"/>-->
-<!--                </search>-->
-<!--            </field>-->
-<!--        </record>-->
+        <!--        <record id="view_attendance_sheet_search" model="ir.ui.view">-->
+        <!--            <field name="name">attendance.sheet.search</field>-->
+        <!--            <field name="model">course.attendance</field>-->
+        <!--            <field name="priority" eval="8"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <search string="Attendance Sheet">-->
+        <!--                    <field name="attendance_date"/>-->
+        <!--                </search>-->
+        <!--            </field>-->
+        <!--        </record>-->
 
         <record model="ir.actions.act_window" id="act_open_attendance_sheet_view">
             <field name="name">Attendance Sheets</field>

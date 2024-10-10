@@ -38,6 +38,8 @@
         'views/grading_line.xml',
         'views/attendance_line_view.xml',
         'views/attendance_sheet_view.xml',
+        'views/student_grading.xml',
+        'views/grading.xml',
         'views/website_slides_templates_course.xml',
         'wizard/generate_timetable_view.xml',
         'wizard/session_confirmation.xml',

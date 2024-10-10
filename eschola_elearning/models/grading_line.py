@@ -5,7 +5,7 @@ class GradingLine(models.Model):
 
     name = fields.Char(string='Code')
     assignments_id = fields.Many2one('assignments', string='Assignment Type')
-    weightage = fields.Integer(string='Weightage')
+    weightage = fields.Integer(string='Weightage %')
 
     grading_structure_id = fields.Many2one('grading.structure', string='Grading Structure')
 

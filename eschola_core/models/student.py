@@ -49,6 +49,11 @@ class Student(models.Model):
         compute='_compute_attendance_count'
     )
 
+    grading_count = fields.Integer(
+        string='Grading Sheets',
+        compute='_compute_grading_count'
+    )
+
     student_img = fields.Image(string='Student Image')
 
     def create_contact(self):
@@ -115,6 +120,24 @@ class Student(models.Model):
                 'create': False
             }
         }
+
+    def action_view_grading(self):
+        return {
+            'name': _('Grading Sheets'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'grading',
+            'domain': [('student_id', '=', self.partner_id.id)],
+            'view_mode': 'tree',
+            'target': 'current',
+            'context': {
+                'create': False
+            }
+        }
+
+    def _compute_grading_count(self):
+        for rec in self:
+            count = self.env['grading'].search_count([('student_id', '=', rec.partner_id.id)])
+            rec.grading_count = count
 
     @api.onchange('name')
     def _update_name(self):
