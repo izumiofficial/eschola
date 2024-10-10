@@ -22,7 +22,7 @@
             <form string="Student Grading">
                 <header>
                     <button type="object" name="start_grading"
-                            invisible="state != 'draft'" string="Start Grading"
+                            invisible="state != 'draft'" string="Generate Grading"
                             class="oe_highlight"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,confirm"/>

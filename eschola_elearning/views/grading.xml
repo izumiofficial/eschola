@@ -17,7 +17,7 @@
                 <field name="scored_marks"/>
                 <field name="total_marks" readonly="1"/>
                 <field name="mark_percent"/>
-                <field name="state"/>
+                <field name="state" required="1"/>
             </tree>
         </field>
     </record>

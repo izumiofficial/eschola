@@ -14,7 +14,7 @@ class GradingStructure(models.Model):
 
     total_weightage = fields.Integer(string='Total %', compute='_compute_total_weightage')  # calculate the weightage from grading_line_ids and show error if exceeding 100
 
-    @api.depends('grading_line_ids.weightage')
+    @api.onchange('grading_line_ids.weightage')
     def _compute_total_weightage(self):
         for record in self:
             if record.grading_line_ids:  # Only calculate if there are grading lines
