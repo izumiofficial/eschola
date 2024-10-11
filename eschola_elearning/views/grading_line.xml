@@ -39,9 +39,9 @@
         <field name="context">{}</field>
     </record>
 
-    <menuitem name="Grading Lines"
-              id="grading_lines_view"
-              parent="website_slides.website_slides_menu_configuration"
-              sequence="14"
-              action="act_open_grading_lines"/>
+<!--    <menuitem name="Grading Lines"-->
+<!--              id="grading_lines_view"-->
+<!--              parent="website_slides.website_slides_menu_configuration"-->
+<!--              sequence="14"-->
+<!--              action="act_open_grading_lines"/>-->
 </odoo>

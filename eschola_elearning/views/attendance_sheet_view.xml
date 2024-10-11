@@ -20,7 +20,8 @@
                     <field name="state" readonly="1" widget="badge"
                            decoration-success="state=='done'"
                            decoration-muted="state=='draft'"/>
-                    <button name="attendance_done" type="object" string="Checked" icon="fa-check" invisible="state == 'done' or absent_type == False"/>
+                    <button name="attendance_done" type="object" string="Checked" icon="fa-check"
+                            invisible="state == 'done' or absent_type == False"/>
                 </tree>
             </field>
         </record>
@@ -67,6 +68,26 @@
             </field>
         </record>
 
+        <record id="view_attendance_pivot" model="ir.ui.view">
+            <field name="name">attendance.sheet.pivot</field>
+            <field name="model">course.attendance</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <pivot string="Attendance Analysis">
+                    <field name="name"/>
+                    <field name="student_id"/>
+                    <field name="course_id" type="row"/>
+                    <field name="session_id"/>
+                    <field name="absent_type" type="col"/>
+                    <field name="camera_on" type="col"/>
+                    <field name="participation" type="col"/>
+                    <field name="remarks"/>
+                    <field name="attendance_date" type="row"/>
+                    <field name="state"/>
+                </pivot>
+            </field>
+        </record>
+
         <record id="view_attendance_sheet_search" model="ir.ui.view">
             <field name="name">attendance.sheet.search</field>
             <field name="model">course.attendance</field>
@@ -82,8 +103,8 @@
                     <group expand="0" string="Group By...">
                         <filter string="Course" name="group_by_attendance_course"
                                 domain="[]" context="{'group_by':'course_id'}"/>
-                        <filter string="SPM" name="group_by_attendance_student"
-                                domain="[]" context="{'group_by':'spm'}"/>
+                        <filter string="Student" name="group_by_attendance_student"
+                                domain="[]" context="{'group_by':'student_id'}"/>
                         <filter string="Status" name="group_by_attendance_present"
                                 domain="[]" context="{'group_by':'state'}"/>
                         <filter string="Date" name="group_by_attendance_date"
@@ -108,10 +129,14 @@
             <field name="name">Attendance Sheets</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">course.attendance</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,pivot</field>
             <field name="search_view_id" ref="view_attendance_sheet_search"/>
             <field name="domain">[]</field>
-            <field name="context">{}</field>
+            <field name="context">{
+                'search_default_group_by_attendance_course': 1,
+                'search_default_group_by_attendance_student': 1
+                }
+            </field>
         </record>
 
         <menuitem name="Student Attendance"
