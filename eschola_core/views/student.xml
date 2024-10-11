@@ -103,6 +103,16 @@
                                     <field name="grading_count" class="o_stat_value"/>
                                 </div>
                             </button>
+                            <button name="action_view_session" type="object"
+                                    icon="fa-bars" class="oe_stat_button"
+                                    context="{}">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_text">
+                                        Sessions
+                                    </span>
+<!--                                    <field name="grading_count" class="o_stat_value"/>-->
+                                </div>
+                            </button>
                         </div>
                         <div class="oe_title">
                             <h1>
@@ -129,6 +139,17 @@
                                 <field name="gender"/>
                             </group>
                         </group>
+<!--                        <notebook>-->
+<!--                            <page string="Courses">-->
+<!--                                <group>-->
+<!--                                    <field name="">-->
+<!--                                        <tree>-->
+<!--                                            <field name=""/>-->
+<!--                                        </tree>-->
+<!--                                    </field>-->
+<!--                                </group>-->
+<!--                            </page>-->
+<!--                        </notebook>-->
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>

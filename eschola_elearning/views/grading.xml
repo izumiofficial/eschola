@@ -54,9 +54,9 @@
         <field name="context">{}</field>
     </record>
 
-    <menuitem name="Grading Sheet"
-              id="grading_sheet_view"
-              parent="website_slides.website_slides_menu_configuration"
-              sequence="15"
-              action="act_open_grading"/>
+<!--    <menuitem name="Grading Sheet"-->
+<!--              id="grading_sheet_view"-->
+<!--              parent="website_slides.website_slides_menu_configuration"-->
+<!--              sequence="15"-->
+<!--              action="act_open_grading"/>-->
 </odoo>

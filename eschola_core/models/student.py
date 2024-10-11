@@ -55,6 +55,7 @@ class Student(models.Model):
     )
 
     student_img = fields.Image(string='Student Image')
+    # course_ids = fields.One2many()
 
     def create_contact(self):
         # Create a new contact (res.partner)
@@ -96,10 +97,12 @@ class Student(models.Model):
             'type': 'ir.actions.act_window',
             'res_model': 'course.attendance',
             'domain': [('student_id', '=', self.partner_id.id)],
-            'view_mode': 'tree',
+            'view_mode': 'tree,pivot',
             'target': 'current',
             'context': {
-                'create': False
+                'create': False,
+                'search_default_group_by_attendance_course': 1,
+
             }
         }
 
@@ -109,15 +112,22 @@ class Student(models.Model):
             rec.course_attendance_count = count
 
     def action_view_session(self):
+        # 1. Get attendance records linked to the student
+        attendances = self.env['course.attendance'].search([('student_id', '=', self.partner_id.id)])
+
+        # 2. Extract the session IDs from the attendance records
+        session_ids = attendances.mapped('session_id').ids
+
         return {
-            'name': _('Attendance Sheets'),
+            'name': _('Sessions'),
             'type': 'ir.actions.act_window',
             'res_model': 'session',
-            'domain': [('course_id', '=', self.partner_id.id)],
-            'view_mode': 'tree',
+            'domain': [('id', 'in', session_ids)],
+            'view_mode': 'tree,form',
             'target': 'current',
             'context': {
-                'create': False
+                'create': False,
+                'search_default_course_id': 1,
             }
         }
 

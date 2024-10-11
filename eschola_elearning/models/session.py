@@ -30,10 +30,12 @@ class Session(models.Model):
 
     color = fields.Integer('Color Index')
     type = fields.Char(compute='_compute_day', string='Day', store=True)
-    state = fields.Selection(
-        [('draft', 'Draft'), ('confirm', 'Confirmed'),
-         ('done', 'Done'), ('cancel', 'Canceled')],
-        string='Status', default='draft')
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('confirm', 'Confirmed'),
+        ('done', 'Done'),
+        ('cancel', 'Canceled')
+    ], string='Status', default='draft')
     active = fields.Boolean(default=True)
     days = fields.Selection([
         ('monday', 'Monday'),
