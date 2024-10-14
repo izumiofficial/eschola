@@ -89,12 +89,12 @@ class Session(models.Model):
         attendance = self.env['slide.channel.partner'].search([
                 ('channel_id', '=', self.course_id.id)]).partner_id
         for record in attendance:
-            print(record)
             self.env['course.attendance'].create({
                 'student_id': record.id,
                 'course_id': self.course_id.id,
                 'session_id': self.id,
-                'spm': self.user_id.id
+                'spm': self.user_id.id,
+                'attendance_date': self.start_datetime.date()
             })
 
         self.state = 'confirm'
