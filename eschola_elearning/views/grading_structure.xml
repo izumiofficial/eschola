@@ -7,9 +7,9 @@
         <field name="arch" type="xml">
             <tree string="Grading Structure">
                 <field name="name"/>
-                <field name="course_id"/>
-                <field name="school_year"/>
-                <field name="academic_stage"/>
+<!--                <field name="course_id"/>-->
+<!--                <field name="school_year"/>-->
+<!--                <field name="academic_stage"/>-->
             </tree>
         </field>
     </record>
@@ -36,15 +36,15 @@
                             <field name="name" placeholder="Name"/>
                         </h1>
                     </div>
-                    <group string="Grading Info">
-                        <group>
-                            <field name="course_id"/>
-                            <field name="school_year"/>
-                        </group>
-                        <group>
-                            <field name="academic_stage"/>
-                        </group>
-                    </group>
+<!--                    <group string="Grading Info">-->
+<!--                        <group>-->
+<!--                            <field name="course_id"/>-->
+<!--                            <field name="school_year"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="academic_stage"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
                     <notebook>
                         <page string="Assignments Grading">
                             <field name="grading_line_ids">
