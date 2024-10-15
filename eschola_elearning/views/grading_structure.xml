@@ -21,6 +21,16 @@
         <field name="arch" type="xml">
             <form string="Attendance Sheet">
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_course" type="object" icon="fa-university" class="oe_stat_button">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">
+                                    Courses
+                                </span>
+                                <field name="slide_channel_count" class="o_stat_value"/>
+                            </div>
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <h1>
                             <field name="name" placeholder="Name"/>

@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import AccessError, ValidationError, UserError
 
 class GradingStructure(models.Model):
@@ -14,6 +14,8 @@ class GradingStructure(models.Model):
 
     total_weightage = fields.Integer(string='Total %', compute='_compute_total_weightage')  # calculate the weightage from grading_line_ids and show error if exceeding 100
 
+    slide_channel_count = fields.Integer('Course Count', compute='_compute_course_count')
+
     @api.onchange('grading_line_ids.weightage')
     def _compute_total_weightage(self):
         for record in self:
@@ -24,3 +26,22 @@ class GradingStructure(models.Model):
                 record.total_weightage = total
             else:
                 record.total_weightage = 0  # Or leave it undefined
+
+    def action_view_course(self):
+        # will display the course that related to the grading structure
+        return {
+            'name': _('Attendance Sheets'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'slide.channel',
+            'domain': [('grading_structure_id', '=', self.id)],
+            'view_mode': 'tree',
+            'target': 'current',
+            'context': {
+                'create': False,
+            }
+        }
+
+    def _compute_course_count(self):
+        for rec in self:
+            count = self.env['slide.channel'].search_count([('grading_structure_id', '=', self.id)])
+            rec.slide_channel_count = count
