@@ -31,10 +31,10 @@
                 <field name="student_id"/>
                 <field name="course_id"/>
                 <group expand="0" string="Group By...">
-                    <filter string="Course" name="group_by_course"
-                            domain="[]" context="{'group_by':'course_id'}"/>
                     <filter string="School Year" name="group_by_school_year_id"
                             domain="[]" context="{'group_by':'school_year_id'}"/>
+                    <filter string="Course" name="group_by_course"
+                            domain="[]" context="{'group_by':'course_id'}"/>
                     <filter string="Academic Stage" name="group_by_academic_stage"
                             domain="[]" context="{'group_by':'academic_stage'}"/>
                     <filter string="Status" name="group_by_state"

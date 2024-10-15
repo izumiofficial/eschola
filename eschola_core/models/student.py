@@ -101,6 +101,7 @@ class Student(models.Model):
             'target': 'current',
             'context': {
                 'create': False,
+                'search_default_group_by_attendance_date': 1,
                 'search_default_group_by_attendance_course': 1,
 
             }
