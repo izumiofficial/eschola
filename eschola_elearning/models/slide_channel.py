@@ -9,6 +9,7 @@ class Channel(models.Model):
     school_year_id = fields.Many2one('school.year', string='School Year', related='term_id.school_year_id')
     start_date = fields.Date(string='Start Date', related='term_id.start_date')
     end_date = fields.Date(string='End Date', related='term_id.end_date')
+    grading_structure = fields.Many2one('grading.structure', string='Grading Structure')
 
     session_ids = fields.One2many('session', 'course_id', string='Sessions')
 

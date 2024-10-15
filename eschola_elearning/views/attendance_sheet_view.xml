@@ -101,14 +101,14 @@
                     <filter string="Participation" name="group_by_participation"
                             domain="[('participation', '=', True)]"/>
                     <group expand="0" string="Group By...">
+                        <filter string="Date" name="group_by_attendance_date"
+                                domain="[]" context="{'group_by':'attendance_date'}"/>
                         <filter string="Course" name="group_by_attendance_course"
                                 domain="[]" context="{'group_by':'course_id'}"/>
                         <filter string="Student" name="group_by_attendance_student"
                                 domain="[]" context="{'group_by':'student_id'}"/>
                         <filter string="Status" name="group_by_attendance_present"
                                 domain="[]" context="{'group_by':'state'}"/>
-                        <filter string="Date" name="group_by_attendance_date"
-                                domain="[]" context="{'group_by':'attendance_date'}"/>
                     </group>
                 </search>
             </field>
